@@ -1,7 +1,10 @@
-import React from 'react';
-import { Code, Server, Smartphone, Brain, Database, GitBranch } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Code, Server, Smartphone, Brain, Database, GitBranch, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const Skills = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
   const skillCategories = [
     {
       title: 'Frontend',
@@ -52,11 +55,36 @@ const Skills = () => {
       blue: 'border-blue-500/30 bg-blue-500/10 text-blue-400',
       green: 'border-green-500/30 bg-green-500/10 text-green-400',
       purple: 'border-purple-500/30 bg-purple-500/10 text-purple-400',
-      purple: 'border-purple-500/30 bg-purple-500/10 text-purple-400',
       indigo: 'border-indigo-500/30 bg-indigo-500/10 text-indigo-400',
       teal: 'border-teal-500/30 bg-teal-500/10 text-teal-400'
     };
     return colors[color as keyof typeof colors];
+  };
+
+  // Auto-play functionality
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % skillCategories.length);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, skillCategories.length]);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % skillCategories.length);
+    setIsAutoPlaying(false);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + skillCategories.length) % skillCategories.length);
+    setIsAutoPlaying(false);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+    setIsAutoPlaying(false);
   };
 
   return (
@@ -69,37 +97,86 @@ const Skills = () => {
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Une expertise diversifiée pour répondre à tous vos besoins technologiques
           </p>
-          <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-orange-600 mx-auto mt-6"></div>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto mt-6"></div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {skillCategories.map((category, index) => {
-            const Icon = category.icon;
-            return (
-              <div 
-                key={category.title}
-                className="group bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl border border-slate-700 hover:border-slate-600 transition-all duration-300 hover:transform hover:scale-105"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className={`w-16 h-16 rounded-xl border-2 ${getColorClasses(category.color)} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                  <Icon size={32} />
-                </div>
-                
-                <h3 className="text-2xl font-bold mb-4">{category.title}</h3>
-                <p className="text-gray-300 mb-6 leading-relaxed">{category.description}</p>
-                
-                <div className="space-y-2">
-                  {category.skills.map((skill) => (
-                    <div key={skill} className="flex items-center">
-                      <div className={`w-2 h-2 rounded-full bg-${category.color}-400 mr-3`}></div>
-                      <span className="text-gray-300">{skill}</span>
+        {/* Carousel Container */}
+        <div className="relative max-w-4xl mx-auto">
+          {/* Main Slide */}
+          <div className="overflow-hidden rounded-2xl">
+            <div 
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+            >
+              {skillCategories.map((category, index) => {
+                const Icon = category.icon;
+                return (
+                  <div 
+                    key={category.title}
+                    className="w-full flex-shrink-0 px-4"
+                  >
+                    <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-12 rounded-2xl border border-slate-700 text-center">
+                      <div className={`w-20 h-20 rounded-xl border-2 ${getColorClasses(category.color)} flex items-center justify-center mb-8 mx-auto`}>
+                        <Icon size={40} />
+                      </div>
+                      
+                      <h3 className="text-3xl font-bold mb-6">{category.title}</h3>
+                      <p className="text-gray-300 mb-8 text-lg leading-relaxed max-w-2xl mx-auto">
+                        {category.description}
+                      </p>
+                      
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
+                        {category.skills.map((skill) => (
+                          <div key={skill} className="flex items-center justify-center">
+                            <div className={`w-3 h-3 rounded-full bg-${category.color}-400 mr-3`}></div>
+                            <span className="text-gray-300 font-medium">{skill}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Navigation Arrows */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-slate-800/80 hover:bg-slate-700 p-3 rounded-full border border-slate-600 transition-colors z-10"
+          >
+            <ChevronLeft className="text-white" size={24} />
+          </button>
+          
+          <button
+            onClick={nextSlide}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-slate-800/80 hover:bg-slate-700 p-3 rounded-full border border-slate-600 transition-colors z-10"
+          >
+            <ChevronRight className="text-white" size={24} />
+          </button>
+
+          {/* Dots Indicator */}
+          <div className="flex justify-center mt-8 space-x-2">
+            {skillCategories.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`w-3 h-3 rounded-full transition-colors ${
+                  index === currentSlide ? 'bg-blue-500' : 'bg-slate-600 hover:bg-slate-500'
+                }`}
+              />
+            ))}
+          </div>
+
+          {/* Auto-play Toggle */}
+          <div className="text-center mt-6">
+            <button
+              onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+              className="text-sm text-gray-400 hover:text-gray-300 transition-colors"
+            >
+              {isAutoPlaying ? 'Pause auto-play' : 'Reprendre auto-play'}
+            </button>
+          </div>
         </div>
 
         {/* Additional Skills */}

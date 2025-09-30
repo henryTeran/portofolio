@@ -12,19 +12,19 @@ const Pricing = () => {
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Des tarifs transparents pour une collaboration sereine
           </p>
-          <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-orange-600 mx-auto mt-6"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto mt-6"></div>
         </div>
 
         <div className="max-w-4xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-8 mb-12">
             {/* Pricing Card */}
-            <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl border border-slate-700 hover:border-orange-500/50 transition-all duration-300">
+            <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl border border-slate-700 hover:border-blue-500/50 transition-all duration-300">
               <div className="text-center mb-8">
-                <div className="w-16 h-16 bg-orange-500/20 rounded-xl flex items-center justify-center mx-auto mb-4 border border-orange-500/30">
-                  <Euro className="text-orange-400" size={32} />
+                <div className="w-16 h-16 bg-blue-500/20 rounded-xl flex items-center justify-center mx-auto mb-4 border border-blue-500/30">
+                  <Euro className="text-blue-400" size={32} />
                 </div>
                 <h3 className="text-2xl font-bold mb-4">Tarif Journalier</h3>
-                <div className="text-5xl font-bold text-orange-400 mb-2">450-500€</div>
+                <div className="text-5xl font-bold text-blue-400 mb-2">450-500€</div>
                 <div className="text-gray-400">par jour</div>
               </div>
 
@@ -94,15 +94,15 @@ const Pricing = () => {
           <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-8 rounded-2xl border border-slate-600">
             <div className="grid md:grid-cols-3 gap-8 text-center">
               <div>
-                <h4 className="text-lg font-semibold mb-3 text-orange-400">Missions courtes</h4>
+                <h4 className="text-lg font-semibold mb-3 text-blue-400">Missions courtes</h4>
                 <p className="text-gray-300">À partir de 3 jours pour des interventions ponctuelles</p>
               </div>
               <div>
-                <h4 className="text-lg font-semibold mb-3 text-blue-400">Projets moyens</h4>
+                <h4 className="text-lg font-semibold mb-3 text-green-400">Projets moyens</h4>
                 <p className="text-gray-300">1-6 mois pour des développements complets</p>
               </div>
               <div>
-                <h4 className="text-lg font-semibold mb-3 text-green-400">Accompagnement long terme</h4>
+                <h4 className="text-lg font-semibold mb-3 text-purple-400">Accompagnement long terme</h4>
                 <p className="text-gray-300">Maintenance et évolutions continues</p>
               </div>
             </div>

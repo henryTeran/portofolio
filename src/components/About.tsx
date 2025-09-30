@@ -11,11 +11,12 @@ const About = () => {
               À propos de moi
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-orange-600 mx-auto"></div>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto"></div>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h3 className="text-2xl font-semibold mb-6 text-orange-400">
+              <h3 className="text-2xl font-semibold mb-6 text-blue-400">
                 Ingénieur & Développeur Full-Stack
               </h3>
               <p className="text-lg text-gray-300 mb-6 leading-relaxed">
@@ -30,7 +31,7 @@ const About = () => {
 
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center p-4 bg-slate-800/50 rounded-xl border border-slate-700">
-                  <div className="text-2xl font-bold text-orange-400 mb-2">450-500€</div>
+                  <div className="text-2xl font-bold text-blue-400 mb-2">450-500€</div>
                   <div className="text-sm text-gray-400">TJM</div>
                 </div>
                 <div className="text-center p-4 bg-slate-800/50 rounded-xl border border-slate-700">
@@ -41,10 +42,10 @@ const About = () => {
             </div>
 
             <div className="space-y-6">
-              <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-6 rounded-xl border border-slate-600 hover:border-orange-500/50 transition-colors">
+              <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-6 rounded-xl border border-slate-600 hover:border-blue-500/50 transition-colors">
                 <div className="flex items-center mb-4">
-                  <div className="bg-orange-500/20 p-3 rounded-lg mr-4">
-                    <Lightbulb className="text-orange-400" size={24} />
+                  <div className="bg-blue-500/20 p-3 rounded-lg mr-4">
+                    <Lightbulb className="text-blue-400" size={24} />
                   </div>
                   <h4 className="text-xl font-semibold">Rigueur & Créativité</h4>
                 </div>
@@ -55,8 +56,8 @@ const About = () => {
 
               <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-6 rounded-xl border border-slate-600 hover:border-blue-500/50 transition-colors">
                 <div className="flex items-center mb-4">
-                  <div className="bg-blue-500/20 p-3 rounded-lg mr-4">
-                    <Users className="text-blue-400" size={24} />
+                  <div className="bg-green-500/20 p-3 rounded-lg mr-4">
+                    <Users className="text-green-400" size={24} />
                   </div>
                   <h4 className="text-xl font-semibold">Autonomie</h4>
                 </div>
@@ -67,8 +68,8 @@ const About = () => {
 
               <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-6 rounded-xl border border-slate-600 hover:border-green-500/50 transition-colors">
                 <div className="flex items-center mb-4">
-                  <div className="bg-green-500/20 p-3 rounded-lg mr-4">
-                    <MessageSquare className="text-green-400" size={24} />
+                  <div className="bg-purple-500/20 p-3 rounded-lg mr-4">
+                    <MessageSquare className="text-purple-400" size={24} />
                   </div>
                   <h4 className="text-xl font-semibold">Communication Multilingue</h4>
                 </div>
@@ -79,8 +80,8 @@ const About = () => {
 
               <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-6 rounded-xl border border-slate-600 hover:border-purple-500/50 transition-colors">
                 <div className="flex items-center mb-4">
-                  <div className="bg-purple-500/20 p-3 rounded-lg mr-4">
-                    <Globe className="text-purple-400" size={24} />
+                  <div className="bg-indigo-500/20 p-3 rounded-lg mr-4">
+                    <Globe className="text-indigo-400" size={24} />
                   </div>
                   <h4 className="text-xl font-semibold">Télétravail & Hybride</h4>
                 </div>

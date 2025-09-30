@@ -9,7 +9,7 @@ const Projects = () => {
       technologies: ['Python/Flask', 'React', 'PostgreSQL', 'OpenAI', 'Docker'],
       features: ['CRM intégré', 'Facturation automatisée', 'IA intégrée', 'Modules personnalisables'],
       category: 'ERP',
-      color: 'orange'
+      color: 'blue'
     },
     {
       title: 'WellSync',
@@ -17,7 +17,7 @@ const Projects = () => {
       technologies: ['Ionic', 'Firebase', 'Angular', 'OpenAI', 'TypeScript'],
       features: ['IA personnalisée', 'Sync temps réel', 'Interface intuitive', 'Analytics avancés'],
       category: 'Mobile & IA',
-      color: 'blue'
+      color: 'green'
     },
     {
       title: 'HealthSync',
@@ -25,7 +25,7 @@ const Projects = () => {
       technologies: ['React', 'Node.js', 'MongoDB', 'WebRTC', 'Socket.io'],
       features: ['Télémédecine', 'Dossiers sécurisés', 'Planning intégré', 'Notifications'],
       category: 'Santé',
-      color: 'green'
+      color: 'purple'
     },
     {
       title: 'BeautyBooker',
@@ -33,7 +33,7 @@ const Projects = () => {
       technologies: ['Angular', 'Firebase', 'Stripe', 'PWA', 'Tailwind'],
       features: ['Réservations en ligne', 'Paiements sécurisés', 'Programme fidélité', 'Interface responsive'],
       category: 'E-commerce',
-      color: 'purple'
+      color: 'indigo'
     },
     {
       title: 'SelfServiceDesk',
@@ -41,7 +41,7 @@ const Projects = () => {
       technologies: ['Ionic', 'Firebase', 'Angular', 'PayPal', 'PWA'],
       features: ['Commandes rapides', 'Gestion stocks', 'Analytics', 'Mode hors-ligne'],
       category: 'Mobile',
-      color: 'indigo'
+      color: 'teal'
     },
     {
       title: 'FromDeepestRecord',
@@ -49,15 +49,15 @@ const Projects = () => {
       technologies: ['React', 'Node.js', 'PostgreSQL', 'Stripe', 'AWS'],
       features: ['Multilingue', 'Recommandations IA', 'Streaming intégré', 'Gestion catalogue'],
       category: 'E-commerce',
-      color: 'teal'
+      color: 'blue'
     }
   ];
 
   const getColorClasses = (color: string) => {
     const colors = {
-      orange: 'border-orange-500/30 text-orange-400',
       blue: 'border-blue-500/30 text-blue-400',
       green: 'border-green-500/30 text-green-400',
+      purple: 'border-purple-500/30 text-purple-400',
       purple: 'border-purple-500/30 text-purple-400',
       indigo: 'border-indigo-500/30 text-indigo-400',
       teal: 'border-teal-500/30 text-teal-400'
@@ -76,6 +76,7 @@ const Projects = () => {
             Découvrez mes projets les plus récents et les technologies utilisées
           </p>
           <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-orange-600 mx-auto mt-6"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto mt-6"></div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">
@@ -159,7 +160,7 @@ const Projects = () => {
             </p>
             <button 
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-orange-500 hover:bg-orange-600 px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
+              className="bg-blue-500 hover:bg-blue-600 px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
             >
               Démarrer un projet
             </button>

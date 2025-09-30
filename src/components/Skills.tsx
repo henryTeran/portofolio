@@ -6,42 +6,42 @@ const Skills = () => {
     {
       title: 'Frontend',
       icon: Code,
-      color: 'orange',
+      color: 'blue',
       skills: ['Angular', 'React', 'Tailwind CSS', 'Ionic', 'TypeScript', 'JavaScript'],
       description: 'Interfaces utilisateur modernes et performantes'
     },
     {
       title: 'Backend',
       icon: Server,
-      color: 'blue',
+      color: 'green',
       skills: ['Python/Flask', 'Node.js', 'REST API', 'Express.js', 'FastAPI'],
       description: 'Architectures serveur robustes et scalables'
     },
     {
       title: 'Mobile',
       icon: Smartphone,
-      color: 'green',
+      color: 'purple',
       skills: ['Ionic', 'PWA', 'React Native', 'Mobile-First Design'],
       description: 'Applications mobiles cross-platform'
     },
     {
       title: 'IA & Automatisation',
       icon: Brain,
-      color: 'purple',
+      color: 'indigo',
       skills: ['OpenAI', 'RPA', 'Pandas', 'NumPy', 'Machine Learning'],
       description: 'Intelligence artificielle et automatisation des processus'
     },
     {
       title: 'Bases de données',
       icon: Database,
-      color: 'indigo',
+      color: 'teal',
       skills: ['SQL', 'Firestore', 'MongoDB', 'PostgreSQL', 'Firebase'],
       description: 'Gestion et optimisation des données'
     },
     {
       title: 'DevOps',
       icon: GitBranch,
-      color: 'teal',
+      color: 'blue',
       skills: ['Git', 'Docker', 'CI/CD', 'AWS', 'Vercel', 'Netlify'],
       description: 'Déploiement et intégration continue'
     }
@@ -49,9 +49,9 @@ const Skills = () => {
 
   const getColorClasses = (color: string) => {
     const colors = {
-      orange: 'border-orange-500/30 bg-orange-500/10 text-orange-400',
       blue: 'border-blue-500/30 bg-blue-500/10 text-blue-400',
       green: 'border-green-500/30 bg-green-500/10 text-green-400',
+      purple: 'border-purple-500/30 bg-purple-500/10 text-purple-400',
       purple: 'border-purple-500/30 bg-purple-500/10 text-purple-400',
       indigo: 'border-indigo-500/30 bg-indigo-500/10 text-indigo-400',
       teal: 'border-teal-500/30 bg-teal-500/10 text-teal-400'
@@ -70,6 +70,7 @@ const Skills = () => {
             Une expertise diversifiée pour répondre à tous vos besoins technologiques
           </p>
           <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-orange-600 mx-auto mt-6"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto mt-6"></div>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -103,12 +104,12 @@ const Skills = () => {
 
         {/* Additional Skills */}
         <div className="mt-16 text-center">
-          <h3 className="text-2xl font-semibold mb-8 text-orange-400">Technologies supplémentaires</h3>
+          <h3 className="text-2xl font-semibold mb-8 text-blue-400">Technologies supplémentaires</h3>
           <div className="flex flex-wrap justify-center gap-4">
             {['Firebase', 'Supabase', 'Redis', 'GraphQL', 'WebSockets', 'Microservices', 'Cloud Computing', 'API Design'].map((tech) => (
               <span 
                 key={tech}
-                className="px-4 py-2 bg-slate-800 border border-slate-600 rounded-full text-gray-300 hover:border-orange-500/50 transition-colors"
+                className="px-4 py-2 bg-slate-800 border border-slate-600 rounded-full text-gray-300 hover:border-blue-500/50 transition-colors"
               >
                 {tech}
               </span>

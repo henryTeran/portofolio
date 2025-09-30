@@ -7,7 +7,7 @@ const Services = () => {
       title: 'Développement Full-Stack Sur Mesure',
       description: 'Création d\'applications web complètes avec architectures modernes, API REST et interfaces utilisateur performantes.',
       icon: Code,
-      color: 'orange',
+      color: 'blue',
       includes: [
         'Architecture technique complète',
         'Frontend & Backend intégrés',
@@ -21,7 +21,7 @@ const Services = () => {
       title: 'Création d\'ERP & Solutions Métiers',
       description: 'Développement de systèmes de gestion d\'entreprise modulaires et évolutifs adaptés à vos processus spécifiques.',
       icon: Building,
-      color: 'blue',
+      color: 'green',
       includes: [
         'Analyse des besoins métiers',
         'Modules personnalisés',
@@ -35,7 +35,7 @@ const Services = () => {
       title: 'Applications Web & Mobiles',
       description: 'Développement d\'applications cross-platform avec des technologies modernes pour une expérience utilisateur optimale.',
       icon: Smartphone,
-      color: 'green',
+      color: 'purple',
       includes: [
         'Applications cross-platform',
         'PWA (Progressive Web App)',
@@ -49,7 +49,7 @@ const Services = () => {
       title: 'Intégration IA & Automatisation',
       description: 'Implémentation de solutions d\'intelligence artificielle et d\'automatisation pour optimiser vos processus.',
       icon: Brain,
-      color: 'purple',
+      color: 'indigo',
       includes: [
         'Chatbots intelligents',
         'Automatisation RPA',
@@ -63,7 +63,7 @@ const Services = () => {
       title: 'E-commerce & Plateformes SaaS',
       description: 'Création de plateformes e-commerce et SaaS avec paiements sécurisés et gestion utilisateurs avancée.',
       icon: ShoppingCart,
-      color: 'indigo',
+      color: 'blue',
       includes: [
         'Catalogue produits avancé',
         'Paiements sécurisés',
@@ -77,7 +77,6 @@ const Services = () => {
 
   const getColorClasses = (color: string) => {
     const colors = {
-      orange: 'bg-orange-500/10 border-orange-500/30 text-orange-400',
       blue: 'bg-blue-500/10 border-blue-500/30 text-blue-400',
       green: 'bg-green-500/10 border-green-500/30 text-green-400',
       purple: 'bg-purple-500/10 border-purple-500/30 text-purple-400',
@@ -96,7 +95,7 @@ const Services = () => {
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Des solutions complètes pour transformer vos idées en réalité numérique
           </p>
-          <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-orange-600 mx-auto mt-6"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto mt-6"></div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 mb-16">
@@ -140,7 +139,7 @@ const Services = () => {
               { step: '04', title: 'Livraison', desc: 'Déploiement et formation utilisateurs' }
             ].map((phase, index) => (
               <div key={phase.step} className="text-center group">
-                <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-lg group-hover:scale-110 transition-transform duration-300">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-lg group-hover:scale-110 transition-transform duration-300">
                   {phase.step}
                 </div>
                 <h4 className="text-lg font-semibold mb-2">{phase.title}</h4>

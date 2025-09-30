@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { ExternalLink, Github, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import React from 'react';
+import { ExternalLink, Github, ArrowRight } from 'lucide-react';
 
 const Projects = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-
   const projects = [
     {
       title: 'ZIGOMA ERP',
@@ -73,32 +70,6 @@ const Projects = () => {
     return colors[color as keyof typeof colors];
   };
 
-  // Auto-play functionality
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-    
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % projects.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [isAutoPlaying, projects.length]);
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % projects.length);
-    setIsAutoPlaying(false);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + projects.length) % projects.length);
-    setIsAutoPlaying(false);
-  };
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index);
-    setIsAutoPlaying(false);
-  };
-
   return (
     <section id="projects" className="py-20 bg-slate-950">
       <div className="container mx-auto px-4">
@@ -112,129 +83,81 @@ const Projects = () => {
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto mt-6"></div>
         </div>
 
-        {/* Carousel Container */}
-        <div className="relative max-w-5xl mx-auto">
-          {/* Main Slide */}
-          <div className="overflow-hidden rounded-2xl">
+        <div className="grid lg:grid-cols-2 gap-8 mb-16">
+          {projects.map((project, index) => (
             <div 
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+              key={project.title}
+              className="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl border border-slate-700 hover:border-slate-600 transition-all duration-300 group hover:transform hover:scale-[1.02]"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
-              {projects.map((project, index) => (
-                <div 
-                  key={project.title}
-                  className="w-full flex-shrink-0 px-4"
-                >
-                  <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl border border-slate-700 p-8 h-full">
-                    {/* Project Header */}
-                    <div className="flex items-start justify-between mb-6">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-4 mb-4">
-                          <span className={`inline-block px-3 py-1 text-sm font-medium rounded-full border ${getColorClasses(project.color)}`}>
-                            {project.category}
-                          </span>
-                          <span className="text-sm text-gray-400">{project.period}</span>
-                        </div>
-                        <h3 className="text-3xl font-bold mb-4">{project.title}</h3>
-                      </div>
-                      <div className="flex gap-2">
-                        <button className="p-2 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors">
-                          <ExternalLink size={18} />
-                        </button>
-                        <button className="p-2 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors">
-                          <Github size={18} />
-                        </button>
-                      </div>
-                    </div>
-
-                    <p className="text-gray-300 mb-8 leading-relaxed text-lg">
-                      {project.description}
-                    </p>
-
-                    {/* Features */}
-                    <div className="mb-8">
-                      <h4 className="text-sm font-semibold text-gray-400 mb-4 uppercase tracking-wider">
-                        Fonctionnalités clés
-                      </h4>
-                      <div className="grid grid-cols-2 gap-3">
-                        {project.features.map((feature) => (
-                          <div key={feature} className="flex items-center">
-                            <div className={`w-2 h-2 rounded-full bg-${project.color}-400 mr-3`}></div>
-                            <span className="text-gray-300">{feature}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Technologies */}
-                    <div className="mb-8">
-                      <h4 className="text-sm font-semibold text-gray-400 mb-4 uppercase tracking-wider">
-                        Technologies utilisées
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {project.technologies.map((tech) => (
-                          <span 
-                            key={tech}
-                            className="px-3 py-1 bg-slate-700 text-gray-300 rounded-full text-sm border border-slate-600"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* CTA */}
-                    <button className={`flex items-center gap-2 text-${project.color}-400 hover:text-${project.color}-300 font-medium transition-colors`}>
-                      En savoir plus
-                      <ArrowRight size={16} />
-                    </button>
+              {/* Project Header */}
+              <div className="flex items-start justify-between mb-6">
+                <div className="flex-1">
+                  <div className="flex items-center gap-4 mb-4">
+                    <span className={`inline-block px-3 py-1 text-sm font-medium rounded-full border ${getColorClasses(project.color)}`}>
+                      {project.category}
+                    </span>
+                    <span className="text-sm text-gray-400">{project.period}</span>
                   </div>
+                  <h3 className="text-2xl font-bold mb-4">{project.title}</h3>
                 </div>
-              ))}
+                <div className="flex gap-2">
+                  <button className="p-2 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors">
+                    <ExternalLink size={18} />
+                  </button>
+                  <button className="p-2 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors">
+                    <Github size={18} />
+                  </button>
+                </div>
+              </div>
+
+              <p className="text-gray-300 mb-6 leading-relaxed">
+                {project.description}
+              </p>
+
+              {/* Features */}
+              <div className="mb-6">
+                <h4 className="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wider">
+                  Fonctionnalités clés
+                </h4>
+                <div className="grid grid-cols-2 gap-2">
+                  {project.features.map((feature) => (
+                    <div key={feature} className="flex items-center">
+                      <div className={`w-2 h-2 rounded-full bg-${project.color}-400 mr-3`}></div>
+                      <span className="text-gray-300 text-sm">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Technologies */}
+              <div className="mb-6">
+                <h4 className="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wider">
+                  Technologies utilisées
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {project.technologies.map((tech) => (
+                    <span 
+                      key={tech}
+                      className="px-3 py-1 bg-slate-700 text-gray-300 rounded-full text-sm border border-slate-600"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* CTA */}
+              <button className={`flex items-center gap-2 text-${project.color}-400 hover:text-${project.color}-300 font-medium transition-colors`}>
+                En savoir plus
+                <ArrowRight size={16} />
+              </button>
             </div>
-          </div>
-
-          {/* Navigation Arrows */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-slate-800/80 hover:bg-slate-700 p-3 rounded-full border border-slate-600 transition-colors z-10"
-          >
-            <ChevronLeft className="text-white" size={24} />
-          </button>
-          
-          <button
-            onClick={nextSlide}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-slate-800/80 hover:bg-slate-700 p-3 rounded-full border border-slate-600 transition-colors z-10"
-          >
-            <ChevronRight className="text-white" size={24} />
-          </button>
-
-          {/* Dots Indicator */}
-          <div className="flex justify-center mt-8 space-x-2">
-            {projects.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`w-3 h-3 rounded-full transition-colors ${
-                  index === currentSlide ? 'bg-blue-500' : 'bg-slate-600 hover:bg-slate-500'
-                }`}
-              />
-            ))}
-          </div>
-
-          {/* Auto-play Toggle */}
-          <div className="text-center mt-6">
-            <button
-              onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-              className="text-sm text-gray-400 hover:text-gray-300 transition-colors"
-            >
-              {isAutoPlaying ? 'Pause auto-play' : 'Reprendre auto-play'}
-            </button>
-          </div>
+          ))}
         </div>
 
         {/* Call to Action */}
-        <div className="text-center mt-16">
+        <div className="text-center">
           <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-8 rounded-2xl border border-slate-600 max-w-2xl mx-auto">
             <h3 className="text-2xl font-bold mb-4">Vous avez un projet en tête ?</h3>
             <p className="text-gray-300 mb-6">

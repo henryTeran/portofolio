@@ -1,19 +1,38 @@
 import React, { useState } from 'react';
 import { Mail, Linkedin, Github, Send, MapPin, Clock } from 'lucide-react';
+import { sendContactEmail, ContactFormData } from '../services/emailService';
+import QuoteModal from './QuoteModal';
 
 const Contact = () => {
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
-    // Reset form
-    setFormData({ name: '', email: '', message: '' });
+    
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const success = await sendContactEmail(formData as ContactFormData);
+      if (success) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -25,6 +44,11 @@ const Contact = () => {
 
   return (
     <section id="contact" className="py-20 bg-slate-900/50">
+      <QuoteModal 
+        isOpen={isQuoteModalOpen} 
+        onClose={() => setIsQuoteModalOpen(false)} 
+      />
+      
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
@@ -165,11 +189,23 @@ const Contact = () => {
                 />
               </div>
 
+              {submitStatus === 'success' && (
+                <div className="p-4 bg-green-500/20 border border-green-500/30 rounded-lg text-green-400">
+                  Message envoyé avec succès ! Je vous recontacterai sous 24h.
+                </div>
+              )}
+
+              {submitStatus === 'error' && (
+                <div className="p-4 bg-red-500/20 border border-red-500/30 rounded-lg text-red-400">
+                  Erreur lors de l'envoi. Veuillez réessayer ou me contacter directement.
+                </div>
+              )}
               <button
                 type="submit"
-                className="w-full bg-blue-500 hover:bg-blue-600 px-8 py-4 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
+                disabled={isSubmitting}
+                className="w-full bg-blue-500 hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed px-8 py-4 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
               >
-                Envoyer le message
+                {isSubmitting ? 'Envoi en cours...' : 'Envoyer le message'}
                 <Send size={20} />
               </button>
             </form>
@@ -188,14 +224,14 @@ const Contact = () => {
           <div className="bg-gradient-to-r from-blue-500/10 to-blue-600/10 p-6 rounded-2xl border border-blue-500/30">
             <h3 className="text-xl font-bold mb-4">Besoin d'un devis rapide ?</h3>
             <p className="text-gray-300 mb-6">
-              Contactez-moi directement pour une estimation personnalisée de votre projet
+              Utilisez notre formulaire détaillé pour une estimation personnalisée
             </p>
-            <a 
-              href="mailto:teranhenryc@gmail.com?subject=Demande de devis&body=Bonjour Henry, j'aimerais discuter d'un projet..."
+            <button 
+              onClick={() => setIsQuoteModalOpen(true)}
               className="inline-block bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
             >
               Demander un devis
-            </a>
+            </button>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ import emailjs from '@emailjs/browser';
 // Configuration EmailJS
 const EMAILJS_SERVICE_ID = 'portofolio_HenryTeran'; // À configurer dans EmailJS
 const EMAILJS_TEMPLATE_ID = 'template_3r8z2af'; // Template pour contact simple
-const EMAILJS_QUOTE_TEMPLATE_ID = 'template_quote'; // Template pour demande de devis
+const EMAILJS_QUOTE_TEMPLATE_ID = 'template_3r8z2af'; // Template pour demande de devis
 const EMAILJS_PUBLIC_KEY = 'xZiaWwWG4X44LV4sB'; // À configurer dans EmailJS
 
 export interface ContactFormData {

@@ -33,14 +33,14 @@ const Contact = () => {
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Prêt à discuter de votre prochain projet ? N'hésitez pas à me contacter
           </p>
-          <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-orange-600 mx-auto mt-6"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto mt-6"></div>
         </div>
 
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12">
           {/* Contact Info */}
           <div className="space-y-8">
             <div>
-              <h3 className="text-2xl font-bold mb-6 text-orange-400">Parlons de votre projet</h3>
+              <h3 className="text-2xl font-bold mb-6 text-blue-400">Parlons de votre projet</h3>
               <p className="text-gray-300 text-lg leading-relaxed mb-8">
                 Que vous ayez besoin d'un ERP sur mesure, d'une application mobile innovante 
                 ou d'intégrer l'IA dans vos processus, je suis là pour vous accompagner.
@@ -50,20 +50,20 @@ const Contact = () => {
             {/* Contact Methods */}
             <div className="space-y-6">
               <div className="flex items-center">
-                <div className="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center mr-4 border border-orange-500/30">
-                  <Mail className="text-orange-400" size={24} />
+                <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mr-4 border border-blue-500/30">
+                  <Mail className="text-blue-400" size={24} />
                 </div>
                 <div>
                   <div className="font-semibold">Email</div>
-                  <a href="mailto:teranhenryc@gmail.com" className="text-gray-300 hover:text-orange-400 transition-colors">
+                  <a href="mailto:teranhenryc@gmail.com" className="text-gray-300 hover:text-blue-400 transition-colors">
                     teranhenryc@gmail.com
                   </a>
                 </div>
               </div>
 
               <div className="flex items-center">
-                <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mr-4 border border-blue-500/30">
-                  <MapPin className="text-blue-400" size={24} />
+                <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mr-4 border border-green-500/30">
+                  <MapPin className="text-green-400" size={24} />
                 </div>
                 <div>
                   <div className="font-semibold">Localisation</div>
@@ -72,8 +72,8 @@ const Contact = () => {
               </div>
 
               <div className="flex items-center">
-                <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mr-4 border border-green-500/30">
-                  <Clock className="text-green-400" size={24} />
+                <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mr-4 border border-purple-500/30">
+                  <Clock className="text-purple-400" size={24} />
                 </div>
                 <div>
                   <div className="font-semibold">Disponibilité</div>
@@ -104,9 +104,9 @@ const Contact = () => {
                 </a>
                 <a 
                   href="mailto:teranhenryc@gmail.com" 
-                  className="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center border border-orange-500/30 hover:bg-orange-500/30 transition-colors"
+                  className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center border border-blue-500/30 hover:bg-blue-500/30 transition-colors"
                 >
-                  <Mail className="text-orange-400" size={24} />
+                  <Mail className="text-blue-400" size={24} />
                 </a>
               </div>
             </div>
@@ -127,7 +127,7 @@ const Contact = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-white placeholder-gray-400"
+                  className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-white placeholder-gray-400"
                   placeholder="Votre nom"
                   required
                 />
@@ -143,7 +143,7 @@ const Contact = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-white placeholder-gray-400"
+                  className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-white placeholder-gray-400"
                   placeholder="votre@email.com"
                   required
                 />
@@ -159,7 +159,7 @@ const Contact = () => {
                   value={formData.message}
                   onChange={handleChange}
                   rows={6}
-                  className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors text-white placeholder-gray-400 resize-none"
+                  className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-white placeholder-gray-400 resize-none"
                   placeholder="Décrivez votre projet..."
                   required
                 />
@@ -167,7 +167,7 @@ const Contact = () => {
 
               <button
                 type="submit"
-                className="w-full bg-orange-500 hover:bg-orange-600 px-8 py-4 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
+                className="w-full bg-blue-500 hover:bg-blue-600 px-8 py-4 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
               >
                 Envoyer le message
                 <Send size={20} />
@@ -185,14 +185,14 @@ const Contact = () => {
 
         {/* Quick Contact */}
         <div className="max-w-2xl mx-auto mt-16 text-center">
-          <div className="bg-gradient-to-r from-orange-500/10 to-orange-600/10 p-6 rounded-2xl border border-orange-500/30">
+          <div className="bg-gradient-to-r from-blue-500/10 to-blue-600/10 p-6 rounded-2xl border border-blue-500/30">
             <h3 className="text-xl font-bold mb-4">Besoin d'un devis rapide ?</h3>
             <p className="text-gray-300 mb-6">
               Contactez-moi directement pour une estimation personnalisée de votre projet
             </p>
             <a 
               href="mailto:teranhenryc@gmail.com?subject=Demande de devis&body=Bonjour Henry, j'aimerais discuter d'un projet..."
-              className="inline-block bg-orange-500 hover:bg-orange-600 px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
+              className="inline-block bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
             >
               Demander un devis
             </a>

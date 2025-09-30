@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <div className="text-2xl font-bold text-orange-400 mb-4">
+            <div className="text-2xl font-bold text-blue-400 mb-4">
               Henry Teran Corrales
             </div>
             <p className="text-gray-300 mb-4">
@@ -36,9 +36,9 @@ const Footer = () => {
               </a>
               <a 
                 href="mailto:teranhenryc@gmail.com" 
-                className="w-10 h-10 bg-orange-500/20 rounded-lg flex items-center justify-center border border-orange-500/30 hover:bg-orange-500/30 transition-colors"
+                className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center border border-blue-500/30 hover:bg-blue-500/30 transition-colors"
               >
-                <Mail className="text-orange-400" size={20} />
+                <Mail className="text-blue-400" size={20} />
               </a>
             </div>
           </div>
@@ -49,31 +49,31 @@ const Footer = () => {
             <div className="space-y-2">
               <button 
                 onClick={() => document.getElementById('accueil')?.scrollIntoView({ behavior: 'smooth' })}
-                className="block text-gray-300 hover:text-orange-400 transition-colors"
+                className="block text-gray-300 hover:text-blue-400 transition-colors"
               >
                 Accueil
               </button>
               <button 
                 onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-                className="block text-gray-300 hover:text-orange-400 transition-colors"
+                className="block text-gray-300 hover:text-blue-400 transition-colors"
               >
                 À propos
               </button>
               <button 
                 onClick={() => document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' })}
-                className="block text-gray-300 hover:text-orange-400 transition-colors"
+                className="block text-gray-300 hover:text-blue-400 transition-colors"
               >
                 Compétences
               </button>
               <button 
                 onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-                className="block text-gray-300 hover:text-orange-400 transition-colors"
+                className="block text-gray-300 hover:text-blue-400 transition-colors"
               >
                 Projets
               </button>
               <button 
                 onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-                className="block text-gray-300 hover:text-orange-400 transition-colors"
+                className="block text-gray-300 hover:text-blue-400 transition-colors"
               >
                 Services
               </button>
@@ -85,10 +85,10 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Contact</h4>
             <div className="space-y-3">
               <div className="flex items-center">
-                <Mail className="text-orange-400 mr-3" size={18} />
+                <Mail className="text-blue-400 mr-3" size={18} />
                 <a 
                   href="mailto:teranhenryc@gmail.com" 
-                  className="text-gray-300 hover:text-orange-400 transition-colors"
+                  className="text-gray-300 hover:text-blue-400 transition-colors"
                 >
                   teranhenryc@gmail.com
                 </a>

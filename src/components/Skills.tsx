@@ -59,25 +59,25 @@ const Skills = () => {
   };
 
   return (
-    <section id="skills" className="py-20 bg-slate-950">
+    <section id="skills" className="py-20 bg-app">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+          <h2 className="text-4xl lg:text-5xl font-display font-bold mb-6" style={{color:'var(--text)'}}>
             Compétences Techniques
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-[var(--muted)] max-w-3xl mx-auto">
             Une expertise diversifiée pour répondre à tous vos besoins technologiques
           </p>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto mt-6"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-[var(--primary)] to-[var(--primary)] mx-auto mt-6"></div>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {skillCategories.map((category, index) => {
             const Icon = category.icon;
             return (
-              <div 
+              <div
                 key={category.title}
-                className="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl border border-slate-700 hover:border-slate-600 transition-all duration-300 group hover:transform hover:scale-[1.02]"
+                className="card transition-all duration-300 group hover:transform hover:scale-[1.02]"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className={`w-16 h-16 rounded-xl border-2 ${getColorClasses(category.color)} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
@@ -85,13 +85,13 @@ const Skills = () => {
                 </div>
                 
                 <h3 className="text-2xl font-bold mb-4">{category.title}</h3>
-                <p className="text-gray-300 mb-6 leading-relaxed">{category.description}</p>
-                
+                <p className="text-[var(--muted)] mb-6 leading-relaxed">{category.description}</p>
+
                 <div className="space-y-3">
                   {category.skills.map((skill) => (
                     <div key={skill} className="flex items-center">
                       <div className={`w-2 h-2 rounded-full bg-${category.color}-400 mr-3`}></div>
-                      <span className="text-gray-300">{skill}</span>
+                      <span className="text-[var(--muted)]">{skill}</span>
                     </div>
                   ))}
                 </div>
@@ -100,14 +100,13 @@ const Skills = () => {
           })}
         </div>
 
-        {/* Additional Skills */}
         <div className="text-center">
-          <h3 className="text-2xl font-semibold mb-8 text-blue-400">Technologies supplémentaires</h3>
+          <h3 className="text-2xl font-semibold mb-8 text-[var(--primary)]">Technologies supplémentaires</h3>
           <div className="flex flex-wrap justify-center gap-4">
             {['Firebase', 'Supabase', 'Redis', 'GraphQL', 'WebSockets', 'Microservices', 'Cloud Computing', 'API Design'].map((tech) => (
-              <span 
+              <span
                 key={tech}
-                className="px-4 py-2 bg-slate-800 border border-slate-600 rounded-full text-gray-300 hover:border-blue-500/50 transition-colors"
+                className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-[var(--muted)] hover:border-[var(--primary)]/50 transition-colors"
               >
                 {tech}
               </span>

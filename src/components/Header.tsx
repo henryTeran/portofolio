@@ -1,90 +1,61 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from './LanguageSwitcher';
+import ThemeToggle from './ThemeToggle';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMenuOpen(false);
-    }
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    setIsMenuOpen(false);
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-slate-950/95 backdrop-blur-sm shadow-lg' : 'bg-transparent'
-    }`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-[var(--bg)]/95 backdrop-blur-sm shadow-lg' : 'bg-transparent'}`}>
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <div className="text-xl font-bold text-blue-400">
+          <div className="text-xl font-display font-bold text-[var(--text)]">
             Henry Teran
           </div>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
-            <button onClick={() => scrollToSection('accueil')} className="hover:text-blue-400 transition-colors">
-              Accueil
-            </button>
-            <button onClick={() => scrollToSection('about')} className="hover:text-blue-400 transition-colors">
-              À propos
-            </button>
-            <button onClick={() => scrollToSection('skills')} className="hover:text-blue-400 transition-colors">
-              Compétences
-            </button>
-            <button onClick={() => scrollToSection('projects')} className="hover:text-blue-400 transition-colors">
-              Projets
-            </button>
-            <button onClick={() => scrollToSection('services')} className="hover:text-blue-400 transition-colors">
-              Services
-            </button>
-            <button onClick={() => scrollToSection('contact')} className="bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded-full transition-colors">
-              Contact
-            </button>
+          <div className="hidden md:flex items-center gap-6 text-[var(--muted)]">
+            <button onClick={() => scrollTo('accueil')} className="hover:text-[var(--primary)]">{t('nav.home')}</button>
+            <button onClick={() => scrollTo('about')} className="hover:text-[var(--primary)]">{t('nav.about')}</button>
+            <button onClick={() => scrollTo('skills')} className="hover:text-[var(--primary)]">{t('nav.skills')}</button>
+            <button onClick={() => scrollTo('projects')} className="hover:text-[var(--primary)]">{t('nav.projects')}</button>
+            <button onClick={() => scrollTo('services')} className="hover:text-[var(--primary)]">{t('nav.services')}</button>
+            <button onClick={() => scrollTo('contact')} className="btn">{t('nav.contact')}</button>
+            <LanguageSwitcher/>
+            <ThemeToggle/>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button 
-            className="md:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {isMenuOpen ? <X size={24}/> : <Menu size={24}/>}
           </button>
         </div>
 
-        {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-slate-950/95 backdrop-blur-sm border-t border-slate-800">
-            <div className="flex flex-col p-4 space-y-4">
-              <button onClick={() => scrollToSection('accueil')} className="text-left hover:text-blue-400 transition-colors py-2">
-                Accueil
-              </button>
-              <button onClick={() => scrollToSection('about')} className="text-left hover:text-blue-400 transition-colors py-2">
-                À propos
-              </button>
-              <button onClick={() => scrollToSection('skills')} className="text-left hover:text-blue-400 transition-colors py-2">
-                Compétences
-              </button>
-              <button onClick={() => scrollToSection('projects')} className="text-left hover:text-blue-400 transition-colors py-2">
-                Projets
-              </button>
-              <button onClick={() => scrollToSection('services')} className="text-left hover:text-blue-400 transition-colors py-2">
-                Services
-              </button>
-              <button onClick={() => scrollToSection('contact')} className="text-left bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-full transition-colors">
-                Contact
-              </button>
+          <div className="md:hidden absolute top-full left-0 right-0 bg-[var(--bg)]/95 backdrop-blur-sm border-t border-white/10">
+            <div className="flex flex-col p-4 space-y-3">
+              <button onClick={() => scrollTo('accueil')} className="text-left hover:text-[var(--primary)] py-2">{t('nav.home')}</button>
+              <button onClick={() => scrollTo('about')} className="text-left hover:text-[var(--primary)] py-2">{t('nav.about')}</button>
+              <button onClick={() => scrollTo('skills')} className="text-left hover:text-[var(--primary)] py-2">{t('nav.skills')}</button>
+              <button onClick={() => scrollTo('projects')} className="text-left hover:text-[var(--primary)] py-2">{t('nav.projects')}</button>
+              <button onClick={() => scrollTo('services')} className="text-left hover:text-[var(--primary)] py-2">{t('nav.services')}</button>
+              <div className="flex items-center justify-between">
+                <LanguageSwitcher/><ThemeToggle/>
+              </div>
+              <button onClick={() => scrollTo('contact')} className="text-left btn mt-2">{t('nav.contact')}</button>
             </div>
           </div>
         )}

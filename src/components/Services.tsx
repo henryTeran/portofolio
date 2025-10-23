@@ -86,25 +86,25 @@ const Services = () => {
   };
 
   return (
-    <section id="services" className="py-20 bg-slate-900/50">
+    <section id="services" className="py-20 bg-app">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+          <h2 className="text-4xl lg:text-5xl font-display font-bold mb-6" style={{color:'var(--text)'}}>
             Services Proposés
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-[var(--muted)] max-w-3xl mx-auto">
             Des solutions complètes pour transformer vos idées en réalité numérique
           </p>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto mt-6"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-[var(--primary)] to-[var(--primary)] mx-auto mt-6"></div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 mb-16">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
-              <div 
+              <div
                 key={service.title}
-                className="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl border border-slate-700 hover:border-slate-600 transition-all duration-300 group hover:transform hover:scale-[1.02]"
+                className="card transition-all duration-300 group hover:transform hover:scale-[1.02]"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className={`w-16 h-16 rounded-xl border-2 ${getColorClasses(service.color)} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
@@ -112,14 +112,14 @@ const Services = () => {
                 </div>
                 
                 <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
-                <p className="text-gray-300 mb-6 leading-relaxed">{service.description}</p>
-                
+                <p className="text-[var(--muted)] mb-6 leading-relaxed">{service.description}</p>
+
                 <div className="space-y-3">
-                  <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Inclus :</h4>
+                  <h4 className="text-sm font-semibold text-[var(--muted)] uppercase tracking-wider">Inclus :</h4>
                   {service.includes.map((item) => (
                     <div key={item} className="flex items-center">
                       <div className={`w-2 h-2 rounded-full bg-${service.color}-400 mr-3`}></div>
-                      <span className="text-gray-300">{item}</span>
+                      <span className="text-[var(--muted)]">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -128,7 +128,6 @@ const Services = () => {
           })}
         </div>
 
-        {/* Process */}
         <div className="max-w-4xl mx-auto">
           <h3 className="text-3xl font-bold text-center mb-12">Mon processus de travail</h3>
           <div className="grid md:grid-cols-4 gap-6">
@@ -139,11 +138,11 @@ const Services = () => {
               { step: '04', title: 'Livraison', desc: 'Déploiement et formation utilisateurs' }
             ].map((phase, index) => (
               <div key={phase.step} className="text-center group">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-lg group-hover:scale-110 transition-transform duration-300">
+                <div className="w-16 h-16 bg-gradient-to-br from-[var(--primary)] to-[var(--primary-600)] rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-lg text-white group-hover:scale-110 transition-transform duration-300">
                   {phase.step}
                 </div>
                 <h4 className="text-lg font-semibold mb-2">{phase.title}</h4>
-                <p className="text-gray-400 text-sm">{phase.desc}</p>
+                <p className="text-[var(--muted)] text-sm">{phase.desc}</p>
               </div>
             ))}
           </div>

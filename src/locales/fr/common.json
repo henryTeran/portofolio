@@ -1,0 +1,20 @@
+{
+  "nav.home":"Accueil",
+  "nav.about":"À propos",
+  "nav.skills":"Compétences",
+  "nav.projects":"Projets",
+  "nav.services":"Services",
+  "nav.pricing":"Tarifs",
+  "nav.contact":"Contact",
+  "hero.hi":"Bonjour, je suis",
+  "hero.role":"Développeur Full-Stack Freelance",
+  "hero.cta.work":"Travaillons ensemble",
+  "hero.cta.projects":"Voir mes projets",
+  "about.title":"À propos de moi",
+  "about.lead":"Ingénieur & Développeur Full-Stack",
+  "cta.quick.title":"Vous avez un projet en tête ?",
+  "cta.quick.btn":"Démarrer un projet",
+  "contact.title":"Contactez-moi",
+  "pricing.title":"Tarifs & Disponibilité",
+  "footer.rights":"Tous droits réservés."
+}

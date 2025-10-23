@@ -1,7 +1,9 @@
 import React from 'react';
 import { ExternalLink, Github, ArrowRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const Projects = () => {
+  const { t } = useTranslation();
   const projects = [
     {
       title: 'ZIGOMA ERP',
@@ -71,23 +73,23 @@ const Projects = () => {
   };
 
   return (
-    <section id="projects" className="py-20 bg-slate-950">
+    <section id="projects" className="py-20 bg-app">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-            Réalisations & Projets
+          <h2 className="text-4xl lg:text-5xl font-display font-bold mb-6" style={{color:'var(--text)'}}>
+            {t('nav.projects')}
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-[var(--muted)] max-w-3xl mx-auto">
             Découvrez mes projets les plus récents et les technologies utilisées
           </p>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto mt-6"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-[var(--primary)] to-[var(--primary)] mx-auto mt-6"></div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 mb-16">
           {projects.map((project, index) => (
-            <div 
+            <div
               key={project.title}
-              className="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl border border-slate-700 hover:border-slate-600 transition-all duration-300 group hover:transform hover:scale-[1.02]"
+              className="card transition-all duration-300 group hover:transform hover:scale-[1.02]"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Project Header */}
@@ -111,7 +113,7 @@ const Projects = () => {
                 </div>
               </div>
 
-              <p className="text-gray-300 mb-6 leading-relaxed">
+              <p className="text-[var(--muted)] mb-6 leading-relaxed">
                 {project.description}
               </p>
 
@@ -124,7 +126,7 @@ const Projects = () => {
                   {project.features.map((feature) => (
                     <div key={feature} className="flex items-center">
                       <div className={`w-2 h-2 rounded-full bg-${project.color}-400 mr-3`}></div>
-                      <span className="text-gray-300 text-sm">{feature}</span>
+                      <span className="text-[var(--muted)] text-sm">{feature}</span>
                     </div>
                   ))}
                 </div>
@@ -137,9 +139,9 @@ const Projects = () => {
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech) => (
-                    <span 
+                    <span
                       key={tech}
-                      className="px-3 py-1 bg-slate-700 text-gray-300 rounded-full text-sm border border-slate-600"
+                      className="px-3 py-1 bg-white/5 text-[var(--muted)] rounded-full text-sm border border-white/10"
                     >
                       {tech}
                     </span>
@@ -156,18 +158,17 @@ const Projects = () => {
           ))}
         </div>
 
-        {/* Call to Action */}
         <div className="text-center">
-          <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-8 rounded-2xl border border-slate-600 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold mb-4">Vous avez un projet en tête ?</h3>
-            <p className="text-gray-300 mb-6">
+          <div className="card max-w-2xl mx-auto">
+            <h3 className="text-2xl font-bold mb-4">{t('cta.quick.title')}</h3>
+            <p className="text-[var(--muted)] mb-6">
               Discutons de la façon dont je peux vous aider à le concrétiser
             </p>
-            <button 
+            <button
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-blue-500 hover:bg-blue-600 px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
+              className="btn"
             >
-              Démarrer un projet
+              {t('cta.quick.btn')}
             </button>
           </div>
         </div>

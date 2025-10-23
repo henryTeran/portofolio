@@ -1,0 +1,36 @@
+:root{
+  /* LIGHT */
+  --bg:#F9FAFB;
+  --card:#FFFFFF;
+  --text:#1F2937;
+  --muted:#6B7280;
+  --primary:#0EA5E9;      /* cyan-500 */
+  --primary-600:#0891B2;  /* cyan-600 */
+  --accent:#F97316;       /* orange-500 */
+}
+:root.dark{
+  /* DARK */
+  --bg:#0B1220;           /* bleu nuit */
+  --card:#101827;         /* slate-900 */
+  --text:#E5E7EB;
+  --muted:#94A3B8;
+  --primary:#22D3EE;      /* cyan-400 */
+  --primary-600:#0891B2;
+  --accent:#F59E0B;       /* amber-500 */
+}
+
+/* utilitaires */
+.bg-app{ background:var(--bg); color:var(--text) }
+.card{
+  background:color-mix(in oklab, var(--card) 92%, transparent);
+  border:1px solid color-mix(in oklab, var(--text) 8%, transparent);
+  border-radius:1.25rem; padding:1.25rem;
+  box-shadow:0 6px 24px rgba(0,0,0,.15); backdrop-filter:blur(6px);
+}
+.btn{
+  background:linear-gradient(135deg, var(--primary) 0%, #6366F1 100%);
+  color:white; border-radius:1rem; padding:.75rem 1.25rem; display:inline-flex; gap:.5rem; align-items:center;
+  transition:transform .15s ease, filter .15s ease;
+}
+.btn:hover{ transform:translateY(-1px); filter:saturate(1.05) }
+.kbd{ padding:.25rem .5rem; border-radius:.5rem; background:rgba(127,127,127,.12); border:1px solid rgba(127,127,127,.22); font-size:.75rem }

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+import './i18n';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -11,18 +12,20 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
-      <Header />
-      <main>
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Services />
-        <Pricing />
-        <Contact />
-      </main>
-      <Footer />
+    <div className="min-h-screen bg-app">
+      <Suspense fallback={<div className="container py-20">Loading…</div>}>
+        <Header />
+        <main>
+          <Hero />
+          <About />
+          <Skills />
+          <Projects />
+          <Services />
+          <Pricing />
+          <Contact />
+        </main>
+        <Footer />
+      </Suspense>
     </div>
   );
 }

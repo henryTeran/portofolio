@@ -1,254 +1,297 @@
 {
-  "nav.home": "Accueil",
-  "nav.about": "À propos",
-  "nav.skills": "Compétences",
-  "nav.projects": "Projets",
-  "nav.services": "Services",
-  "nav.pricing": "Tarifs",
-  "nav.contact": "Contact",
-  
-  "hero.hi": "Bonjour, je suis",
-  "hero.role": "Développeur Full-Stack Freelance",
-  "hero.specialization": "Spécialisé en",
-  "hero.erp": "ERP",
-  "hero.medical": "plateformes médicales",
-  "hero.ai": "IA",
-  "hero.ecommerce": "e-commerce",
-  "hero.cta.work": "Travaillons ensemble",
-  "hero.cta.projects": "Voir mes projets",
-  "hero.stats.projects": "Projets réalisés",
-  "hero.stats.technologies": "Technologies",
-  "hero.stats.availability": "Disponibilité",
-  "hero.card.frontend": "Frontend",
-  "hero.card.frontend.tech": "Angular, React, Tailwind",
-  "hero.card.backend": "Backend",
-  "hero.card.backend.tech": "Python/Flask, Node.js",
-  "hero.card.mobile": "Mobile",
-  "hero.card.mobile.tech": "Ionic, PWA",
-  "hero.card.intelligence": "Intelligence",
-  "hero.card.ai.tech": "OpenAI, RPA",
-
-  "about.title": "À propos de moi",
-  "about.lead": "Ingénieur & Développeur Full-Stack",
-  "about.p1": "Fort d'une formation d'ingénieur en microtechnique et d'une expertise approfondie en développement full-stack, je me spécialise dans la création de solutions technologiques innovantes et performantes.",
-  "about.p2": "Mon approche combine rigueur technique, créativité et une communication multilingue pour livrer des projets qui dépassent les attentes de mes clients.",
-  "about.tjm": "TJM",
-  "about.tjm.value": "450-500€",
-  "about.availability": "Disponibilité",
-  "about.availability.value": "Immédiat",
-  "about.features.rigor.title": "Rigueur & Créativité",
-  "about.features.rigor.desc": "Approche méthodique combinée à une pensée innovante pour des solutions sur mesure.",
-  "about.features.autonomy.title": "Autonomie",
-  "about.features.autonomy.desc": "Capacité à gérer des projets complexes de A à Z en toute indépendance.",
-  "about.features.communication.title": "Communication Multilingue",
-  "about.features.communication.desc": "Français, Anglais, Espagnol, Italien - pour une collaboration internationale.",
-  "about.features.remote.title": "Télétravail & Hybride",
-  "about.features.remote.desc": "Flexible sur Genève/France avec possibilité de déplacements.",
-
-  "skills.title": "Compétences Techniques",
-  "skills.subtitle": "Une expertise diversifiée pour répondre à tous vos besoins technologiques",
-  "skills.frontend.title": "Frontend",
-  "skills.frontend.desc": "Interfaces utilisateur modernes et performantes",
-  "skills.backend.title": "Backend",
-  "skills.backend.desc": "Architectures serveur robustes et scalables",
-  "skills.mobile.title": "Mobile",
-  "skills.mobile.desc": "Applications mobiles cross-platform",
-  "skills.ai.title": "IA & Automatisation",
-  "skills.ai.desc": "Intelligence artificielle et automatisation des processus",
-  "skills.database.title": "Bases de données",
-  "skills.database.desc": "Gestion et optimisation des données",
-  "skills.devops.title": "DevOps",
-  "skills.devops.desc": "Déploiement et intégration continue",
-  "skills.extra.title": "Technologies supplémentaires",
-
-  "services.title": "Services Proposés",
-  "services.subtitle": "Des solutions complètes pour transformer vos idées en réalité numérique",
-  "services.includesTitle": "Inclus :",
-  "services.fullstack.title": "Développement Full-Stack Sur Mesure",
-  "services.fullstack.desc": "Création d'applications web complètes avec architectures modernes, API REST et interfaces utilisateur performantes.",
-  "services.fullstack.includes": ["Architecture technique complète", "Frontend & Backend intégrés", "API REST/GraphQL", "Base de données optimisée", "Tests automatisés", "Documentation technique"],
-  "services.erp.title": "Création d'ERP & Solutions Métiers",
-  "services.erp.desc": "Développement de systèmes de gestion d'entreprise modulaires et évolutifs adaptés à vos processus spécifiques.",
-  "services.erp.includes": ["Analyse des besoins métiers", "Modules personnalisés", "Intégration CRM/Facturation", "Workflows automatisés", "Tableaux de bord analytics", "Formation utilisateurs"],
-  "services.mobile.title": "Applications Web & Mobiles",
-  "services.mobile.desc": "Développement d'applications cross-platform avec des technologies modernes pour une expérience utilisateur optimale.",
-  "services.mobile.includes": ["Applications cross-platform", "PWA (Progressive Web App)", "Interface responsive", "Fonctionnalités offline", "Notifications push", "Store deployment"],
-  "services.ai.title": "Intégration IA & Automatisation",
-  "services.ai.desc": "Implémentation de solutions d'intelligence artificielle et d'automatisation pour optimiser vos processus.",
-  "services.ai.includes": ["Chatbots intelligents", "Automatisation RPA", "Analyse de données", "Machine Learning", "Intégration OpenAI", "Optimisation processus"],
-  "services.ecommerce.title": "E-commerce & Plateformes SaaS",
-  "services.ecommerce.desc": "Création de plateformes e-commerce et SaaS avec paiements sécurisés et gestion utilisateurs avancée.",
-  "services.ecommerce.includes": ["Catalogue produits avancé", "Paiements sécurisés", "Gestion commandes", "Système d'abonnements", "Analytics e-commerce", "Multi-tenant SaaS"],
-  "services.process.title": "Mon processus de travail",
-  "services.process.step1.title": "Analyse",
-  "services.process.step1.desc": "Étude approfondie de vos besoins",
-  "services.process.step2.title": "Conception",
-  "services.process.step2.desc": "Architecture et design de la solution",
-  "services.process.step3.title": "Développement",
-  "services.process.step3.desc": "Implémentation avec tests continus",
-  "services.process.step4.title": "Livraison",
-  "services.process.step4.desc": "Déploiement et formation utilisateurs",
-
-  "projects.subtitle": "Découvrez mes projets les plus récents et les technologies utilisées",
-  "projects.features": "Fonctionnalités clés",
-  "projects.technologies": "Technologies utilisées",
-  "projects.learnmore": "En savoir plus",
-  "projects.cta.subtitle": "Discutons de la façon dont je peux vous aider à le concrétiser",
-  
-  "projects.zigoma.title": "ZIGOMA ERP",
-  "projects.zigoma.description": "ERP modulaire complet avec CRM intégré, système de facturation avancé et intelligence artificielle pour l'optimisation des processus métiers.",
-  "projects.zigoma.category": "ERP",
-  "projects.zigoma.period": "2025/05 – 06/2025",
-  "projects.zigoma.features": ["CRM intégré", "Facturation automatisée", "IA intégrée", "Modules personnalisables"],
-  "projects.wellsync.title": "WellSync",
-  "projects.wellsync.description": "Application mobile de bien-être avec IA intégrée, utilisant Firebase pour la synchronisation en temps réel et Ionic pour l'expérience mobile.",
-  "projects.wellsync.category": "Mobile & IA",
-  "projects.wellsync.period": "03/2025 – 05/2025",
-  "projects.wellsync.features": ["IA personnalisée", "Sync temps réel", "Interface intuitive", "Analytics avancés"],
-  "projects.healthsync.title": "HealthSync",
-  "projects.healthsync.description": "Plateforme médicale complète connectant patients et médecins avec gestion des consultations, dossiers médicaux et télémédecine.",
-  "projects.healthsync.category": "Santé",
-  "projects.healthsync.period": "01/2025 – 03/2025",
-  "projects.healthsync.features": ["Télémédecine", "Dossiers sécurisés", "Planning intégré", "Notifications"],
-  "projects.beautybooker.title": "BeautyBooker",
-  "projects.beautybooker.description": "Plateforme de réservation pour soins esthétiques avec gestion des créneaux, paiements en ligne et système de fidélité client.",
-  "projects.beautybooker.category": "E-commerce",
-  "projects.beautybooker.period": "09/2024 – 12/2024",
-  "projects.beautybooker.features": ["Réservations en ligne", "Paiements sécurisés", "Programme fidélité", "Interface responsive"],
-  "projects.selfservicedesk.title": "SelfServiceDesk",
-  "projects.selfservicedesk.description": "Application mobile de commande rapide pour restaurants avec interface intuitive, gestion des stocks et analytics en temps réel.",
-  "projects.selfservicedesk.category": "Mobile",
-  "projects.selfservicedesk.period": "05/2024 – 08/2024",
-  "projects.selfservicedesk.features": ["Commandes rapides", "Gestion stocks", "Analytics", "Mode hors-ligne"],
-  "projects.fromdeepestrecord.title": "FromDeepestRecord",
-  "projects.fromdeepestrecord.description": "E-commerce musical multilingue avec catalogue avancé, recommandations IA et système de streaming intégré.",
-  "projects.fromdeepestrecord.category": "E-commerce",
-  "projects.fromdeepestrecord.period": "01/2024 – 05/2024",
-  "projects.fromdeepestrecord.features": ["Multilingue", "Recommandations IA", "Streaming intégré", "Gestion catalogue"],
-
-  "pricing.title": "Tarifs & Disponibilité",
-  "pricing.subtitle": "Des tarifs transparents pour une collaboration sereine",
-  "pricing.daily.title": "Tarif Journalier",
-  "pricing.daily.value": "450-500€",
-  "pricing.daily.per": "par jour",
-  "pricing.daily.item1": "Développement full-stack complet",
-  "pricing.daily.item2": "Architecture technique & conseil",
-  "pricing.daily.item3": "Tests & documentation inclus",
-  "pricing.daily.item4": "Support post-livraison",
-  "pricing.daily.item5": "Formations utilisateurs",
-  "pricing.availability.title": "Disponibilité",
-  "pricing.availability.value": "Immédiate",
-  "pricing.availability.ready": "Prêt à démarrer",
-  "pricing.work.title": "Modalités de travail",
-  "pricing.work.desc": "Télétravail ou hybride (Genève/France)",
-  "pricing.flexible.title": "Horaires flexibles",
-  "pricing.flexible.desc": "Adaptation à vos fuseaux horaires",
-  "pricing.status.label": "STATUT ACTUEL",
-  "pricing.status.value": "Disponible immédiatement",
-  "pricing.missions.short.title": "Missions courtes",
-  "pricing.missions.short.desc": "À partir de 3 jours pour des interventions ponctuelles",
-  "pricing.missions.medium.title": "Projets moyens",
-  "pricing.missions.medium.desc": "1-6 mois pour des développements complets",
-  "pricing.missions.long.title": "Accompagnement long terme",
-  "pricing.missions.long.desc": "Maintenance et évolutions continues",
-
-  "contact.title": "Contactez-moi",
-  "contact.subtitle": "Prêt à discuter de votre prochain projet ? N'hésitez pas à me contacter",
-  "contact.left.title": "Parlons de votre projet",
-  "contact.left.desc": "Que vous ayez besoin d'un ERP sur mesure, d'une application mobile innovante ou d'intégrer l'IA dans vos processus, je suis là pour vous accompagner.",
-  "contact.email.label": "Email",
-  "contact.location.label": "Localisation",
-  "contact.location.value": "Genève/France - Télétravail/Hybride",
-  "contact.availability.label": "Disponibilité",
-  "contact.availability.value": "Immédiate - Flexible",
-  "contact.findme": "Retrouvez-moi sur",
-  "contact.form.title": "Envoyez-moi un message",
-  "contact.form.nameLabel": "Nom complet",
-  "contact.form.namePlaceholder": "Votre nom",
-  "contact.form.emailLabel": "Adresse email",
-  "contact.form.emailPlaceholder": "votre@email.com",
-  "contact.form.messageLabel": "Message",
-  "contact.form.messagePlaceholder": "Décrivez votre projet...",
-  "contact.form.success": "Message envoyé avec succès ! Je vous recontacterai sous 24h.",
-  "contact.form.error": "Erreur lors de l'envoi. Veuillez réessayer ou me contacter directement.",
-  "contact.form.sending": "Envoi en cours...",
-  "contact.form.send": "Envoyer le message",
-  "contact.response.label": "Temps de réponse moyen",
-  "contact.response.value": "< 24 heures",
-  "contact.quote.title": "Besoin d'un devis rapide ?",
-  "contact.quote.desc": "Utilisez notre formulaire détaillé pour une estimation personnalisée",
-  "contact.quote.btn": "Demander un devis",
-
-  "quote.title": "Demande de devis personnalisé",
-  "quote.step": "Étape",
-  "quote.of": "sur",
-  "quote.step1": "Informations",
-  "quote.step2": "Projet",
-  "quote.step3": "Planning",
-  "quote.step4": "Finalisation",
-  "quote.info.title": "Vos informations",
-  "quote.info.nameLabel": "Nom complet",
-  "quote.info.namePlaceholder": "Votre nom",
-  "quote.info.emailLabel": "Email",
-  "quote.info.emailPlaceholder": "votre@email.com",
-  "quote.info.phoneLabel": "Téléphone",
-  "quote.info.phonePlaceholder": "+33 6 12 34 56 78",
-  "quote.info.companyLabel": "Entreprise",
-  "quote.info.companyPlaceholder": "Nom de votre entreprise",
-  "quote.project.title": "Détails du projet",
-  "quote.project.typeLabel": "Type de projet",
-  "quote.project.typePlaceholder": "Sélectionnez un type",
-  "quote.project.types": ["Site web vitrine", "Application web", "Application mobile", "E-commerce", "ERP / CRM", "Plateforme SaaS", "Intégration IA", "Automatisation RPA", "API / Backend", "Autre"],
-  "quote.project.descLabel": "Description du projet",
-  "quote.project.descPlaceholder": "Décrivez votre projet en détail...",
-  "quote.project.featuresLabel": "Fonctionnalités souhaitées",
-  "quote.project.features": ["Authentification utilisateurs", "Paiements en ligne", "Gestion de contenu (CMS)", "Tableau de bord admin", "Notifications push", "Chat en temps réel", "Géolocalisation", "Intégration réseaux sociaux", "Analytics avancés", "Mode hors-ligne", "Multi-langues", "API REST"],
-  "quote.project.techLabel": "Technologies préférées",
-  "quote.project.technologies": ["React", "Angular", "Vue.js", "Node.js", "Python/Flask", "Firebase", "MongoDB", "PostgreSQL", "Ionic", "React Native", "Tailwind CSS", "TypeScript"],
-  "quote.planning.title": "Planning et budget",
-  "quote.planning.timelineLabel": "Délai souhaité",
-  "quote.planning.timelinePlaceholder": "Sélectionnez un délai",
-  "quote.planning.timelines": ["Moins d'1 mois", "1-3 mois", "3-6 mois", "6-12 mois", "Plus d'1 an", "Flexible"],
-  "quote.planning.budgetLabel": "Budget estimé",
-  "quote.planning.budgetPlaceholder": "Sélectionnez un budget",
-  "quote.planning.budgets": ["Moins de 5 000€", "5 000€ - 10 000€", "10 000€ - 20 000€", "20 000€ - 50 000€", "Plus de 50 000€", "À discuter"],
-  "quote.planning.urgencyLabel": "Urgence du projet",
-  "quote.planning.urgency.low": "Faible",
-  "quote.planning.urgency.medium": "Moyenne",
-  "quote.planning.urgency.high": "Élevée",
-  "quote.planning.additionalLabel": "Services supplémentaires",
-  "quote.planning.design": "Design graphique / UI/UX",
-  "quote.planning.hosting": "Hébergement et nom de domaine",
-  "quote.planning.maintenance": "Maintenance et support",
-  "quote.planning.training": "Formation utilisateurs",
-  "quote.final.title": "Informations supplémentaires",
-  "quote.final.additionalLabel": "Informations complémentaires",
-  "quote.final.additionalPlaceholder": "Ajoutez toute information utile pour votre projet...",
-  "quote.final.summary": "Résumé de votre demande",
-  "quote.final.project": "Projet :",
-  "quote.final.budget": "Budget :",
-  "quote.final.timeline": "Délai :",
-  "quote.final.features": "Fonctionnalités :",
-  "quote.final.featuresSelected": "sélectionnées",
-  "quote.final.technologies": "Technologies :",
-  "quote.final.techSelected": "sélectionnées",
-  "quote.success": "Demande envoyée avec succès ! Je vous recontacterai sous 24h.",
-  "quote.error": "Erreur lors de l'envoi. Veuillez réessayer ou me contacter directement.",
-  "quote.btn.prev": "Précédent",
-  "quote.btn.next": "Suivant",
-  "quote.btn.sending": "Envoi en cours...",
-  "quote.btn.send": "Envoyer la demande",
-
-  "footer.brand.tagline": "Développeur Full-Stack Freelance spécialisé en solutions innovantes pour l'entreprise moderne.",
-  "footer.nav.title": "Navigation",
-  "footer.contact.title": "Contact",
-  "footer.contact.available": "Disponible immédiatement",
-  "footer.contact.tjm": "TJM : 450-500€ / jour",
-  "footer.contact.location": "Télétravail ou hybride (Genève/France)",
-  "footer.rights": "Tous droits réservés.",
-  "footer.made": "Fait avec",
-  "footer.coffee": "et beaucoup de café",
-
-  "cta.quick.title": "Vous avez un projet en tête ?",
-  "cta.quick.btn": "Démarrer un projet"
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "skills": "Compétences",
+    "projects": "Projets",
+    "services": "Services",
+    "contact": "Contact"
+  },
+  "hero": {
+    "hi": "Bonjour, je suis",
+    "name": "Henry Teran Corrales",
+    "role": "Développeur Full-Stack Freelance",
+    "specialization": "Spécialisé en",
+    "erp": "ERP sur mesure",
+    "medical": "plateformes médicales",
+    "ai": "solutions IA",
+    "ecommerce": "et sites e-commerce",
+    "cta": {
+      "work": "Travaillons ensemble",
+      "projects": "Voir mes projets"
+    },
+    "stats": {
+      "projects": "Projets complétés",
+      "technologies": "Technologies maîtrisées",
+      "availability": "Disponibilité"
+    },
+    "card": {
+      "frontend": {
+        "title": "Frontend",
+        "subtitle": "Angular, React, Tailwind"
+      },
+      "backend": {
+        "title": "Backend",
+        "subtitle": "Python/Flask, Node.js"
+      },
+      "mobile": {
+        "title": "Mobile",
+        "subtitle": "Ionic, PWA"
+      },
+      "intelligence": {
+        "title": "Intelligence",
+        "subtitle": "OpenAI, RPA"
+      }
+    }
+  },
+  "about": {
+    "title": "À propos de moi",
+    "subtitle": "Ingénieur & Développeur Full-Stack",
+    "p1": "Fort d'une formation d'ingénieur en microtechnique et d'une expertise approfondie en développement full-stack, je me spécialise dans la création de solutions technologiques innovantes et performantes.",
+    "p2": "Mon approche combine rigueur technique, créativité et une communication multilingue pour livrer des projets qui dépassent les attentes de mes clients.",
+    "features": {
+      "rigor": {
+        "title": "Rigueur & Créativité",
+        "desc": "Approche méthodique combinée à une pensée innovante pour des solutions sur mesure."
+      },
+      "autonomy": {
+        "title": "Autonomie",
+        "desc": "Capacité à gérer des projets complexes de A à Z en toute indépendance."
+      },
+      "communication": {
+        "title": "Communication Multilingue",
+        "desc": "Français, Anglais, Espagnol, Italien - pour une collaboration internationale."
+      },
+      "remote": {
+        "title": "Télétravail & Hybride",
+        "desc": "Flexible sur Genève/France avec possibilité de déplacements."
+      }
+    }
+  },
+  "skills": {
+    "title": "Compétences Techniques",
+    "subtitle": "Une expertise diversifiée pour répondre à tous vos besoins technologiques",
+    "extra": {
+      "title": "Technologies supplémentaires"
+    },
+    "frontend": {
+      "title": "Frontend",
+      "desc": "Interfaces utilisateur modernes et performantes"
+    },
+    "backend": {
+      "title": "Backend",
+      "desc": "Architectures serveur robustes et scalables"
+    },
+    "mobile": {
+      "title": "Mobile",
+      "desc": "Applications mobiles cross-platform"
+    },
+    "ai": {
+      "title": "IA & Automatisation",
+      "desc": "Intelligence artificielle et automatisation des processus"
+    },
+    "database": {
+      "title": "Bases de données",
+      "desc": "Gestion et optimisation des données"
+    },
+    "devops": {
+      "title": "DevOps",
+      "desc": "Déploiement et intégration continue"
+    }
+  },
+  "projects": {
+    "title": "Projets Phares",
+    "subtitle": "Découvrez mes projets les plus récents et les technologies utilisées",
+    "learnmore": "En savoir plus",
+    "featuresTitle": "Fonctionnalités clés",
+    "techTitle": "Technologies utilisées",
+    "list": {
+      "zigoma": {
+        "title": "ZIGOMA ERP",
+        "period": "05/2025 – 06/2025",
+        "category": "ERP",
+        "description": "ERP intelligent et modulaire pour PME avec CRM, gestion des produits et stocks, facturation (devis, commandes, bons de livraison, factures) et IA intégrée.",
+        "features": [
+          "CRM intégré",
+          "Facturation complète (devis → factures)",
+          "Tableaux de bord et KPIs en temps réel",
+          "IA pour génération automatique de documents"
+        ],
+        "technologies": ["OpenAI", "Flask", "Pandas", "NumPy", "Firestore", "Jinja2", "TailwindCSS"]
+      },
+      "wellsync": {
+        "title": "WellSync",
+        "period": "03/2025 – 05/2025",
+        "category": "Mobile & IA",
+        "description": "Application mobile de bien-être intelligente avec IA pour le suivi des émotions, de la nutrition, du sport et des routines de soins.",
+        "features": [
+          "Formulaires de diagnostic dynamiques",
+          "Recommandations personnalisées",
+          "Chatbot IA contextuel",
+          "Notifications intelligentes (push)"
+        ],
+        "technologies": ["Ionic", "Firebase", "Angular", "OpenAI", "TypeScript"]
+      },
+      "healthsync": {
+        "title": "HealthSync",
+        "period": "01/2025 – 03/2025",
+        "category": "Santé",
+        "description": "Plateforme de suivi médical connectant patients et médecins pour la gestion des traitements et des rendez-vous.",
+        "features": [
+          "Suivi médicaments & rappels",
+          "Chat sécurisé patient-médecin",
+          "Dashboards médicaux",
+          "Génération prescriptions PDF"
+        ],
+        "technologies": ["React", "Firebase", "TailwindCSS", "Node.js", "WebRTC"]
+      },
+      "beautybooker": {
+        "title": "BeautyBooker",
+        "period": "09/2024 – 12/2024",
+        "category": "E-commerce",
+        "description": "Plateforme de réservation pour soins esthétiques avec gestion des créneaux, paiements en ligne et système de fidélité client.",
+        "features": [
+          "Réservations en ligne",
+          "Paiements sécurisés Stripe",
+          "Programme fidélité",
+          "Interface responsive"
+        ],
+        "technologies": ["Angular", "Firebase", "Stripe", "PWA", "Tailwind"]
+      },
+      "selfservicedesk": {
+        "title": "SelfServiceDesk",
+        "period": "05/2024 – 08/2024",
+        "category": "Mobile",
+        "description": "Application mobile de commande rapide pour restaurants avec interface intuitive, gestion des stocks et analytics en temps réel.",
+        "features": [
+          "Commandes rapides",
+          "Gestion stocks temps réel",
+          "Analytics avancés",
+          "Mode hors-ligne"
+        ],
+        "technologies": ["Ionic", "Firebase", "Angular", "PayPal", "PWA"]
+      },
+      "fromdeepestrecord": {
+        "title": "FromDeepestRecord",
+        "period": "01/2024 – 05/2024",
+        "category": "E-commerce",
+        "description": "E-commerce musical multilingue avec catalogue avancé, recommandations IA et système de streaming intégré.",
+        "features": [
+          "Catalogue multilingue",
+          "Recommandations IA",
+          "Streaming intégré",
+          "Gestion complète catalogue"
+        ],
+        "technologies": ["React", "Node.js", "PostgreSQL", "Stripe", "AWS"]
+      }
+    }
+  },
+  "services": {
+    "title": "Services Proposés",
+    "subtitle": "Des solutions complètes pour transformer vos idées en réalité numérique",
+    "includesTitle": "Inclus",
+    "fullstack": {
+      "title": "Développement Full-Stack Sur Mesure",
+      "desc": "Création d'applications web complètes avec architectures modernes, API REST et interfaces utilisateur performantes.",
+      "includes": [
+        "Architecture technique complète",
+        "Frontend & Backend intégrés",
+        "API REST/GraphQL",
+        "Base de données optimisée",
+        "Tests automatisés",
+        "Documentation technique"
+      ]
+    },
+    "erp": {
+      "title": "Création d'ERP & Solutions Métiers",
+      "desc": "Développement de systèmes de gestion d'entreprise modulaires et évolutifs adaptés à vos processus spécifiques.",
+      "includes": [
+        "Analyse des besoins métiers",
+        "Modules personnalisés",
+        "Intégration CRM/Facturation",
+        "Workflows automatisés",
+        "Tableaux de bord analytics",
+        "Formation utilisateurs"
+      ]
+    },
+    "mobile": {
+      "title": "Applications Web & Mobiles",
+      "desc": "Développement d'applications cross-platform avec des technologies modernes pour une expérience utilisateur optimale.",
+      "includes": [
+        "Applications cross-platform",
+        "PWA (Progressive Web App)",
+        "Interface responsive",
+        "Fonctionnalités offline",
+        "Notifications push",
+        "Store deployment"
+      ]
+    },
+    "ai": {
+      "title": "Intégration IA & Automatisation",
+      "desc": "Implémentation de solutions d'intelligence artificielle et d'automatisation pour optimiser vos processus.",
+      "includes": [
+        "Chatbots intelligents",
+        "Automatisation RPA",
+        "Analyse de données",
+        "Machine Learning",
+        "Intégration OpenAI",
+        "Optimisation processus"
+      ]
+    },
+    "ecommerce": {
+      "title": "E-commerce & Plateformes SaaS",
+      "desc": "Création de plateformes e-commerce et SaaS avec paiements sécurisés et gestion utilisateurs avancée.",
+      "includes": [
+        "Catalogue produits avancé",
+        "Paiements sécurisés",
+        "Gestion commandes",
+        "Système d'abonnements",
+        "Analytics e-commerce",
+        "Multi-tenant SaaS"
+      ]
+    }
+  },
+  "contact": {
+    "title": "Me Contacter",
+    "subtitle": "Prêt à discuter de votre prochain projet ? N'hésitez pas à me contacter",
+    "left": {
+      "title": "Parlons de votre projet",
+      "description": "Que vous ayez besoin d'un ERP sur mesure, d'une application mobile innovante ou d'intégrer l'IA dans vos processus, je suis là pour vous accompagner.",
+      "email": "Email",
+      "location": "Localisation",
+      "locationValue": "Genève/France - Télétravail/Hybride",
+      "availability": "Disponibilité",
+      "availabilityValue": "Immédiate - Flexible",
+      "social": "Retrouvez-moi sur",
+      "responseTime": "Temps de réponse moyen",
+      "responseTimeValue": "< 24 heures"
+    },
+    "form": {
+      "nameLabel": "Nom complet",
+      "namePlaceholder": "Votre nom",
+      "emailLabel": "Adresse email",
+      "emailPlaceholder": "votre@email.com",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Décrivez votre projet...",
+      "submit": "Envoyer le message",
+      "submitting": "Envoi en cours...",
+      "success": "Message envoyé avec succès ! Je vous recontacterai sous 24h.",
+      "error": "Erreur lors de l'envoi. Veuillez réessayer ou me contacter directement."
+    },
+    "quote": {
+      "title": "Besoin d'un devis rapide ?",
+      "description": "Utilisez notre formulaire détaillé pour une estimation personnalisée",
+      "cta": "Demander un devis"
+    }
+  },
+  "footer": {
+    "description": "Développeur Full-Stack Freelance spécialisé en solutions innovantes pour l'entreprise moderne.",
+    "navigation": "Navigation",
+    "contactTitle": "Contact",
+    "availability": "Disponible immédiatement",
+    "location": "Télétravail ou hybride (Genève/France)",
+    "rights": "Tous droits réservés.",
+    "madeWith": "Fait avec",
+    "andCoffee": "et beaucoup de café"
+  }
 }

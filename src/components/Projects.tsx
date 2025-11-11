@@ -1,19 +1,21 @@
 import React from 'react';
-import { ExternalLink, Github, ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 
 const Projects = () => {
   const { t } = useTranslation();
-  const projects = t('projects.list', { returnObjects: true }) as Array<{
+
+  // Récupérer les 6 projets depuis i18n
+  const projectsList = t('projects.list', { returnObjects: true }) as Record<string, {
     title: string;
+    period: string;
+    category: string;
     description: string;
-    image: string;
-    technologies: string[];
     features: string[];
-    github?: string;
-    demo?: string;
+    technologies: string[];
   }>;
+
+  const projects = Object.values(projectsList);
 
   return (
     <section id="projects" className="py-20 bg-app">
@@ -32,23 +34,21 @@ const Projects = () => {
           {projects.map((project, index) => (
             <motion.div
               key={project.title}
-              className="card transition-all duration-300 group hover:transform hover:scale-[1.02] overflow-hidden"
+              className="card transition-all duration-300 group hover:transform hover:scale-[1.02]"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              {/* Project Image */}
-              <div className="relative h-48 -mt-6 -mx-6 mb-6 overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <div className="flex items-start justify-between mb-4">
+                <div>
+                  <span className="inline-block px-3 py-1 text-sm font-medium rounded-full border border-[var(--primary)]/30 text-[var(--primary)] mb-3">
+                    {project.category}
+                  </span>
+                  <h3 className="text-2xl font-bold">{project.title}</h3>
+                </div>
+                <span className="text-sm text-[var(--muted)]">{project.period}</span>
               </div>
-
-              <h3 className="text-2xl font-bold mb-4">{project.title}</h3>
 
               <p className="text-[var(--muted)] mb-6 leading-relaxed">
                 {project.description}
@@ -80,30 +80,6 @@ const Projects = () => {
                 </div>
               </div>
 
-              {/* Links */}
-              <div className="flex gap-2 pt-4 border-t border-white/10">
-                {project.demo && (
-                  <a
-                    href={project.demo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg transition-colors text-[var(--text)]"
-                  >
-                    <ExternalLink size={16} />
-                    <span className="text-sm">{t('projects.cta')}</span>
-                  </a>
-                )}
-                {project.github && (
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2 bg-white/5 hover:bg-white/10 rounded-lg transition-colors"
-                  >
-                    <Github size={18} className="text-[var(--text)]" />
-                  </a>
-                )}
-              </div>
             </motion.div>
           ))}
         </div>

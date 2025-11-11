@@ -5,239 +5,257 @@
     "skills": "Skills",
     "projects": "Projects",
     "services": "Services",
-    "pricing": "Pricing",
     "contact": "Contact"
   },
   "hero": {
-    "greeting": "Hello, I'm",
+    "hi": "Hi, I'm",
     "name": "Henry Teran Corrales",
-    "title": "Full-Stack Developer Freelance",
-    "subtitle": "Specialized in innovative solutions",
-    "description": "I create cutting-edge ERP systems, mobile applications, and AI-powered solutions for modern businesses.",
+    "role": "Full-Stack Freelance Developer",
+    "specialization": "Specialized in",
+    "erp": "custom ERPs",
+    "medical": "medical platforms",
+    "ai": "AI-powered solutions",
+    "ecommerce": "and e-commerce apps",
     "cta": {
-      "primary": "View my projects",
-      "secondary": "Contact me"
+      "work": "Let's work together",
+      "projects": "View my projects"
     },
     "stats": {
-      "experience": "Years of Experience",
-      "projects": "Completed Projects",
-      "clients": "Satisfied Clients",
-      "technologies": "Technologies Mastered"
+      "projects": "Completed projects",
+      "technologies": "Tech stack",
+      "availability": "Availability"
+    },
+    "card": {
+      "frontend": {
+        "title": "Frontend",
+        "subtitle": "Angular, React, Tailwind"
+      },
+      "backend": {
+        "title": "Backend",
+        "subtitle": "Python/Flask, Node.js"
+      },
+      "mobile": {
+        "title": "Mobile",
+        "subtitle": "Ionic, PWA"
+      },
+      "intelligence": {
+        "title": "Intelligence",
+        "subtitle": "OpenAI, RPA"
+      }
     }
   },
   "about": {
     "title": "About Me",
-    "subtitle": "Full-Stack Developer passionate about innovative technologies",
-    "intro": "With 8 years of experience in software development, I specialize in creating robust and scalable solutions. My expertise ranges from complex ERP systems to innovative mobile applications, always with a focus on performance and user experience.",
-    "expertise": {
-      "title": "My Expertise",
-      "items": [
-        {
-          "title": "Custom ERP Development",
-          "description": "Design and development of tailor-made ERP systems to optimize your business processes"
-        },
-        {
-          "title": "Mobile Applications",
-          "description": "Native and cross-platform applications with React Native, delivering optimal performance"
-        },
-        {
-          "title": "AI & Innovation",
-          "description": "Integration of AI solutions and advanced technologies to propel your business forward"
-        }
-      ]
-    },
-    "approach": {
-      "title": "My Approach",
-      "description": "I believe in a collaborative and agile approach. Each project is an opportunity to create something exceptional that perfectly meets your specific needs.",
-      "values": [
-        "Quality and attention to detail",
-        "Transparent and regular communication",
-        "Respect for deadlines and budget",
-        "Continuous technical innovation"
-      ]
+    "subtitle": "Engineer & Full-Stack Developer",
+    "p1": "With a background in microengineering and deep expertise in full-stack development, I specialize in creating innovative and high-performance technological solutions.",
+    "p2": "My approach combines technical rigor, creativity, and multilingual communication to deliver projects that exceed my clients' expectations.",
+    "features": {
+      "rigor": {
+        "title": "Rigor & Creativity",
+        "desc": "Methodical approach combined with innovative thinking for tailor-made solutions."
+      },
+      "autonomy": {
+        "title": "Autonomy",
+        "desc": "Ability to manage complex projects from A to Z completely independently."
+      },
+      "communication": {
+        "title": "Multilingual Communication",
+        "desc": "French, English, Spanish, Italian - for international collaboration."
+      },
+      "remote": {
+        "title": "Remote & Hybrid",
+        "desc": "Flexible in Geneva/France with possibility of travel."
+      }
     }
   },
   "skills": {
     "title": "Technical Skills",
-    "subtitle": "A versatile technology stack for high-performance projects",
-    "categories": {
-      "frontend": {
-        "title": "Frontend",
-        "items": [
-          { "name": "React / Next.js", "level": 95 },
-          { "name": "TypeScript", "level": 90 },
-          { "name": "Tailwind CSS", "level": 95 },
-          { "name": "React Native", "level": 85 }
-        ]
+    "subtitle": "Diverse expertise to meet all your technological needs",
+    "extra": {
+      "title": "Additional Technologies"
+    },
+    "frontend": {
+      "title": "Frontend",
+      "desc": "Modern and high-performance user interfaces"
+    },
+    "backend": {
+      "title": "Backend",
+      "desc": "Robust and scalable server architectures"
+    },
+    "mobile": {
+      "title": "Mobile",
+      "desc": "Cross-platform mobile applications"
+    },
+    "ai": {
+      "title": "AI & Automation",
+      "desc": "Artificial intelligence and process automation"
+    },
+    "database": {
+      "title": "Databases",
+      "desc": "Data management and optimization"
+    },
+    "devops": {
+      "title": "DevOps",
+      "desc": "Deployment and continuous integration"
+    }
+  },
+  "projects": {
+    "title": "Featured Projects",
+    "subtitle": "Discover my most recent projects and the technologies used",
+    "learnmore": "Learn more",
+    "featuresTitle": "Key features",
+    "techTitle": "Technologies used",
+    "list": {
+      "zigoma": {
+        "title": "ZIGOMA ERP",
+        "period": "05/2025 – 06/2025",
+        "category": "ERP",
+        "description": "Intelligent modular ERP for SMEs with CRM, product and stock management, full sales flow (quotes, orders, delivery notes, invoices) and integrated AI.",
+        "features": [
+          "Integrated CRM",
+          "Complete invoicing (quotes → invoices)",
+          "Real-time dashboards and KPIs",
+          "AI for automatic document generation"
+        ],
+        "technologies": ["OpenAI", "Flask", "Pandas", "NumPy", "Firestore", "Jinja2", "TailwindCSS"]
       },
-      "backend": {
-        "title": "Backend",
-        "items": [
-          { "name": "Node.js / Express", "level": 90 },
-          { "name": "Python / Django", "level": 85 },
-          { "name": "PostgreSQL", "level": 88 },
-          { "name": "MongoDB", "level": 82 }
-        ]
+      "wellsync": {
+        "title": "WellSync",
+        "period": "03/2025 – 05/2025",
+        "category": "Mobile & AI",
+        "description": "Intelligent wellness mobile app with AI for tracking emotions, nutrition, fitness, and self-care routines.",
+        "features": [
+          "Dynamic diagnostic forms",
+          "Personalized recommendations",
+          "Contextual AI chatbot",
+          "Smart push notifications"
+        ],
+        "technologies": ["Ionic", "Firebase", "Angular", "OpenAI", "TypeScript"]
       },
-      "tools": {
-        "title": "Tools & DevOps",
-        "items": [
-          { "name": "Git / GitHub", "level": 95 },
-          { "name": "Docker", "level": 85 },
-          { "name": "AWS / Cloud", "level": 80 },
-          { "name": "CI/CD", "level": 85 }
-        ]
+      "healthsync": {
+        "title": "HealthSync",
+        "period": "01/2025 – 03/2025",
+        "category": "Healthcare",
+        "description": "Medical tracking platform connecting patients and doctors for treatment and appointment management.",
+        "features": [
+          "Medication tracking & reminders",
+          "Secure patient-doctor chat",
+          "Medical dashboards",
+          "PDF prescription generation"
+        ],
+        "technologies": ["React", "Firebase", "TailwindCSS", "Node.js", "WebRTC"]
       },
-      "other": {
-        "title": "Other Skills",
-        "items": [
-          { "name": "AI Integration", "level": 80 },
-          { "name": "API Design", "level": 92 },
-          { "name": "Performance Optimization", "level": 88 },
-          { "name": "Security", "level": 85 }
-        ]
+      "beautybooker": {
+        "title": "BeautyBooker",
+        "period": "09/2024 – 12/2024",
+        "category": "E-commerce",
+        "description": "Booking platform for beauty services with slot management, online payments, and customer loyalty system.",
+        "features": [
+          "Online bookings",
+          "Secure Stripe payments",
+          "Loyalty program",
+          "Responsive interface"
+        ],
+        "technologies": ["Angular", "Firebase", "Stripe", "PWA", "Tailwind"]
+      },
+      "selfservicedesk": {
+        "title": "SelfServiceDesk",
+        "period": "05/2024 – 08/2024",
+        "category": "Mobile",
+        "description": "Quick ordering mobile app for restaurants with intuitive interface, stock management, and real-time analytics.",
+        "features": [
+          "Quick orders",
+          "Real-time stock management",
+          "Advanced analytics",
+          "Offline mode"
+        ],
+        "technologies": ["Ionic", "Firebase", "Angular", "PayPal", "PWA"]
+      },
+      "fromdeepestrecord": {
+        "title": "FromDeepestRecord",
+        "period": "01/2024 – 05/2024",
+        "category": "E-commerce",
+        "description": "Multilingual music e-commerce with advanced catalog, AI recommendations, and integrated streaming system.",
+        "features": [
+          "Multilingual catalog",
+          "AI recommendations",
+          "Integrated streaming",
+          "Complete catalog management"
+        ],
+        "technologies": ["React", "Node.js", "PostgreSQL", "Stripe", "AWS"]
       }
     }
   },
   "services": {
     "title": "My Services",
-    "subtitle": "Comprehensive solutions for all your development needs",
-    "list": [
-      {
-        "title": "Custom ERP Development",
-        "description": "Complete ERP solutions tailored to your industry and specific needs",
-        "features": [
-          "Complete functional analysis",
-          "Custom module development",
-          "Integration with existing systems",
-          "Training and technical support",
-          "Ongoing maintenance and updates"
-        ]
-      },
-      {
-        "title": "Mobile Development",
-        "description": "High-performance native and cross-platform mobile applications",
-        "features": [
-          "iOS and Android applications",
-          "React Native development",
-          "Modern and intuitive UI/UX",
-          "API integration",
-          "Publication on stores"
-        ]
-      },
-      {
-        "title": "AI Integration",
-        "description": "Integration of artificial intelligence solutions to automate your processes",
-        "features": [
-          "Implementation of chatbots",
-          "Process automation",
-          "Predictive analysis",
-          "Computer vision",
-          "Custom training"
-        ]
-      },
-      {
-        "title": "Technical Consulting",
-        "description": "Expert advice to guide your technology choices",
-        "features": [
-          "Technical audit",
-          "Technology architecture",
-          "Performance optimization",
-          "Best practices",
-          "Team training"
-        ]
-      }
-    ]
-  },
-  "projects": {
-    "title": "Featured Projects",
-    "subtitle": "A selection of my best achievements",
-    "cta": "View details",
-    "list": [
-      {
-        "title": "Complete ERP System",
-        "description": "Custom ERP solution for a manufacturing SME, including inventory management, production, and accounting.",
-        "image": "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "technologies": ["React", "Node.js", "PostgreSQL", "Docker"],
-        "features": [
-          "Real-time inventory management",
-          "Production planning",
-          "Integrated accounting",
-          "Interactive dashboards",
-          "Role management"
-        ],
-        "github": "https://github.com/henry-teran/erp-system",
-        "demo": "https://erp-demo.example.com"
-      },
-      {
-        "title": "E-Commerce Mobile App",
-        "description": "Mobile application for online sales with AR integration to visualize products in 3D.",
-        "image": "https://images.pexels.com/photos/3944405/pexels-photo-3944405.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "technologies": ["React Native", "TypeScript", "Firebase", "Stripe"],
-        "features": [
-          "3D product visualization",
-          "Secure payment",
-          "Order management",
-          "Push notifications",
-          "Personalized recommendations"
-        ],
-        "github": "https://github.com/henry-teran/ecommerce-app",
-        "demo": "https://apps.apple.com/app/demo"
-      },
-      {
-        "title": "AI Chatbot Platform",
-        "description": "Intelligent chatbot platform for customer service, based on GPT-4 with learning capability.",
-        "image": "https://images.pexels.com/photos/8438918/pexels-photo-8438918.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "technologies": ["Python", "FastAPI", "OpenAI", "React", "WebSocket"],
-        "features": [
-          "GPT-4 integration",
-          "Continuous learning",
-          "Multi-language",
-          "Conversation analytics",
-          "Easy integration"
-        ],
-        "github": "https://github.com/henry-teran/ai-chatbot",
-        "demo": "https://chatbot-demo.example.com"
-      }
-    ]
-  },
-  "pricing": {
-    "title": "Pricing",
-    "subtitle": "Transparent rates adapted to your needs",
-    "dayRate": "Daily Rate (TJM)",
-    "dayRateValue": "€450-500 / day",
-    "dayRateDescription": "For mission or long-term project. Flexible rate based on project duration and complexity.",
-    "fixedPrice": "Fixed Price",
-    "fixedPriceDescription": "Custom quote based on your specific needs. Free estimate within 48 hours.",
-    "includes": "Includes",
-    "includesList": [
-      "Detailed analysis of your needs",
-      "Complete project documentation",
-      "Agile development with regular monitoring",
-      "Unit and integration testing",
-      "Technical training",
-      "3-month warranty and support"
-    ],
-    "cta": "Request a Quote",
-    "availability": "Immediate Availability"
+    "subtitle": "Complete solutions to transform your ideas into digital reality",
+    "includesTitle": "Includes",
+    "fullstack": {
+      "title": "Custom Full-Stack Development",
+      "desc": "Creation of complete web applications with modern architectures, REST APIs, and high-performance user interfaces.",
+      "includes": [
+        "Complete technical architecture",
+        "Integrated Frontend & Backend",
+        "REST/GraphQL API",
+        "Optimized database",
+        "Automated testing",
+        "Technical documentation"
+      ]
+    },
+    "erp": {
+      "title": "ERP & Business Solutions Creation",
+      "desc": "Development of modular and scalable business management systems adapted to your specific processes.",
+      "includes": [
+        "Business needs analysis",
+        "Custom modules",
+        "CRM/Billing integration",
+        "Automated workflows",
+        "Analytics dashboards",
+        "User training"
+      ]
+    },
+    "mobile": {
+      "title": "Web & Mobile Applications",
+      "desc": "Cross-platform application development with modern technologies for optimal user experience.",
+      "includes": [
+        "Cross-platform applications",
+        "PWA (Progressive Web App)",
+        "Responsive interface",
+        "Offline features",
+        "Push notifications",
+        "Store deployment"
+      ]
+    },
+    "ai": {
+      "title": "AI Integration & Automation",
+      "desc": "Implementation of artificial intelligence solutions and automation to optimize your processes.",
+      "includes": [
+        "Intelligent chatbots",
+        "RPA automation",
+        "Data analysis",
+        "Machine Learning",
+        "OpenAI integration",
+        "Process optimization"
+      ]
+    },
+    "ecommerce": {
+      "title": "E-commerce & SaaS Platforms",
+      "desc": "Creation of e-commerce and SaaS platforms with secure payments and advanced user management.",
+      "includes": [
+        "Advanced product catalog",
+        "Secure payments",
+        "Order management",
+        "Subscription system",
+        "E-commerce analytics",
+        "Multi-tenant SaaS"
+      ]
+    }
   },
   "contact": {
     "title": "Contact Me",
     "subtitle": "Ready to discuss your next project? Feel free to contact me",
-    "form": {
-      "name": "Full Name",
-      "namePlaceholder": "Your name",
-      "email": "Email Address",
-      "emailPlaceholder": "your@email.com",
-      "message": "Message",
-      "messagePlaceholder": "Describe your project...",
-      "submit": "Send Message",
-      "submitting": "Sending...",
-      "success": "Message sent successfully! I will get back to you within 24 hours.",
-      "error": "Error sending. Please try again or contact me directly."
-    },
-    "info": {
-      "title": "Let's Talk About Your Project",
+    "left": {
+      "title": "Let's talk about your project",
       "description": "Whether you need a custom ERP, an innovative mobile application, or to integrate AI into your processes, I'm here to support you.",
       "email": "Email",
       "location": "Location",
@@ -248,113 +266,31 @@
       "responseTime": "Average response time",
       "responseTimeValue": "< 24 hours"
     },
+    "form": {
+      "nameLabel": "Full name",
+      "namePlaceholder": "Your name",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "your@email.com",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Describe your project...",
+      "submit": "Send message",
+      "submitting": "Sending...",
+      "success": "Message sent successfully! I will get back to you within 24h.",
+      "error": "Error sending. Please try again or contact me directly."
+    },
     "quote": {
-      "title": "Need a Quick Quote?",
+      "title": "Need a quick quote?",
       "description": "Use our detailed form for a personalized estimate",
-      "cta": "Request a Quote"
-    }
-  },
-  "quote": {
-    "title": "Request a Quote",
-    "steps": {
-      "client": "Your Information",
-      "project": "Project Details",
-      "planning": "Planning & Budget",
-      "additional": "Additional Services"
-    },
-    "clientInfo": {
-      "name": "Full Name",
-      "namePlaceholder": "Jean Dupont",
-      "email": "Professional Email",
-      "emailPlaceholder": "jean.dupont@entreprise.com",
-      "phone": "Phone",
-      "phonePlaceholder": "+41 XX XXX XX XX",
-      "company": "Company (optional)",
-      "companyPlaceholder": "Your Company"
-    },
-    "projectDetails": {
-      "type": "Project Type",
-      "typePlaceholder": "Select a type",
-      "types": {
-        "erp": "Custom ERP",
-        "mobile": "Mobile Application",
-        "web": "Web Application",
-        "ai": "AI Integration",
-        "consulting": "Technical Consulting",
-        "other": "Other"
-      },
-      "description": "Project Description",
-      "descriptionPlaceholder": "Describe your project in detail...",
-      "features": "Desired Features",
-      "featuresPlaceholder": "List the main features...",
-      "technologies": "Preferred Technologies (if any)",
-      "technologiesPlaceholder": "React, Node.js, Python..."
-    },
-    "planning": {
-      "timeline": "Desired Timeline",
-      "timelinePlaceholder": "Select a timeline",
-      "timelines": {
-        "asap": "As soon as possible",
-        "1month": "1-3 months",
-        "3months": "3-6 months",
-        "6months": "6+ months",
-        "flexible": "Flexible"
-      },
-      "budget": "Estimated Budget",
-      "budgetPlaceholder": "Select a range",
-      "budgets": {
-        "5k": "< €5,000",
-        "10k": "€5,000 - €10,000",
-        "25k": "€10,000 - €25,000",
-        "50k": "€25,000 - €50,000",
-        "50kplus": "> €50,000",
-        "discuss": "To discuss"
-      },
-      "urgency": "Urgency",
-      "urgencies": {
-        "low": "Low - Exploratory project",
-        "medium": "Medium - Planned start",
-        "high": "High - Quick start needed"
-      }
-    },
-    "additionalServices": {
-      "title": "Do you need these services?",
-      "design": "UI/UX Design",
-      "hosting": "Hosting & Infrastructure",
-      "maintenance": "Ongoing Maintenance",
-      "training": "Team Training",
-      "info": "Additional Information",
-      "infoPlaceholder": "Anything else to tell me about your project?"
-    },
-    "summary": {
-      "title": "Summary of Your Request",
-      "client": "Your Information",
-      "project": "Project",
-      "type": "Type",
-      "timeline": "Timeline",
-      "budget": "Budget",
-      "urgency": "Urgency",
-      "services": "Additional Services",
-      "none": "None"
-    },
-    "navigation": {
-      "next": "Next",
-      "previous": "Previous",
-      "submit": "Send Request",
-      "submitting": "Sending..."
-    },
-    "messages": {
-      "success": "Quote request sent successfully! I will get back to you within 24 hours with a detailed estimate.",
-      "error": "Error sending request. Please try again or contact me directly at teranhenryc@gmail.com"
+      "cta": "Request a quote"
     }
   },
   "footer": {
-    "rights": "All rights reserved.",
+    "description": "Full-Stack Freelance Developer specialized in innovative solutions for modern businesses.",
     "navigation": "Navigation",
-    "contact": "Contact",
+    "contactTitle": "Contact",
     "availability": "Immediately available",
-    "rate": "Daily rate: €450-500 / day",
     "location": "Remote or hybrid (Geneva/France)",
+    "rights": "All rights reserved.",
     "madeWith": "Made with",
     "andCoffee": "and lots of coffee"
   }

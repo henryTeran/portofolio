@@ -5,39 +5,36 @@ import { useTranslation } from 'react-i18next';
 const Skills = () => {
   const { t } = useTranslation();
 
-  const getSkillsData = () => {
-    const categories = t('skills.categories', { returnObjects: true }) as any;
-    return [
-      {
-        key: 'frontend',
-        title: categories.frontend.title,
-        icon: Code,
-        color: 'blue',
-        items: categories.frontend.items
-      },
-      {
-        key: 'backend',
-        title: categories.backend.title,
-        icon: Server,
-        color: 'green',
-        items: categories.backend.items
-      },
-      {
-        key: 'tools',
-        title: categories.tools.title,
-        icon: Smartphone,
-        color: 'teal',
-        items: categories.tools.items
-      },
-      {
-        key: 'other',
-        title: categories.other.title,
-        icon: Brain,
-        color: 'emerald',
-        items: categories.other.items
-      }
-    ];
-  };
+  const skillCategories = [
+    {
+      title: t('skills.frontend.title'),
+      icon: Code,
+      color: 'blue',
+      skills: ['Angular', 'React', 'Tailwind CSS', 'Ionic', 'TypeScript', 'JavaScript'],
+      description: t('skills.frontend.desc')
+    },
+    {
+      title: t('skills.backend.title'),
+      icon: Server,
+      color: 'green',
+      skills: ['Python/Flask', 'Node.js', 'REST API', 'Express.js', 'FastAPI'],
+      description: t('skills.backend.desc')
+    },
+    {
+      title: t('skills.mobile.title'),
+      icon: Smartphone,
+      color: 'emerald',
+      skills: ['Ionic', 'PWA', 'React Native', 'Mobile-First Design'],
+      description: t('skills.mobile.desc')
+    },
+    {
+      title: t('skills.ai.title'),
+      icon: Brain,
+      color: 'teal',
+      skills: ['OpenAI', 'RPA', 'Pandas', 'NumPy', 'Machine Learning'],
+      description: t('skills.ai.desc')
+    }
+  ];
 
   const getColorClasses = (color: string) => {
     const colors = {
@@ -49,7 +46,6 @@ const Skills = () => {
     return colors[color as keyof typeof colors];
   };
 
-  const skillsData = getSkillsData();
 
   return (
     <section id="skills" className="py-20 bg-app">
@@ -65,11 +61,11 @@ const Skills = () => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-          {skillsData.map((category, index) => {
+          {skillCategories.map((category, index) => {
             const Icon = category.icon;
             return (
               <div
-                key={category.key}
+                key={category.title}
                 className="card transition-all duration-300 group hover:transform hover:scale-[1.02]"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
@@ -77,21 +73,14 @@ const Skills = () => {
                   <Icon size={32} />
                 </div>
 
-                <h3 className="text-2xl font-bold mb-6">{category.title}</h3>
+                <h3 className="text-2xl font-bold mb-4">{category.title}</h3>
+                <p className="text-[var(--muted)] mb-6 leading-relaxed">{category.description}</p>
 
                 <div className="space-y-3">
-                  {category.items.map((skill: { name: string; level: number }) => (
-                    <div key={skill.name}>
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-[var(--muted)] text-sm">{skill.name}</span>
-                        <span className="text-[var(--primary)] text-xs font-semibold">{skill.level}%</span>
-                      </div>
-                      <div className="w-full bg-white/5 rounded-full h-2 overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-[var(--primary)] to-emerald-400 transition-all duration-1000"
-                          style={{ width: `${skill.level}%` }}
-                        ></div>
-                      </div>
+                  {category.skills.map((skill) => (
+                    <div key={skill} className="flex items-center">
+                      <div className="w-2 h-2 rounded-full bg-emerald-400 mr-3"></div>
+                      <span className="text-[var(--muted)]">{skill}</span>
                     </div>
                   ))}
                 </div>

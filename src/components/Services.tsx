@@ -5,22 +5,64 @@ import { useTranslation } from 'react-i18next';
 const Services = () => {
   const { t } = useTranslation();
 
-  const getServicesData = () => {
-    const servicesList = t('services.list', { returnObjects: true }) as Array<{
-      title: string;
-      description: string;
-      features: string[];
-    }>;
-
-    const icons = [Code, Building, Smartphone, Brain];
-    const colors = ['blue', 'green', 'emerald', 'teal'];
-
-    return servicesList.map((service, index) => ({
-      ...service,
-      icon: icons[index % icons.length],
-      color: colors[index % colors.length]
-    }));
-  };
+  const services = [
+    {
+      title: t('services.fullstack.title'),
+      description: t('services.fullstack.desc'),
+      icon: Code,
+      color: 'blue',
+      includes: [
+        'Architecture technique complète',
+        'Frontend & Backend intégrés',
+        'API REST/GraphQL',
+        'Base de données optimisée',
+        'Tests automatisés',
+        'Documentation technique'
+      ]
+    },
+    {
+      title: t('services.erp.title'),
+      description: t('services.erp.desc'),
+      icon: Building,
+      color: 'green',
+      includes: [
+        'Analyse des besoins métiers',
+        'Modules personnalisés',
+        'Intégration CRM/Facturation',
+        'Workflows automatisés',
+        'Tableaux de bord analytics',
+        'Formation utilisateurs'
+      ]
+    },
+    {
+      title: t('services.mobile.title'),
+      description: t('services.mobile.desc'),
+      icon: Smartphone,
+      color: 'emerald',
+      includes: [
+        'Applications cross-platform',
+        'PWA (Progressive Web App)',
+        'Interface responsive',
+        'Fonctionnalités offline',
+        'Notifications push',
+        'Store deployment'
+      ]
+    },
+    {
+      title: t('services.ai.title'),
+      description: t('services.ai.desc'),
+      icon: Brain,
+      color: 'teal',
+      includes: [
+        'Chatbots intelligents',
+        'Automatisation RPA',
+        'Analyse de données',
+        'Machine Learning',
+        'Intégration OpenAI',
+        'Optimisation processus'
+      ]
+    }
+  ];
 
   const getColorClasses = (color: string) => {
     const colors = {
@@ -32,7 +74,6 @@ const Services = () => {
     return colors[color as keyof typeof colors];
   };
 
-  const services = getServicesData();
 
   return (
     <section id="services" className="py-20 bg-app">
@@ -64,7 +105,7 @@ const Services = () => {
                 <p className="text-[var(--muted)] mb-6 leading-relaxed">{service.description}</p>
 
                 <div className="space-y-3">
-                  {service.features.map((item: string) => (
+                  {service.includes.map((item: string) => (
                     <div key={item} className="flex items-center">
                       <div className="w-2 h-2 rounded-full bg-emerald-400 mr-3"></div>
                       <span className="text-[var(--muted)]">{item}</span>

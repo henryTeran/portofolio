@@ -99,7 +99,6 @@ const Footer = () => {
                 <span className="text-[var(--muted)]">{t('footer.availability')}</span>
               </div>
               <div className="text-[var(--muted)] text-sm">
-                {t('footer.rate')}<br />
                 {t('footer.location')}
               </div>
             </div>

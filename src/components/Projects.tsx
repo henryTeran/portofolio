@@ -1,6 +1,7 @@
 import React from 'react';
 import { ExternalLink, Github, ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
 
 const Projects = () => {
   const { t } = useTranslation();
@@ -87,10 +88,13 @@ const Projects = () => {
 
         <div className="grid lg:grid-cols-2 gap-8 mb-16">
           {projects.map((project, index) => (
-            <div
+            <motion.div
               key={project.title}
               className="card transition-all duration-300 group hover:transform hover:scale-[1.02]"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
             >
               {/* Project Header */}
               <div className="flex items-start justify-between mb-6">
@@ -150,11 +154,11 @@ const Projects = () => {
               </div>
 
               {/* CTA */}
-              <button className={`flex items-center gap-2 text-${project.color}-400 hover:text-${project.color}-300 font-medium transition-colors`}>
-                En savoir plus
+              <button className="flex items-center gap-2 text-[var(--primary)] hover:text-[var(--primary)]/80 font-medium transition-colors">
+                {t('projects.learnmore')}
                 <ArrowRight size={16} />
               </button>
-            </div>
+            </motion.div>
           ))}
         </div>
 

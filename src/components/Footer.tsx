@@ -16,8 +16,7 @@ const Footer = () => {
               Henry Teran Corrales
             </div>
             <p className="text-[var(--muted)] mb-4">
-              Développeur Full-Stack Freelance spécialisé en solutions innovantes
-              pour l'entreprise moderne.
+              {t('hero.title')} - {t('hero.subtitle')}
             </p>
             <div className="flex gap-4">
               <a
@@ -34,7 +33,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Github className="text-[var(--muted)]" size={20} />
+                <Github className="text-[var(--text)] hover:text-[var(--primary)]" size={20} />
               </a>
               <a
                 href="mailto:teranhenryc@gmail.com"
@@ -47,7 +46,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Navigation</h4>
+            <h4 className="text-lg font-semibold mb-4">{t('footer.navigation')}</h4>
             <div className="space-y-2">
               <button
                 onClick={() => document.getElementById('accueil')?.scrollIntoView({ behavior: 'smooth' })}
@@ -84,7 +83,7 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Contact</h4>
+            <h4 className="text-lg font-semibold mb-4">{t('footer.contact')}</h4>
             <div className="space-y-3">
               <div className="flex items-center">
                 <Mail className="text-[var(--primary)] mr-3" size={18} />
@@ -96,12 +95,12 @@ const Footer = () => {
                 </a>
               </div>
               <div className="flex items-center">
-                <div className="w-3 h-3 bg-green-400 rounded-full mr-3"></div>
-                <span className="text-[var(--muted)]">Disponible immédiatement</span>
+                <div className="w-3 h-3 bg-emerald-400 rounded-full mr-3"></div>
+                <span className="text-[var(--muted)]">{t('footer.availability')}</span>
               </div>
               <div className="text-[var(--muted)] text-sm">
-                TJM : 450-500€ / jour<br />
-                Télétravail ou hybride (Genève/France)
+                {t('footer.rate')}<br />
+                {t('footer.location')}
               </div>
             </div>
           </div>
@@ -113,7 +112,7 @@ const Footer = () => {
               © {currentYear} Henry Teran Corrales. {t('footer.rights')}
             </div>
             <div className="flex items-center text-[var(--muted)] text-sm">
-              Fait avec <Heart className="mx-2 text-red-400" size={16} /> et beaucoup de café
+              {t('footer.madeWith')} <Heart className="mx-2 text-red-400" size={16} /> {t('footer.andCoffee')}
             </div>
           </div>
         </div>

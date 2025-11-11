@@ -12,7 +12,7 @@ const Pricing = () => {
             {t('pricing.title')}
           </h2>
           <p className="text-xl text-[var(--muted)] max-w-3xl mx-auto">
-            Des tarifs transparents pour une collaboration sereine
+            {t('pricing.subtitle')}
           </p>
           <div className="w-24 h-1 bg-gradient-to-r from-[var(--primary)] to-[var(--primary)] mx-auto mt-6"></div>
         </div>
@@ -24,32 +24,19 @@ const Pricing = () => {
                 <div className="w-16 h-16 bg-[var(--primary)]/20 rounded-xl flex items-center justify-center mx-auto mb-4 border border-[var(--primary)]/30">
                   <Euro className="text-[var(--primary)]" size={32} />
                 </div>
-                <h3 className="text-2xl font-bold mb-4">Tarif Journalier</h3>
-                <div className="text-5xl font-bold text-[var(--primary)] mb-2">450-500€</div>
-                <div className="text-[var(--muted)]">par jour</div>
+                <h3 className="text-2xl font-bold mb-4">{t('pricing.dayRate')}</h3>
+                <div className="text-5xl font-bold text-[var(--primary)] mb-2">{t('pricing.dayRateValue')}</div>
+                <p className="text-[var(--muted)] text-sm mt-4">{t('pricing.dayRateDescription')}</p>
               </div>
 
               <div className="space-y-4">
-                <div className="flex items-center">
-                  <Check className="text-green-400 mr-3 flex-shrink-0" size={20} />
-                  <span className="text-[var(--muted)]">Développement full-stack complet</span>
-                </div>
-                <div className="flex items-center">
-                  <Check className="text-green-400 mr-3 flex-shrink-0" size={20} />
-                  <span className="text-[var(--muted)]">Architecture technique & conseil</span>
-                </div>
-                <div className="flex items-center">
-                  <Check className="text-green-400 mr-3 flex-shrink-0" size={20} />
-                  <span className="text-[var(--muted)]">Tests & documentation inclus</span>
-                </div>
-                <div className="flex items-center">
-                  <Check className="text-green-400 mr-3 flex-shrink-0" size={20} />
-                  <span className="text-[var(--muted)]">Support post-livraison</span>
-                </div>
-                <div className="flex items-center">
-                  <Check className="text-green-400 mr-3 flex-shrink-0" size={20} />
-                  <span className="text-[var(--muted)]">Formations utilisateurs</span>
-                </div>
+                <h4 className="font-semibold mb-2">{t('pricing.includes')}</h4>
+                {(t('pricing.includesList', { returnObjects: true }) as string[]).map((item, index) => (
+                  <div key={index} className="flex items-center">
+                    <div className="w-2 h-2 rounded-full bg-emerald-400 mr-3 flex-shrink-0"></div>
+                    <span className="text-[var(--muted)]">{item}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -58,51 +45,32 @@ const Pricing = () => {
                 <div className="w-16 h-16 bg-[var(--primary)]/20 rounded-xl flex items-center justify-center mx-auto mb-4 border border-[var(--primary)]/30">
                   <Clock className="text-[var(--primary)]" size={32} />
                 </div>
-                <h3 className="text-2xl font-bold mb-4">Disponibilité</h3>
-                <div className="text-3xl font-bold text-[var(--primary)] mb-2">Immédiate</div>
-                <div className="text-[var(--muted)]">Prêt à démarrer</div>
+                <h3 className="text-2xl font-bold mb-4">{t('pricing.fixedPrice')}</h3>
+                <p className="text-[var(--muted)]">{t('pricing.fixedPriceDescription')}</p>
               </div>
 
               <div className="space-y-6">
                 <div className="flex items-start">
-                  <MapPin className="text-green-400 mr-3 flex-shrink-0 mt-1" size={20} />
+                  <MapPin className="text-emerald-400 mr-3 flex-shrink-0 mt-1" size={20} />
                   <div>
-                    <div className="font-semibold mb-1">Modalités de travail</div>
-                    <div className="text-[var(--muted)]">Télétravail ou hybride (Genève/France)</div>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <Clock className="text-[var(--primary)] mr-3 flex-shrink-0 mt-1" size={20} />
-                  <div>
-                    <div className="font-semibold mb-1">Horaires flexibles</div>
-                    <div className="text-[var(--muted)]">Adaptation à vos fuseaux horaires</div>
+                    <div className="font-semibold mb-1">{t('contact.info.location')}</div>
+                    <div className="text-[var(--muted)]">{t('contact.info.locationValue')}</div>
                   </div>
                 </div>
 
                 <div className="bg-white/5 p-4 rounded-xl border border-white/10">
                   <div className="text-center">
-                    <div className="text-sm font-semibold text-green-400 mb-1">STATUT ACTUEL</div>
-                    <div className="text-lg font-bold">Disponible immédiatement</div>
+                    <div className="text-sm font-semibold text-emerald-400 mb-1">{t('contact.info.availability')}</div>
+                    <div className="text-lg font-bold">{t('pricing.availability')}</div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
 
-          <div className="card">
-            <div className="grid md:grid-cols-3 gap-8 text-center">
-              <div>
-                <h4 className="text-lg font-semibold mb-3 text-[var(--primary)]">Missions courtes</h4>
-                <p className="text-[var(--muted)]">À partir de 3 jours pour des interventions ponctuelles</p>
-              </div>
-              <div>
-                <h4 className="text-lg font-semibold mb-3 text-green-400">Projets moyens</h4>
-                <p className="text-[var(--muted)]">1-6 mois pour des développements complets</p>
-              </div>
-              <div>
-                <h4 className="text-lg font-semibold mb-3 text-[var(--accent)]">Accompagnement long terme</h4>
-                <p className="text-[var(--muted)]">Maintenance et évolutions continues</p>
+                <button
+                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="w-full btn"
+                >
+                  {t('pricing.cta')}
+                </button>
               </div>
             </div>
           </div>

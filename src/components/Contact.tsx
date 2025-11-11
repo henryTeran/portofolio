@@ -66,10 +66,9 @@ const Contact = () => {
           {/* Contact Info */}
           <div className="space-y-8">
             <div>
-              <h3 className="text-2xl font-bold mb-6 text-[var(--primary)]">Parlons de votre projet</h3>
+              <h3 className="text-2xl font-bold mb-6 text-[var(--primary)]">{t('contact.info.title')}</h3>
               <p className="text-[var(--muted)] text-lg leading-relaxed mb-8">
-                Que vous ayez besoin d'un ERP sur mesure, d'une application mobile innovante
-                ou d'intégrer l'IA dans vos processus, je suis là pour vous accompagner.
+                {t('contact.info.description')}
               </p>
             </div>
 
@@ -80,7 +79,7 @@ const Contact = () => {
                   <Mail className="text-[var(--primary)]" size={24} />
                 </div>
                 <div>
-                  <div className="font-semibold">Email</div>
+                  <div className="font-semibold">{t('contact.info.email')}</div>
                   <a href="mailto:teranhenryc@gmail.com" className="text-[var(--muted)] hover:text-[var(--primary)] transition-colors">
                     teranhenryc@gmail.com
                   </a>
@@ -88,12 +87,12 @@ const Contact = () => {
               </div>
 
               <div className="flex items-center">
-                <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mr-4 border border-green-500/30">
-                  <MapPin className="text-green-400" size={24} />
+                <div className="w-12 h-12 bg-emerald-500/20 rounded-lg flex items-center justify-center mr-4 border border-emerald-500/30">
+                  <MapPin className="text-emerald-400" size={24} />
                 </div>
                 <div>
-                  <div className="font-semibold">Localisation</div>
-                  <div className="text-[var(--muted)]">Genève/France - Télétravail/Hybride</div>
+                  <div className="font-semibold">{t('contact.info.location')}</div>
+                  <div className="text-[var(--muted)]">{t('contact.info.locationValue')}</div>
                 </div>
               </div>
 
@@ -102,14 +101,14 @@ const Contact = () => {
                   <Clock className="text-[var(--accent)]" size={24} />
                 </div>
                 <div>
-                  <div className="font-semibold">Disponibilité</div>
-                  <div className="text-[var(--muted)]">Immédiate - Flexible</div>
+                  <div className="font-semibold">{t('contact.info.availability')}</div>
+                  <div className="text-[var(--muted)]">{t('contact.info.availabilityValue')}</div>
                 </div>
               </div>
             </div>
 
             <div className="pt-8">
-              <h4 className="text-lg font-semibold mb-4">Retrouvez-moi sur</h4>
+              <h4 className="text-lg font-semibold mb-4">{t('contact.info.social')}</h4>
               <div className="flex gap-4">
                 <a
                   href="https://linkedin.com/in/henry-teran"
@@ -125,7 +124,7 @@ const Contact = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Github className="text-[var(--muted)]" size={24} />
+                  <Github className="text-[var(--text)] hover:text-[var(--primary)]" size={24} />
                 </a>
                 <a
                   href="mailto:teranhenryc@gmail.com"
@@ -138,12 +137,12 @@ const Contact = () => {
           </div>
 
           <div className="card">
-            <h3 className="text-2xl font-bold mb-6">Envoyez-moi un message</h3>
-            
+            <h3 className="text-2xl font-bold mb-6">{t('contact.info.title')}</h3>
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-[var(--muted)] mb-2">
-                  Nom complet
+                  {t('contact.form.name')}
                 </label>
                 <input
                   type="text"
@@ -152,14 +151,14 @@ const Contact = () => {
                   value={formData.name}
                   onChange={handleChange}
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)] transition-colors text-[var(--text)] placeholder-[var(--muted)]"
-                  placeholder="Votre nom"
+                  placeholder={t('contact.form.namePlaceholder')}
                   required
                 />
               </div>
 
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-[var(--muted)] mb-2">
-                  Adresse email
+                  {t('contact.form.email')}
                 </label>
                 <input
                   type="email"
@@ -168,14 +167,14 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)] transition-colors text-[var(--text)] placeholder-[var(--muted)]"
-                  placeholder="votre@email.com"
+                  placeholder={t('contact.form.emailPlaceholder')}
                   required
                 />
               </div>
 
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-[var(--muted)] mb-2">
-                  Message
+                  {t('contact.form.message')}
                 </label>
                 <textarea
                   id="message"
@@ -184,20 +183,20 @@ const Contact = () => {
                   onChange={handleChange}
                   rows={6}
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)] transition-colors text-[var(--text)] placeholder-[var(--muted)] resize-none"
-                  placeholder="Décrivez votre projet..."
+                  placeholder={t('contact.form.messagePlaceholder')}
                   required
                 />
               </div>
 
               {submitStatus === 'success' && (
                 <div className="p-4 bg-green-500/20 border border-green-500/30 rounded-lg text-green-400">
-                  Message envoyé avec succès ! Je vous recontacterai sous 24h.
+                  {t('contact.form.success')}
                 </div>
               )}
 
               {submitStatus === 'error' && (
                 <div className="p-4 bg-red-500/20 border border-red-500/30 rounded-lg text-red-400">
-                  Erreur lors de l'envoi. Veuillez réessayer ou me contacter directement.
+                  {t('contact.form.error')}
                 </div>
               )}
               <button
@@ -205,15 +204,15 @@ const Contact = () => {
                 disabled={isSubmitting}
                 className="w-full btn disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSubmitting ? 'Envoi en cours...' : 'Envoyer le message'}
+                {isSubmitting ? t('contact.form.submitting') : t('contact.form.submit')}
                 <Send size={20} />
               </button>
             </form>
 
             <div className="mt-8 p-4 bg-white/5 rounded-lg border border-white/10">
               <div className="text-center">
-                <div className="text-sm text-[var(--muted)] mb-1">Temps de réponse moyen</div>
-                <div className="text-lg font-semibold text-green-400">{"< 24 heures"}</div>
+                <div className="text-sm text-[var(--muted)] mb-1">{t('contact.info.responseTime')}</div>
+                <div className="text-lg font-semibold text-emerald-400">{t('contact.info.responseTimeValue')}</div>
               </div>
             </div>
           </div>
@@ -221,15 +220,15 @@ const Contact = () => {
 
         <div className="max-w-2xl mx-auto mt-16 text-center">
           <div className="card bg-gradient-to-r from-[var(--primary)]/10 to-[var(--primary)]/5 border-[var(--primary)]/30">
-            <h3 className="text-xl font-bold mb-4">Besoin d'un devis rapide ?</h3>
+            <h3 className="text-xl font-bold mb-4">{t('contact.quote.title')}</h3>
             <p className="text-[var(--muted)] mb-6">
-              Utilisez notre formulaire détaillé pour une estimation personnalisée
+              {t('contact.quote.description')}
             </p>
             <button
               onClick={() => setIsQuoteModalOpen(true)}
               className="btn"
             >
-              Demander un devis
+              {t('contact.quote.cta')}
             </button>
           </div>
         </div>

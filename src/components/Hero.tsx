@@ -38,6 +38,7 @@ const Hero = () => {
 
   return (
     <section id="accueil" className="min-h-screen flex items-center justify-center relative overflow-hidden">
+      
       <div className="absolute inset-0" style={{background:'linear-gradient(135deg, rgba(34,211,238,.06), transparent 40%), radial-gradient(600px at 30% 10%, rgba(99,102,241,.08), transparent 60%), var(--bg)'}}/>
 
       <div className="absolute inset-0 opacity-20">
@@ -130,8 +131,8 @@ const Hero = () => {
                   whileHover={{ y: -5 }}
                 >
                   <Code2 className="text-[var(--primary)] mb-4" size={40} />
-                  <h3 className="font-semibold mb-2 text-sm sm:text-base">{t('hero.card.frontend')}</h3>
-                  <p className="text-xs sm:text-sm text-[var(--muted)]">{t('hero.card.frontend.tech')}</p>
+                  <h3 className="font-semibold mb-2 text-sm sm:text-base">{t('hero.card.frontend.title')}</h3>
+                  <p className="text-xs sm:text-sm text-[var(--muted)]">{t('hero.card.frontend.subtitle')}</p>
                 </motion.div>
                 <motion.div
                   className="card bg-gradient-to-br from-green-500/20 to-green-600/10 hover:scale-105 transition-transform duration-300"
@@ -139,8 +140,8 @@ const Hero = () => {
                   whileHover={{ y: -5 }}
                 >
                   <Database className="text-green-400 mb-4" size={40} />
-                  <h3 className="font-semibold mb-2 text-sm sm:text-base">{t('hero.card.backend')}</h3>
-                  <p className="text-xs sm:text-sm text-[var(--muted)]">{t('hero.card.backend.tech')}</p>
+                  <h3 className="font-semibold mb-2 text-sm sm:text-base">{t('hero.card.backend.title')}</h3>
+                  <p className="text-xs sm:text-sm text-[var(--muted)]">{t('hero.card.backend.subtitle')}</p>
                 </motion.div>
                 <motion.div
                   className="card bg-gradient-to-br from-[var(--accent)]/20 to-[var(--accent)]/10 hover:scale-105 transition-transform duration-300"
@@ -148,8 +149,8 @@ const Hero = () => {
                   whileHover={{ y: -5 }}
                 >
                   <Smartphone className="text-[var(--accent)] mb-4" size={40} />
-                  <h3 className="font-semibold mb-2 text-sm sm:text-base">{t('hero.card.mobile')}</h3>
-                  <p className="text-xs sm:text-sm text-[var(--muted)]">{t('hero.card.mobile.tech')}</p>
+                  <h3 className="font-semibold mb-2 text-sm sm:text-base">{t('hero.card.mobile.title')}</h3>
+                  <p className="text-xs sm:text-sm text-[var(--muted)]">{t('hero.card.mobile.subtitle')}</p>
                 </motion.div>
                 <motion.div
                   className="card bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 hover:scale-105 transition-transform duration-300"
@@ -157,8 +158,8 @@ const Hero = () => {
                   whileHover={{ y: -5 }}
                 >
                   <div className="text-emerald-400 mb-4 text-2xl font-bold">AI</div>
-                  <h3 className="font-semibold mb-2 text-sm sm:text-base">{t('hero.card.intelligence')}</h3>
-                  <p className="text-xs sm:text-sm text-[var(--muted)]">{t('hero.card.ai.tech')}</p>
+                  <h3 className="font-semibold mb-2 text-sm sm:text-base">{t('hero.card.intelligence.title')}</h3>
+                  <p className="text-xs sm:text-sm text-[var(--muted)]">{t('hero.card.intelligence.subtitle')}</p>
                 </motion.div>
               </div>
             </div>

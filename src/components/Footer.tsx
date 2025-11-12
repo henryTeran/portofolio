@@ -13,10 +13,21 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <div className="text-2xl font-display font-bold text-[var(--primary)] mb-4">
-              Henry Teran Corrales
+              {/* Affiché en mode clair */}
+              <img
+                src="/logo-dark.svg"
+                alt="Logo clair"
+                className="block dark:hidden w-64"
+              />
+              {/* Affiché en mode sombre */}
+              <img
+                src="/logo-light.svg"
+                alt="Logo sombre"
+                className="hidden dark:block w-64"
+              />
             </div>
             <p className="text-[var(--muted)] mb-4">
-              {t('hero.title')} - {t('hero.subtitle')}
+              {t('footer.description')}
             </p>
             <div className="flex gap-4">
               <a

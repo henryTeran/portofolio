@@ -25,7 +25,20 @@ const Header = () => {
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="text-xl font-display font-bold text-[var(--text)]">
-            Henry Teran
+            <div className="text-xl font-display font-bold text-[var(--text)]">
+              {/* Affiché en mode clair */}
+              <img
+                src="/logo-dark.svg"
+                alt="Logo clair"
+                className="block dark:hidden w-64"
+              />
+              {/* Affiché en mode sombre */}
+              <img
+                src="/logo-light.svg"
+                alt="Logo sombre"
+                className="hidden dark:block w-64"
+              />
+            </div>
           </div>
 
           <div className="hidden md:flex items-center gap-6 text-[var(--muted)]">

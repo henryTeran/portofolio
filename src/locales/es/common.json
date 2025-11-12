@@ -254,7 +254,7 @@
   "contact": {
     "title": "Contáctame",
     "subtitle": "¿Listo para discutir tu próximo proyecto? No dudes en contactarme",
-    "left": {
+    "info": {
       "title": "Hablemos de tu proyecto",
       "description": "Ya sea que necesites un ERP personalizado, una aplicación móvil innovadora o integrar IA en tus procesos, estoy aquí para apoyarte.",
       "email": "Email",
@@ -267,11 +267,11 @@
       "responseTimeValue": "< 24 horas"
     },
     "form": {
-      "nameLabel": "Nombre completo",
+      "name": "Nombre completo",
       "namePlaceholder": "Tu nombre",
-      "emailLabel": "Correo electrónico",
+      "email": "Correo electrónico",
       "emailPlaceholder": "tu@email.com",
-      "messageLabel": "Mensaje",
+      "message": "Mensaje",
       "messagePlaceholder": "Describe tu proyecto...",
       "submit": "Enviar mensaje",
       "submitting": "Enviando...",

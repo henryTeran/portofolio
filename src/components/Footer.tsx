@@ -39,7 +39,7 @@ const Footer = () => {
                 <Linkedin className="text-[var(--primary)]" size={20} />
               </a>
               <a
-                href="https://github.com/henry-teran"
+                href="https://github.com/henryTeran"
                 className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center border border-white/10 hover:bg-white/10 transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"

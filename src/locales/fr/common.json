@@ -249,7 +249,14 @@
         "Analytics e-commerce",
         "Multi-tenant SaaS"
       ]
-    }
+    },
+    "processTitle": "Mon processus de travail",
+    "process": [
+      { "title": "Analyse", "desc": "Étude approfondie de vos besoins" },
+      { "title": "Conception", "desc": "Architecture et design de la solution" },
+      { "title": "Développement", "desc": "Implémentation avec tests continus" },
+      { "title": "Livraison", "desc": "Déploiement et formation utilisateurs" }
+    ]
   },
   "contact": {
     "title": "Me Contacter",

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Code, Server, Smartphone, Brain } from 'lucide-react';
+import { Code, Server, Smartphone, Brain, Database, GitBranch } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const Skills = () => {
@@ -33,6 +33,20 @@ const Skills = () => {
       color: 'teal',
       skills: ['OpenAI', 'RPA', 'Pandas', 'NumPy', 'Machine Learning'],
       description: t('skills.ai.desc')
+    },
+    {
+      title: t('skills.database.title'),
+      icon: Database,
+      color: 'purple',
+      skills: ['SQL', 'Firestore', 'MongoDB', 'PostgreSQL', 'Firebase'],
+      description: t('skills.database.desc')
+    },
+    {
+      title: t('skills.devops.title'),
+      icon: GitBranch,
+      color: 'indigo',
+      skills: ['Git', 'Docker', 'CI/CD', 'AWS', 'Vercel', 'Netlify'],
+      description: t('skills.devops.desc')
     }
   ];
 
@@ -41,7 +55,9 @@ const Skills = () => {
       blue: 'border-blue-500/30 bg-blue-500/10 text-blue-400',
       green: 'border-green-500/30 bg-green-500/10 text-green-400',
       teal: 'border-teal-500/30 bg-teal-500/10 text-teal-400',
-      emerald: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400'
+      emerald: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400',
+      purple: 'border-purple-500/30 bg-purple-500/10 text-purple-400',
+      indigo: 'border-indigo-500/30 bg-indigo-500/10 text-indigo-400'
     };
     return colors[color as keyof typeof colors];
   };
@@ -60,7 +76,7 @@ const Skills = () => {
           <div className="w-24 h-1 bg-gradient-to-r from-[var(--primary)] to-[var(--primary)] mx-auto mt-6"></div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {skillCategories.map((category, index) => {
             const Icon = category.icon;
             return (
@@ -87,6 +103,19 @@ const Skills = () => {
               </div>
             );
           })}
+        </div>
+        <div className="text-center">
+          <h3 className="text-2xl font-semibold mb-8 text-[var(--primary)]">Technologies supplémentaires</h3>
+          <div className="flex flex-wrap justify-center gap-4">
+            {['Firebase', 'Supabase', 'Redis', 'GraphQL', 'WebSockets', 'Microservices', 'Cloud Computing', 'API Design'].map((tech) => (
+              <span
+                key={tech}
+                className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-[var(--muted)] hover:border-[var(--primary)]/50 transition-colors"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>

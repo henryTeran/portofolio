@@ -57,7 +57,7 @@ const Contact = () => {
             {t('contact.title')}
           </h2>
           <p className="text-xl text-[var(--muted)] max-w-3xl mx-auto">
-            Prêt à discuter de votre prochain projet ? N'hésitez pas à me contacter
+            {t('contact.subtitle')}
           </p>
           <div className="w-24 h-1 bg-gradient-to-r from-[var(--primary)] to-[var(--primary)] mx-auto mt-6"></div>
         </div>
@@ -119,7 +119,7 @@ const Contact = () => {
                   <Linkedin className="text-[var(--primary)]" size={24} />
                 </a>
                 <a
-                  href="https://github.com/henry-teran"
+                  href="https://github.com/henryTeran"
                   className="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center border border-white/10 hover:bg-white/10 transition-colors"
                   target="_blank"
                   rel="noopener noreferrer"

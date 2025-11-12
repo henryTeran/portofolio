@@ -1,5 +1,5 @@
 import React from 'react';
-import { Code, Building, Smartphone, Brain } from 'lucide-react';
+import { Code, Building, Smartphone, Brain, ShoppingCart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const Services = () => {
@@ -11,57 +11,58 @@ const Services = () => {
       description: t('services.fullstack.desc'),
       icon: Code,
       color: 'blue',
-      includes: [
-        'Architecture technique complète',
-        'Frontend & Backend intégrés',
-        'API REST/GraphQL',
-        'Base de données optimisée',
-        'Tests automatisés',
-        'Documentation technique'
-      ]
+      includes: t('services.fullstack.includes', { returnObjects: true }),
     },
     {
       title: t('services.erp.title'),
       description: t('services.erp.desc'),
       icon: Building,
       color: 'green',
-      includes: [
-        'Analyse des besoins métiers',
-        'Modules personnalisés',
-        'Intégration CRM/Facturation',
-        'Workflows automatisés',
-        'Tableaux de bord analytics',
-        'Formation utilisateurs'
-      ]
+      includes: t('services.erp.includes', { returnObjects: true }),
     },
     {
       title: t('services.mobile.title'),
       description: t('services.mobile.desc'),
       icon: Smartphone,
       color: 'emerald',
-      includes: [
-        'Applications cross-platform',
-        'PWA (Progressive Web App)',
-        'Interface responsive',
-        'Fonctionnalités offline',
-        'Notifications push',
-        'Store deployment'
-      ]
+      includes: t('services.mobile.includes', { returnObjects: true }),
     },
     {
       title: t('services.ai.title'),
       description: t('services.ai.desc'),
       icon: Brain,
       color: 'teal',
-      includes: [
-        'Chatbots intelligents',
-        'Automatisation RPA',
-        'Analyse de données',
-        'Machine Learning',
-        'Intégration OpenAI',
-        'Optimisation processus'
-      ]
+      includes: t('services.ai.includes', { returnObjects: true }),
+    },
+    {
+      title: t('services.ecommerce.title'),
+      description: t('services.ecommerce.desc'),
+      icon: ShoppingCart,
+      color: 'blue',
+      includes: t('services.ecommerce.includes', { returnObjects: true }),
     }
+  ];
+  const steps = [
+    {
+      step: '01',
+      title: t('services.process.0.title'),
+      desc: t('services.process.0.desc'),
+    },
+    {
+      step: '02',
+      title: t('services.process.1.title'),
+      desc: t('services.process.1.desc'),
+    },
+    {
+      step: '03',
+      title: t('services.process.2.title'),
+      desc: t('services.process.2.desc'),
+    },
+    {
+      step: '04',
+      title: t('services.process.3.title'),
+      desc: t('services.process.3.desc'),
+    },
   ];
 
   const getColorClasses = (color: string) => {
@@ -88,7 +89,7 @@ const Services = () => {
           <div className="w-24 h-1 bg-gradient-to-r from-[var(--primary)] to-[var(--primary)] mx-auto mt-6"></div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid lg:grid-cols-3 gap-8">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
@@ -115,6 +116,25 @@ const Services = () => {
               </div>
             );
           })}
+        </div>
+        <div className="max-w-4xl mx-auto mt-16 lg:mt-12 pt-6 lg:pt-16 border-t border-white/10 dark:border-white/10">
+          <h3 className="text-3xl font-bold text-center mb-14" style={{ color: 'var(--text)' }}>
+            {t('services.processTitle')}
+          </h3>
+
+          <div className="grid md:grid-cols-4 gap-6">
+            {steps.map((phase) => (
+              <div key={phase.step} className="text-center group">
+                <div className="w-16 h-16 bg-gradient-to-br from-[var(--primary)] to-[var(--primary-600)] rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-lg text-white group-hover:scale-110 transition-transform duration-300">
+                  {phase.step}
+                </div>
+                <h4 className="text-lg font-semibold mb-2" style={{ color: 'var(--text)' }}>
+                  {phase.title}
+                </h4>
+                <p className="text-[var(--muted)] text-sm">{phase.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

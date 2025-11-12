@@ -249,7 +249,14 @@
         "Análisis de e-commerce",
         "SaaS multi-tenant"
       ]
-    }
+    },
+    "processTitle": "Mi proceso de trabajo",
+    "process": [
+      { "title": "Análisis", "desc": "Estudio profundo de tus necesidades" },
+      { "title": "Diseño", "desc": "Arquitectura y diseño de la solución" },
+      { "title": "Desarrollo", "desc": "Implementación con pruebas continuas" },
+      { "title": "Entrega", "desc": "Despliegue y formación de usuarios" }
+    ]
   },
   "contact": {
     "title": "Contáctame",

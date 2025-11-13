@@ -3,7 +3,7 @@ import { Mail, Linkedin, Github, Send, MapPin, Clock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 // ⬇️ adapte l'import selon le nom de ton fichier (email.service ou emailService)
-import { sendContactEmail, initEmailJS } from '../services/emailService'
+import { sendContactEmail, initEmailJS, validateContactForm } from '../services/emailService'
 import type { ContactFormData } from '../services/emailService';
 
 import QuoteModal from './QuoteModal';
@@ -43,8 +43,10 @@ const Contact = () => {
       return;
     }
 
-    // mini validation
-    if (!formData.name.trim() || !isValidEmail(formData.email) || !formData.message.trim()) {
+    // Validation robuste
+    const validation = validateContactForm(formData);
+    if (!validation.isValid) {
+      console.error('[Contact] Erreurs de validation:', validation.errors);
       setSubmitStatus('error');
       return;
     }
@@ -54,7 +56,7 @@ const Contact = () => {
 
     try {
       const ok = await sendContactEmail(
-        { ...formData },
+        formData,
         {
           sourcePage: `${window.location.pathname}#contact`,
           tags: 'lead, portfolio'
@@ -64,12 +66,12 @@ const Contact = () => {
       if (ok) {
         setSubmitStatus('success');
         setFormData({ name: '', email: '', message: '' });
-        // Optionnel : effacer le message de succès après 5s
         setTimeout(() => setSubmitStatus('idle'), 5000);
       } else {
         setSubmitStatus('error');
       }
-    } catch {
+    } catch (error) {
+      console.error('[Contact] Erreur lors de l\'envoi:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);

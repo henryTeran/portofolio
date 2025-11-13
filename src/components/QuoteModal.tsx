@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, Send, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
-import { sendQuoteEmail, QuoteFormData } from '../services/emailService';
+import { sendQuoteEmail, validateQuoteForm, QuoteFormData } from '../services/emailService';
 
 interface QuoteModalProps {
   isOpen: boolean;
@@ -106,6 +106,13 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
   };
 
   const handleSubmit = async () => {
+    const validation = validateQuoteForm(formData);
+    if (!validation.isValid) {
+      console.error('[Quote] Erreurs de validation:', validation.errors);
+      setSubmitStatus('error');
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
@@ -121,6 +128,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
         setSubmitStatus('error');
       }
     } catch (error) {
+      console.error('[Quote] Erreur lors de l\'envoi:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);

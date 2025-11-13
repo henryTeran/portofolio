@@ -202,7 +202,13 @@ const Contact = () => {
                   value={formData.name}
                   onChange={handleChange}
                   autoComplete="name"
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)] transition-colors text-[var(--text)] placeholder-[var(--muted)]"
+                  className="
+                    w-full px-4 py-3 rounded-lg border
+                    bg-white/90 text-slate-900 placeholder-slate-400 border-slate-200
+                    dark:bg-white/5 dark:text-[var(--text)] dark:placeholder-[var(--muted)] dark:border-white/10
+                    focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)]
+                    transition-colors
+                  "
                   placeholder={t('contact.form.namePlaceholder')}
                   required
                 />
@@ -219,7 +225,13 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleChange}
                   autoComplete="email"
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)] transition-colors text-[var(--text)] placeholder-[var(--muted)]"
+                  className="
+                      w-full px-4 py-3 rounded-lg border
+                      bg-white/90 text-slate-900 placeholder-slate-400 border-slate-200
+                      dark:bg-white/5 dark:text-[var(--text)] dark:placeholder-[var(--muted)] dark:border-white/10
+                      focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)]
+                      transition-colors
+                    "
                   placeholder={t('contact.form.emailPlaceholder')}
                   required
                 />
@@ -235,7 +247,13 @@ const Contact = () => {
                   value={formData.message}
                   onChange={handleChange}
                   rows={6}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)] transition-colors text-[var(--text)] placeholder-[var(--muted)] resize-none"
+                  className="
+                    w-full px-4 py-3 rounded-lg border
+                    bg-white/90 text-slate-900 placeholder-slate-400 border-slate-200
+                    dark:bg-white/5 dark:text-[var(--text)] dark:placeholder-[var(--muted)] dark:border-white/10
+                    focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)]
+                    transition-colors
+                  "
                   placeholder={t('contact.form.messagePlaceholder')}
                   required
                 />
@@ -264,7 +282,7 @@ const Contact = () => {
               </button>
             </form>
 
-            <div className="mt-8 p-4 bg-white/5 rounded-lg border border-white/10">
+            <div className="mt-8 p-4 rounded-lg border text-center transition-colors bg-white/70 border-slate-200 dark:bg-white/5 dark:border-white/10">
               <div className="text-center">
                 <div className="text-sm text-[var(--muted)] mb-1">{t('contact.info.responseTime')}</div>
                 <div className="text-lg font-semibold text-emerald-400">{t('contact.info.responseTimeValue')}</div>

@@ -37,7 +37,7 @@ const Hero = () => {
   };
 
   return (
-    <section id="accueil" className="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <section id="accueil" className="min-h-screen flex justify-center item-start lg:items-center relative overflow-hidden pt-24 sm:pt-28 lg:pt-0">
       
       <div className="absolute inset-0" style={{background:'linear-gradient(135deg, rgba(34,211,238,.06), transparent 40%), radial-gradient(600px at 30% 10%, rgba(99,102,241,.08), transparent 60%), var(--bg)'}}/>
 

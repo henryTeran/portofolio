@@ -1,36 +1,75 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Mail, Linkedin, Github, Send, MapPin, Clock } from 'lucide-react';
-import { sendContactEmail, ContactFormData } from '../services/emailService';
 import { useTranslation } from 'react-i18next';
+
+// ⬇️ adapte l'import selon le nom de ton fichier (email.service ou emailService)
+import { sendContactEmail, initEmailJS } from '../services/emailService'
+import type { ContactFormData } from '../services/emailService';
+
 import QuoteModal from './QuoteModal';
 
 const Contact = () => {
   const { t } = useTranslation();
+
+  // UI states
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  
-  const [formData, setFormData] = useState({
+
+  // form state
+  const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',
     message: ''
   });
 
+  // Honeypot anti-bot
+  const [website, setWebsite] = useState(''); // doit rester vide
+
+  useEffect(() => {
+    initEmailJS();
+  }, []);
+
+  const isValidEmail = (email: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
+    // anti-bot : si rempli, on "réussit" silencieusement sans envoyer
+    if (website) {
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+      return;
+    }
+
+    // mini validation
+    if (!formData.name.trim() || !isValidEmail(formData.email) || !formData.message.trim()) {
+      setSubmitStatus('error');
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
     try {
-      const success = await sendContactEmail(formData as ContactFormData);
-      if (success) {
+      const ok = await sendContactEmail(
+        { ...formData },
+        {
+          sourcePage: `${window.location.pathname}#contact`,
+          tags: 'lead, portfolio'
+        }
+      );
+
+      if (ok) {
         setSubmitStatus('success');
         setFormData({ name: '', email: '', message: '' });
+        // Optionnel : effacer le message de succès après 5s
+        setTimeout(() => setSubmitStatus('idle'), 5000);
       } else {
         setSubmitStatus('error');
       }
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -38,10 +77,7 @@ const Contact = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   return (
@@ -53,7 +89,7 @@ const Contact = () => {
 
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-display font-bold mb-6" style={{color:'var(--text)'}}>
+          <h2 className="text-4xl lg:text-5xl font-display font-bold mb-6" style={{ color: 'var(--text)' }}>
             {t('contact.title')}
           </h2>
           <p className="text-xl text-[var(--muted)] max-w-3xl mx-auto">
@@ -63,7 +99,7 @@ const Contact = () => {
         </div>
 
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12">
-          {/* Contact Info */}
+          {/* Colonne gauche : infos */}
           <div className="space-y-8">
             <div>
               <h3 className="text-2xl font-bold mb-6 text-[var(--primary)]">{t('contact.info.title')}</h3>
@@ -72,7 +108,6 @@ const Contact = () => {
               </p>
             </div>
 
-            {/* Contact Methods */}
             <div className="space-y-6">
               <div className="flex items-center">
                 <div className="w-12 h-12 bg-[var(--primary)]/20 rounded-lg flex items-center justify-center mr-4 border border-[var(--primary)]/30">
@@ -124,6 +159,7 @@ const Contact = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
+                  {/* s'adapte au thème via CSS vars */}
                   <Github className="text-[var(--text)] hover:text-[var(--primary)]" size={24} />
                 </a>
                 <a
@@ -136,10 +172,23 @@ const Contact = () => {
             </div>
           </div>
 
+          {/* Colonne droite : formulaire */}
           <div className="card">
             <h3 className="text-2xl font-bold mb-6">{t('contact.info.title')}</h3>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+              {/* Honeypot invisible */}
+              <input
+                type="text"
+                name="website"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+                autoComplete="off"
+                tabIndex={-1}
+                className="hidden"
+                aria-hidden="true"
+              />
+
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-[var(--muted)] mb-2">
                   {t('contact.form.name')}
@@ -150,6 +199,7 @@ const Contact = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
+                  autoComplete="name"
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)] transition-colors text-[var(--text)] placeholder-[var(--muted)]"
                   placeholder={t('contact.form.namePlaceholder')}
                   required
@@ -166,6 +216,7 @@ const Contact = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
+                  autoComplete="email"
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)] transition-colors text-[var(--text)] placeholder-[var(--muted)]"
                   placeholder={t('contact.form.emailPlaceholder')}
                   required
@@ -199,10 +250,12 @@ const Contact = () => {
                   {t('contact.form.error')}
                 </div>
               )}
+
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full btn disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full btn disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                aria-busy={isSubmitting}
               >
                 {isSubmitting ? t('contact.form.submitting') : t('contact.form.submit')}
                 <Send size={20} />
@@ -224,17 +277,14 @@ const Contact = () => {
             <p className="text-[var(--muted)] mb-6">
               {t('contact.quote.description')}
             </p>
-            <button
-              onClick={() => setIsQuoteModalOpen(true)}
-              className="btn"
-            >
+            <button onClick={() => setIsQuoteModalOpen(true)} className="btn">
               {t('contact.quote.cta')}
             </button>
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 };
 
 export default Contact;

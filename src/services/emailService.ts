@@ -1,11 +1,16 @@
+// src/services/email.service.ts
 import emailjs from '@emailjs/browser';
+import i18next from 'i18next';
 
-// Configuration EmailJS
-const EMAILJS_SERVICE_ID = 'portofolio_HenryTeran'; // À configurer dans EmailJS
-const EMAILJS_TEMPLATE_ID = 'template_3r8z2af'; // Template pour contact simple
-const EMAILJS_QUOTE_TEMPLATE_ID = 'template_3r8z2af'; // Template pour demande de devis
-const EMAILJS_PUBLIC_KEY = 'xZiaWwWG4X44LV4sB'; // À configurer dans EmailJS
+const SERVICE_ID   = import.meta.env.VITE_EMAILJS_SERVICE_ID as string;
+const PUBLIC_KEY   = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string;
+const TPL_CONTACT  = import.meta.env.VITE_EMAILJS_TPL_CONTACT as string;
+const TPL_QUOTE    = import.meta.env.VITE_EMAILJS_TPL_QUOTE as string;
 
+// Email de réception (utile si tu veux aussi le passer côté template)
+const RECEIVER_EMAIL = 'teranhenryc@gmail.com';
+
+/* ----------------------------- Types publics ----------------------------- */
 export interface ContactFormData {
   name: string;
   email: string;
@@ -13,106 +18,119 @@ export interface ContactFormData {
 }
 
 export interface QuoteFormData {
-  // Informations personnelles
+  // Infos client
   name: string;
   email: string;
-  phone: string;
-  company: string;
-  
-  // Détails du projet
+  phone?: string;
+  company?: string;
+
+  // Projet
   projectType: string;
   projectDescription: string;
-  features: string[];
-  technologies: string[];
-  
-  // Timeline et budget
-  timeline: string;
-  budget: string;
-  urgency: string;
-  
-  // Besoins spécifiques
-  hasDesign: boolean;
-  needsHosting: boolean;
-  needsMaintenance: boolean;
-  needsTraining: boolean;
-  
-  // Informations supplémentaires
-  additionalInfo: string;
+  features: string[];      // ex: ["auth","stripe"]
+  technologies: string[];  // ex: ["React","Node"]
+
+  // Planning
+  timeline?: string;       // ex: "4-6 semaines"
+  budget?: string;         // ex: "5-8k€"
+  urgency?: string;        // ex: "Haute/Moyenne/Basse"
+
+  // Services
+  hasDesign?: boolean;
+  needsHosting?: boolean;
+  needsMaintenance?: boolean;
+  needsTraining?: boolean;
+
+  // Infos sup
+  additionalInfo?: string;
 }
 
-export const sendContactEmail = async (formData: ContactFormData): Promise<boolean> => {
+/* ------------------------------ Utils internes --------------------------- */
+const boolToYesNo = (v?: boolean) => (v ? 'Oui' : 'Non');
+const safeJoin = (arr?: string[]) =>
+  Array.isArray(arr) ? arr.filter(Boolean).join(', ') : '';
+
+const nowString = () => new Date().toLocaleString();
+
+const currentLang = () => (i18next?.language || 'fr');
+
+/* ------------------------------ Initialisation --------------------------- */
+export const initEmailJS = () => {
+  if (!PUBLIC_KEY) {
+    console.warn('[EmailJS] PUBLIC_KEY manquant');
+    return;
+  }
+  emailjs.init(PUBLIC_KEY);
+};
+
+/* ------------------------------ Contact simple --------------------------- */
+export const sendContactEmail = async (formData: ContactFormData, extras?: {
+  sourcePage?: string; // ex: window.location.pathname
+  tags?: string;       // ex: "lead, portfolio"
+}): Promise<boolean> => {
   try {
     const templateParams = {
-      from_name: formData.name,
-      from_email: formData.email,
-      message: formData.message,
+      title: 'Portfolio Contact',                 // ajoute si tu veux garder {{title}}
+      name: String(formData.name || ''),
+      email: String(formData.email || ''),
+      message: String(formData.message || ''),
+      reply_to: String(formData.email || ''),
       to_email: 'teranhenryc@gmail.com',
-      reply_to: formData.email,
+      time: new Date().toLocaleString(),
+      lang: (i18next.language || 'fr') + '',
+      source_page: String(extras?.sourcePage || window.location.pathname || ''),
+      tags: String(extras?.tags || '')
     };
-
-    await emailjs.send(
-      EMAILJS_SERVICE_ID,
-      EMAILJS_TEMPLATE_ID,
-      templateParams,
-      EMAILJS_PUBLIC_KEY
-    );
-
+    console.log('[EmailJS params]', templateParams);
+    await emailjs.send(SERVICE_ID, TPL_CONTACT, templateParams, PUBLIC_KEY);
     return true;
   } catch (error) {
-    console.error('Erreur lors de l\'envoi de l\'email:', error);
+    console.error('[EmailJS] Échec envoi contact :', error);
     return false;
   }
 };
 
+/* ------------------------------ Demande de devis ------------------------- */
 export const sendQuoteEmail = async (formData: QuoteFormData): Promise<boolean> => {
   try {
     const templateParams = {
-      // Informations client
+      // === INFORMATIONS CLIENT ===
       client_name: formData.name,
       client_email: formData.email,
-      client_phone: formData.phone,
-      client_company: formData.company,
-      
-      // Projet
+      client_phone: formData.phone || '',
+      client_company: formData.company || '',
+
+      // === PROJET ===
       project_type: formData.projectType,
       project_description: formData.projectDescription,
-      project_features: formData.features.join(', '),
-      project_technologies: formData.technologies.join(', '),
-      
-      // Planning
-      project_timeline: formData.timeline,
-      project_budget: formData.budget,
-      project_urgency: formData.urgency,
-      
-      // Services
-      needs_design: formData.hasDesign ? 'Oui' : 'Non',
-      needs_hosting: formData.needsHosting ? 'Oui' : 'Non',
-      needs_maintenance: formData.needsMaintenance ? 'Oui' : 'Non',
-      needs_training: formData.needsTraining ? 'Oui' : 'Non',
-      
-      // Infos supplémentaires
-      additional_info: formData.additionalInfo,
-      
-      // Email de destination
-      to_email: 'teranhenryc@gmail.com',
+      project_features: safeJoin(formData.features),
+      project_technologies: safeJoin(formData.technologies),
+
+      // === PLANNING ===
+      project_timeline: formData.timeline || '',
+      project_budget: formData.budget || '',
+      project_urgency: formData.urgency || '',
+
+      // === SERVICES SUPPLÉMENTAIRES ===
+      needs_design:       boolToYesNo(formData.hasDesign),
+      needs_hosting:      boolToYesNo(formData.needsHosting),
+      needs_maintenance:  boolToYesNo(formData.needsMaintenance),
+      needs_training:     boolToYesNo(formData.needsTraining),
+
+      // === INFORMATIONS SUPPLÉMENTAIRES ===
+      additional_info: formData.additionalInfo || '',
+
+      // meta
+      to_email: RECEIVER_EMAIL,
       reply_to: formData.email,
+      time: nowString(),
+      lang: currentLang(),
     };
 
-    await emailjs.send(
-      EMAILJS_SERVICE_ID,
-      EMAILJS_QUOTE_TEMPLATE_ID,
-      templateParams,
-      EMAILJS_PUBLIC_KEY
-    );
-
+    await emailjs.send(SERVICE_ID, TPL_QUOTE, templateParams, PUBLIC_KEY);
     return true;
   } catch (error) {
-    console.error('Erreur lors de l\'envoi de la demande de devis:', error);
+    console.error('[EmailJS] Échec envoi devis :', error);
     return false;
   }
-};
-
-// Initialisation d'EmailJS
-export const initEmailJS = () => {
-  emailjs.init(EMAILJS_PUBLIC_KEY);
 };

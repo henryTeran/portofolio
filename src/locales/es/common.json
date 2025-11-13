@@ -291,6 +291,126 @@
       "cta": "Solicitar presupuesto"
     }
   },
+  "quoteModal": {
+    "title": "Solicitud de Presupuesto Personalizado",
+    "step": "Paso {{step}} de 4",
+    "steps": {
+      "info": "Información",
+      "project": "Proyecto",
+      "planning": "Planificación",
+      "finalization": "Finalización"
+    },
+    "step1": {
+      "title": "Tu información",
+      "fullName": "Nombre completo *",
+      "fullNamePlaceholder": "Tu nombre",
+      "email": "Email *",
+      "emailPlaceholder": "tu@email.com",
+      "phone": "Teléfono",
+      "phonePlaceholder": "+34 6 12 34 56 78",
+      "company": "Empresa",
+      "companyPlaceholder": "Nombre de tu empresa"
+    },
+    "step2": {
+      "title": "Detalles del proyecto",
+      "projectType": "Tipo de proyecto *",
+      "selectType": "Selecciona un tipo",
+      "projectTypes": [
+        "Sitio web escaparate",
+        "Aplicación web",
+        "Aplicación móvil",
+        "E-commerce",
+        "ERP / CRM",
+        "Plataforma SaaS",
+        "Integración IA",
+        "Automatización RPA",
+        "API / Backend",
+        "Otro"
+      ],
+      "description": "Descripción del proyecto *",
+      "descriptionPlaceholder": "Describe tu proyecto en detalle...",
+      "features": "Funcionalidades deseadas",
+      "featuresList": [
+        "Autenticación de usuarios",
+        "Pagos en línea",
+        "Gestión de contenidos (CMS)",
+        "Panel de control admin",
+        "Notificaciones push",
+        "Chat en tiempo real",
+        "Geolocalización",
+        "Integración redes sociales",
+        "Análisis avanzados",
+        "Modo sin conexión",
+        "Multilingüe",
+        "API REST"
+      ],
+      "technologies": "Tecnologías preferidas",
+      "technologiesList": [
+        "React",
+        "Angular",
+        "Vue.js",
+        "Node.js",
+        "Python/Flask",
+        "Firebase",
+        "MongoDB",
+        "PostgreSQL",
+        "Ionic",
+        "React Native",
+        "Tailwind CSS",
+        "TypeScript"
+      ]
+    },
+    "step3": {
+      "title": "Planificación y presupuesto",
+      "timeline": "Plazo deseado *",
+      "selectTimeline": "Selecciona un plazo",
+      "timelineOptions": [
+        "Menos de 1 mes",
+        "1-3 meses",
+        "3-6 meses",
+        "6-12 meses",
+        "Más de 1 año",
+        "Flexible"
+      ],
+      "budget": "Presupuesto estimado *",
+      "selectBudget": "Selecciona un presupuesto",
+      "budgetRanges": [
+        "Menos de 5 000€",
+        "5 000€ - 10 000€",
+        "10 000€ - 20 000€",
+        "20 000€ - 50 000€",
+        "Más de 50 000€",
+        "A discutir"
+      ],
+      "urgency": "Urgencia del proyecto",
+      "urgencyLevels": ["Baja", "Media", "Alta"],
+      "additionalServices": "Servicios adicionales",
+      "design": "Diseño gráfico / UI/UX",
+      "hosting": "Hosting y nombre de dominio",
+      "maintenance": "Mantenimiento y soporte",
+      "training": "Formación de usuarios"
+    },
+    "step4": {
+      "title": "Información adicional",
+      "additionalInfo": "Información adicional",
+      "additionalInfoPlaceholder": "Añade cualquier información útil para tu proyecto...",
+      "summary": "Resumen de tu solicitud",
+      "project": "Proyecto:",
+      "budget": "Presupuesto:",
+      "timeline": "Plazo:",
+      "features": "Funcionalidades:",
+      "selected": "seleccionadas",
+      "technologies": "Tecnologías:",
+      "successMessage": "¡Solicitud enviada con éxito! Te contactaré en 24h.",
+      "errorMessage": "Error al enviar. Por favor, inténtalo de nuevo o contáctame directamente."
+    },
+    "buttons": {
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "submit": "Enviar solicitud",
+      "submitting": "Enviando..."
+    }
+  },
   "footer": {
     "description": "Desarrollador Full-Stack Freelance especializado en soluciones innovadoras para empresas modernas.",
     "navigation": "Navegación",

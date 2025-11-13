@@ -30,6 +30,14 @@ jobs:
       - name: Install
         run: npm ci
 
+      - name: Create .env file
+        run: |
+          echo "VITE_EMAILJS_SERVICE_ID=${{ secrets.VITE_EMAILJS_SERVICE_ID }}" >> .env
+          echo "VITE_EMAILJS_PUBLIC_KEY=${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}" >> .env
+          echo "VITE_EMAILJS_TPL_CONTACT=${{ secrets.VITE_EMAILJS_TPL_CONTACT }}" >> .env
+          echo "VITE_EMAILJS_TPL_QUOTE=${{ secrets.VITE_EMAILJS_TPL_QUOTE }}" >> .env
+
+
       - name: Build
         run: npm run build
 

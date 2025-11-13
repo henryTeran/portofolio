@@ -3,6 +3,7 @@ import { Mail, Linkedin, Github, Heart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
+  const base = import.meta.env.BASE_URL; 
   const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
 
@@ -15,13 +16,13 @@ const Footer = () => {
             <div className="text-2xl font-display font-bold text-[var(--primary)] mb-4">
               {/* Affiché en mode clair */}
               <img
-                src="/logo-dark.svg"
+                src={`${base}logo-dark.svg`}
                 alt="Logo clair"
                 className="block dark:hidden w-64"
               />
               {/* Affiché en mode sombre */}
               <img
-                src="/logo-light.svg"
+                src={`${base}logo-light.svg`}
                 alt="Logo sombre"
                 className="hidden dark:block w-64"
               />

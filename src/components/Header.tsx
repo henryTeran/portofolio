@@ -5,6 +5,7 @@ import LanguageSwitcher from './LanguageSwitcher';
 import ThemeToggle from './ThemeToggle';
 
 const Header = () => {
+  const base = import.meta.env.BASE_URL; 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { t } = useTranslation();
@@ -28,13 +29,13 @@ const Header = () => {
             <div className="text-xl font-display font-bold text-[var(--text)]">
               {/* Affiché en mode clair */}
               <img
-                src="/logo-dark.svg"
+                src={`${base}logo-dark.svg`}
                 alt="Logo clair"
                 className="block dark:hidden w-64"
               />
               {/* Affiché en mode sombre */}
               <img
-                src="/logo-light.svg"
+                src={`${base}logo-light.svg`}
                 alt="Logo sombre"
                 className="hidden dark:block w-64"
               />

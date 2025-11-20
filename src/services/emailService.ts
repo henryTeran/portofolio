@@ -37,6 +37,10 @@ const sanitizeString = (value: any): string => {
 };
 
 const boolToYesNo = (value?: boolean): string => {
+  const lang = getCurrentLang();
+  if (lang.startsWith('en')) return value ? 'Yes' : 'No';
+  if (lang.startsWith('es')) return value ? 'Sí' : 'No';
+  // default french
   return value ? 'Oui' : 'Non';
 };
 
@@ -69,6 +73,35 @@ export const initEmailJS = (): void => {
   }
 };
 
+const normalizeTemplateParams = (params: Record<string, unknown>): Record<string, string> => {
+  const out: Record<string, string> = {};
+  Object.keys(params).forEach((k) => {
+    const v = params[k];
+    if (v === null || v === undefined) {
+      out[k] = '';
+      return;
+    }
+
+    // Arrays -> comma-separated
+    if (Array.isArray(v)) {
+      out[k] = (v as unknown[]).filter(Boolean).join(', ');
+      return;
+    }
+
+    if (typeof v === 'object') {
+      try {
+        out[k] = JSON.stringify(v);
+      } catch {
+        out[k] = String(v);
+      }
+      return;
+    }
+
+    out[k] = String(v);
+  });
+  return out;
+};
+
 export const sendContactEmail = async (
   formData: ContactFormData,
   extras?: {
@@ -95,14 +128,30 @@ export const sendContactEmail = async (
 
     console.log('[EmailJS Contact] Envoi avec les paramètres:', templateParams);
 
-    const response = await emailjs.send(
-      SERVICE_ID,
-      TPL_CONTACT,
-      templateParams,
-      PUBLIC_KEY
-    );
+    if (!SERVICE_ID || !TPL_CONTACT) {
+      console.error('[EmailJS Contact] SERVICE_ID ou TPL_CONTACT manquant dans .env');
+      return false;
+    }
 
-    console.log('[EmailJS Contact] Succès:', response);
+    const safeParams = normalizeTemplateParams(templateParams);
+
+    try {
+      const response = await emailjs.send(
+        SERVICE_ID,
+        TPL_CONTACT,
+        safeParams,
+        PUBLIC_KEY
+      );
+      console.log('[EmailJS Contact] Succès:', response);
+    } catch (err: unknown) {
+      console.error('[EmailJS Contact] Erreur lors de l\'envoi (détails):', err);
+      if (err && typeof err === 'object') {
+        const eObj = err as Record<string, unknown>;
+        if (eObj.status) console.error('[EmailJS Contact] status:', eObj.status);
+        if (eObj.text) console.error('[EmailJS Contact] body:', eObj.text);
+      }
+      throw err;
+    }
     return true;
   } catch (error) {
     console.error('[EmailJS Contact] Erreur:', error);
@@ -146,14 +195,30 @@ export const sendQuoteEmail = async (formData: QuoteFormData): Promise<boolean> 
 
     console.log('[EmailJS Quote] Envoi avec les paramètres:', templateParams);
 
-    const response = await emailjs.send(
-      SERVICE_ID,
-      TPL_QUOTE,
-      templateParams,
-      PUBLIC_KEY
-    );
+    if (!SERVICE_ID || !TPL_QUOTE) {
+      console.error('[EmailJS Quote] SERVICE_ID ou TPL_QUOTE manquant dans .env');
+      return false;
+    }
 
-    console.log('[EmailJS Quote] Succès:', response);
+    const safeParams = normalizeTemplateParams(templateParams);
+
+    try {
+      const response = await emailjs.send(
+        SERVICE_ID,
+        TPL_QUOTE,
+        safeParams,
+        PUBLIC_KEY
+      );
+      console.log('[EmailJS Quote] Succès:', response);
+    } catch (err: unknown) {
+      console.error('[EmailJS Quote] Erreur lors de l\'envoi (détails):', err);
+      if (err && typeof err === 'object') {
+        const eObj = err as Record<string, unknown>;
+        if (eObj.status) console.error('[EmailJS Quote] status:', eObj.status);
+        if (eObj.text) console.error('[EmailJS Quote] body:', eObj.text);
+      }
+      throw err;
+    }
     return true;
   } catch (error) {
     console.error('[EmailJS Quote] Erreur:', error);
@@ -216,3 +281,4 @@ export const validateQuoteForm = (formData: QuoteFormData): { isValid: boolean; 
     errors
   };
 };
+ 

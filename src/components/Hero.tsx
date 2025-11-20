@@ -86,7 +86,7 @@ const Hero = () => {
             <motion.p className="text-lg sm:text-xl text-[var(--muted)] mb-8 leading-relaxed" variants={itemVariants}>
               {t('hero.specialization')} <span className="text-[var(--primary)] font-semibold">{t('hero.erp')}</span>,
               <span className="text-[var(--primary)] font-semibold"> {t('hero.medical')}</span>,
-              <span className="text-green-400 font-semibold"> {t('hero.ai')}</span> et
+              <span className="text-green-400 font-semibold"> {t('hero.ai')}</span>
               <span className="text-[var(--accent)] font-semibold"> {t('hero.ecommerce')}</span>
             </motion.p>
 

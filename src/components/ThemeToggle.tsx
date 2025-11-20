@@ -20,8 +20,8 @@ export default function ThemeToggle() {
 
     if (favicon) {
       favicon.href = dark
-        ? `${base}favicon-dark.png`
-        : `${base}favicon-light.png`;
+        ? `${base}favicon-dark_v2.png`
+        : `${base}favicon-light_v2.png`;
     }
   }, [dark]);
 

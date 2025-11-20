@@ -21,7 +21,7 @@ export default function ThemeToggle() {
     if (favicon) {
       favicon.href = dark
         ? `${base}favicon-dark.png`
-        : `${base}favicon.png`;
+        : `${base}favicon-light.png`;
     }
   }, [dark]);
 

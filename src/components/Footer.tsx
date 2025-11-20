@@ -120,7 +120,7 @@ const Footer = () => {
         <div className="border-t border-white/10 pt-8 mt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-[var(--muted)] text-sm mb-4 md:mb-0">
-              © {currentYear} Henry Teran Corrales. {t('footer.rights')}
+              © {currentYear} Henry Teran. {t('footer.rights')}
             </div>
             <div className="flex items-center text-[var(--muted)] text-sm">
               {t('footer.madeWith')} <Heart className="mx-2 text-red-400" size={16} /> {t('footer.andCoffee')}

@@ -1,4 +1,4 @@
-# Portfolio Henry Teran Corrales
+# Portfolio Henry Teran
 
 Portfolio professionnel de développeur Full-Stack  avec système d'envoi d'emails intégré.
 

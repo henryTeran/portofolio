@@ -1,6 +1,6 @@
 # Portfolio Henry Teran Corrales
 
-Portfolio professionnel de développeur Full-Stack freelance avec système d'envoi d'emails intégré.
+Portfolio professionnel de développeur Full-Stack  avec système d'envoi d'emails intégré.
 
 ## Configuration EmailJS
 

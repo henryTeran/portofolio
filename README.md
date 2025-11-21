@@ -1,5 +1,7 @@
 # 👨‍💻 Henry Teran – Full-Stack Developer Portfolio
 
+<a id="top"></a>
+
 <div align="center">
 
 [![React](https://img.shields.io/badge/React-18%2B-61DAFB?logo=react&logoColor=white&style=flat-square)](https://react.dev)
@@ -467,7 +469,7 @@ This project is licensed under the **MIT License** – see the [LICENSE](LICENSE
 
 Made with ❤️ by [Henry Teran](https://github.com/henryTeran)
 
-[🔝 Back to top](#-Henry Teran – Full-Stack Developer Portfolio)
+[🔝 Back to top](#top)
 
 </div>
 

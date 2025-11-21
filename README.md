@@ -467,7 +467,7 @@ This project is licensed under the **MIT License** – see the [LICENSE](LICENSE
 
 Made with ❤️ by [Henry Teran](https://github.com/henryTeran)
 
-[🔝 Back to top](#-henry-teran--full-stack-developer-portfolio)
+[🔝 Back to top](#-Henry Teran – Full-Stack Developer Portfolio)
 
 </div>
 

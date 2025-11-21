@@ -6,52 +6,58 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5%2B-3178C6?logo=typescript&logoColor=white&style=flat-square)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3-38B2AC?logo=tailwindcss&logoColor=white&style=flat-square)](https://tailwindcss.com)
 [![Vite](https://img.shields.io/badge/Vite-5%2B-646CFF?logo=vite&logoColor=white&style=flat-square)](https://vitejs.dev)
-[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](#)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![GitHub Pages](https://img.shields.io/badge/Live-Portfolio-blue?style=flat-square)](https://henryteran.github.io/portofolio)
 
-**Modern, responsive portfolio showcasing full-stack development expertise with integrated email solutions.**
+**Modern, responsive full-stack portfolio showcasing expertise in React, TypeScript, and modern web development with integrated email solutions and multi-language support.**
 
-[🌐 Live Demo](#) • [📧 Contact](#contact) • [🎯 Features](#features)
+[🌐 **Live Portfolio**](https://henryteran.github.io/portofolio) • [📧 **Contact**](#-contact) • [🚀 **Quick Start**](#-quick-start)
 
 </div>
 
 ---
 
-## 🎯 Features
+## ✨ Features
 
 ### 📧 Smart Email System
-- ✅ **Contact Form** – Direct email integration with validation
-- ✅ **Quote Generator** – 4-step wizard for detailed project quotes
-- ✅ **EmailJS Integration** – Zero backend required
-- ✅ **Auto-responses** – Instant confirmation messages
-- ✅ **Error Handling** – Robust error management & logging
+- **Contact Form** – Direct email delivery with validation and error handling
+- **Quote Generator** – 4-step wizard for detailed project inquiries
+- **EmailJS Integration** – Zero backend infrastructure required
+- **Auto-responses** – Instant confirmation messages to clients
+- **Template Variables** – Corrupted template prevention with string normalization
+- **Multilingual Support** – Email responses adapt to selected language
 
 ### 🌍 Internationalization (i18n)
-- 🇫🇷 Français
-- 🇬🇧 English  
-- 🇪🇸 Español
+- **Three Languages:** 🇫🇷 Français, 🇬🇧 English, 🇪🇸 Español
+- **Dynamic Switching** – Instant language changes without page reload
+- **Complete Localization** – All UI text, forms, and templates translated
+- **Context-Aware** – Email language matches user's selected language
 
-### 🎨 UI/UX
-- ✨ **Dark/Light Mode** – Seamless theme switching
-- 📱 **Fully Responsive** – Mobile-first design
-- 🎬 **Smooth Animations** – Framer Motion powered
-- ♿ **Accessible** – WCAG compliant
-- 🚀 **Performance Optimized** – Instant loading
+### 🎨 User Interface & Experience
+- ✨ **Dark/Light Mode** – Seamless theme switching with persistent storage
+- 📱 **Fully Responsive** – Mobile-first design with optimized mobile layouts
+- 🎬 **Smooth Animations** – Framer Motion powered transitions and interactions
+- ♿ **Accessible** – WCAG 2.1 compliant with keyboard navigation
+- 🚀 **Performance Optimized** – Instant page loads and smooth interactions
+- 🎯 **Modern UI Components** – Badge system, modals, cards, and interactive elements
 
-### 🛠️ Developer Tools
-- 🔒 TypeScript for type safety
-- 🎯 ESLint & code quality
-- 📊 Git-based workflow
-- 🔄 Hot module replacement (HMR)
+### 🛠️ Developer Experience
+- 🔒 **TypeScript** – Full type safety and improved code quality
+- 🎯 **ESLint** – Consistent code style and best practices
+- 🔄 **Hot Module Replacement (HMR)** – Instant updates during development
+- 📊 **Git Workflow** – Clean commit history and version control
+- 🔐 **Environment Security** – Secure handling of API keys and secrets
 
 ---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- **Node.js** 16+ 
-- **npm** or **yarn**
+- **Node.js** 16.0.0 or higher
+- **npm** 8.0.0+ or **yarn** 3.0.0+
+- **Git** for version control
 
-### Installation
+### Installation & Development
 
 ```bash
 # Clone the repository
@@ -61,56 +67,84 @@ cd portofolio
 # Install dependencies
 npm install
 
-# Start development server
+# Start development server with HMR
 npm run dev
 
 # Build for production
 npm run build
 
-# Preview production build
+# Preview production build locally
 npm run preview
+
+# Run ESLint checks
+npm run lint
+
+# Type check with TypeScript
+npm run type-check
 ```
 
 ---
 
 ## ⚙️ EmailJS Configuration
 
-Pour activer l'envoi d'emails, vous devez configurer EmailJS :
+## ⚙️ EmailJS Configuration
 
 ### Step 1: Create EmailJS Account
-1. Go to [EmailJS](https://www.emailjs.com/)
+1. Visit [EmailJS](https://www.emailjs.com/)
 2. Sign up for a free account
-3. Verify your email
+3. Verify your email address
 
 ### Step 2: Set Up Email Service
-1. Navigate to **Email Services** in dashboard
-2. Add your email provider (Gmail, Outlook, etc.)
-3. Note your **Service ID**
+1. Navigate to **Email Services** in your dashboard
+2. Add your email provider:
+   - Gmail (recommended for beginners)
+   - Outlook
+   - Yahoo
+   - Custom SMTP
+3. Connect your email and verify
+4. Save your **Service ID** (format: `service_xxxxxxxxx`)
 
-### Step 3: Create Email Templates
+### Step 3: Create Public Key
+1. Go to **Account** → **API Keys**
+2. Copy your **Public Key** (format: `xxxxxxxxxxxxxxxxxxxx`)
 
-#### Template: Contact Form (`template_contact`)
+### Step 4: Create Email Templates
+
+#### Template 1: Contact Form (`template_contact`)
+
+In EmailJS dashboard, create a new template with these variables:
+
 ```
 New contact message from portfolio
 
-From: {{from_name}}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SENDER INFORMATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Name: {{from_name}}
 Email: {{from_email}}
 
-Message:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MESSAGE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 {{message}}
 
----
-Reply to: {{reply_to}}
-Sent at: {{time}}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+METADATA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Sent: {{time}}
 Language: {{lang}}
+Reply to: {{reply_to}}
 ```
 
-#### Template: Quote Request (`template_quote`)
+#### Template 2: Quote Request (`template_quote`)
+
+In EmailJS dashboard, create a new template with these variables:
+
 ```
 New quote request from portfolio
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-CLIENT INFORMATION
+👤 CLIENT INFORMATION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Name: {{client_name}}
 Email: {{client_email}}
@@ -118,7 +152,7 @@ Phone: {{client_phone}}
 Company: {{client_company}}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-PROJECT DETAILS
+📋 PROJECT DETAILS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Type: {{project_type}}
 Description: {{project_description}}
@@ -126,50 +160,73 @@ Features: {{project_features}}
 Technologies: {{project_technologies}}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-TIMELINE & BUDGET
+📅 TIMELINE & BUDGET
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Timeline: {{project_timeline}}
 Budget: {{project_budget}}
 Urgency: {{project_urgency}}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-ADDITIONAL SERVICES
+🔧 ADDITIONAL SERVICES
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Design: {{needs_design}}
-Hosting: {{needs_hosting}}
-Maintenance: {{needs_maintenance}}
-Training: {{needs_training}}
+Design Work: {{needs_design}}
+Hosting Setup: {{needs_hosting}}
+Maintenance Plan: {{needs_maintenance}}
+Training & Support: {{needs_training}}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-ADDITIONAL NOTES
+📝 ADDITIONAL NOTES
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 {{additional_info}}
 
----
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⏰ SUBMISSION DETAILS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Sent: {{time}}
+Language: {{lang}}
 Reply to: {{reply_to}}
-Sent: {{time}} | Language: {{lang}}
 ```
 
-### Step 4: Configure Environment Variables
+### Step 5: Configure Environment Variables
 
-Create a `.env.local` file in the project root:
+Create `.env.local` in your project root:
 
 ```env
-VITE_EMAILJS_SERVICE_ID=your_service_id_here
-VITE_EMAILJS_PUBLIC_KEY=your_public_key_here
+# EmailJS Configuration
+VITE_EMAILJS_SERVICE_ID=service_xxxxxxxxx
+VITE_EMAILJS_PUBLIC_KEY=xxxxxxxxxxxxxxxxxxxx
 VITE_EMAILJS_TPL_CONTACT=template_contact
 VITE_EMAILJS_TPL_QUOTE=template_quote
 ```
 
-⚠️ **Important:** Add `.env.local` to `.gitignore` to keep secrets safe!
+**Create `.env.example` for documentation:**
 
-### Step 5: Verify Configuration
+```env
+# EmailJS Configuration
+# Get these from https://www.emailjs.com/docs/rest-api/send/
+VITE_EMAILJS_SERVICE_ID=your_service_id
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
+VITE_EMAILJS_TPL_CONTACT=template_contact
+VITE_EMAILJS_TPL_QUOTE=template_quote
+```
 
-1. Start the dev server: `npm run dev`
-2. Open the portfolio in browser
-3. Test the contact form
-4. Test the quote generator (4-step wizard)
-5. Check your email inbox for received messages
+⚠️ **IMPORTANT:** Add `.env.local` to `.gitignore` to protect your credentials!
+
+### Step 6: Verify Configuration
+
+```bash
+# Start the development server
+npm run dev
+
+# Test the contact form at http://localhost:5173
+# Test the quote generator (4-step wizard)
+# Check your email inbox for test messages
+```
+
+**Troubleshooting:**
+- **"One or more dynamic variables are corrupted"** → Ensure all template variables are strings
+- **Emails not received** → Verify Service ID and Public Key are correct
+- **Template not found** → Check template names match exactly in `.env.local`
 
 ---
 
@@ -178,51 +235,71 @@ VITE_EMAILJS_TPL_QUOTE=template_quote
 ```
 portofolio/
 ├── src/
-│   ├── components/        # React components (Hero, About, Projects, etc.)
-│   ├── services/          # EmailJS service & email utilities
-│   ├── locales/           # i18n translations (FR, EN, ES)
-│   │   ├── fr/common.json
-│   │   ├── en/common.json
-│   │   └── es/common.json
-│   ├── styles/            # Global styles & CSS variables
-│   ├── App.tsx            # Main app component
-│   ├── main.tsx           # Entry point
-│   └── vite-env.d.ts      # Vite environment types
-├── public/                # Static assets (logos, favicons)
-├── index.html             # HTML entry point
-├── tailwind.config.js     # Tailwind configuration
-├── tsconfig.json          # TypeScript configuration
-├── vite.config.ts         # Vite configuration
-└── package.json           # Dependencies & scripts
+│   ├── components/
+│   │   ├── About.tsx              # About section with skills
+│   │   ├── Contact.tsx            # Contact form component
+│   │   ├── Footer.tsx             # Footer with links
+│   │   ├── Header.tsx             # Navigation header
+│   │   ├── Hero.tsx               # Landing hero section
+│   │   ├── LanguageSwitcher.tsx   # i18n language selector
+│   │   ├── Pricing.tsx            # Pricing section
+│   │   ├── Projects.tsx           # Portfolio projects grid
+│   │   ├── QuoteModal.tsx         # 4-step quote wizard
+│   │   ├── Services.tsx           # Services offered
+│   │   ├── Skills.tsx             # Technical skills display
+│   │   ├── ThemeToggle.tsx        # Dark/Light mode switcher
+│   │   └── ui/                    # Reusable UI components
+│   │       ├── Badge.tsx
+│   │       ├── Card.tsx
+│   │       ├── Feature.tsx
+│   │       └── PillButton.tsx
+│   ├── services/
+│   │   └── emailService.ts        # EmailJS integration & validation
+│   ├── locales/                   # i18n translations
+│   │   ├── en/common.json         # English translations
+│   │   ├── fr/common.json         # French translations
+│   │   └── es/common.json         # Spanish translations
+│   ├── i18n/
+│   │   └── index.ts               # i18next configuration
+│   ├── styles/
+│   │   ├── theme.css              # CSS variables for theming
+│   │   └── index.css              # Global styles
+│   ├── App.tsx                    # Main application component
+│   ├── main.tsx                   # Entry point
+│   └── vite-env.d.ts              # Vite type definitions
+├── public/
+│   ├── logo-dark.svg              # Dark theme logo
+│   ├── logo-light.svg             # Light theme logo
+│   └── 404.html                   # 404 page for GitHub Pages
+├── index.html                     # HTML template
+├── tailwind.config.js             # Tailwind CSS configuration
+├── postcss.config.js              # PostCSS configuration
+├── tsconfig.json                  # TypeScript main config
+├── tsconfig.app.json              # TypeScript app config
+├── tsconfig.node.json             # TypeScript node config
+├── vite.config.ts                 # Vite build configuration
+├── eslint.config.js               # ESLint configuration
+├── package.json                   # Dependencies & scripts
+├── .env.example                   # Environment template
+├── .gitignore                     # Git ignore rules
+└── README.md                      # This file
 ```
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Technology | Purpose |
-|------------|---------|
-| **React 18** | UI framework |
-| **TypeScript** | Type safety |
-| **Tailwind CSS** | Styling & utilities |
-| **Vite** | Build tool & dev server |
-| **Framer Motion** | Animations & transitions |
-| **i18next** | Internationalization |
-| **EmailJS** | Email delivery service |
-| **Lucide React** | Icon library |
-| **ESLint** | Code linting |
-
----
-
-## 🎓 Learning Resources
-
-- [React Documentation](https://react.dev)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs)
-- [Tailwind CSS Docs](https://tailwindcss.com/docs)
-- [Vite Guide](https://vitejs.dev/guide)
-- [EmailJS Docs](https://www.emailjs.com/docs)
-- [Framer Motion Docs](https://www.framer.com/motion)
-- [i18next Guide](https://www.i18next.com)
+| Category | Technologies |
+|----------|--------------|
+| **Frontend Framework** | React 18, TypeScript |
+| **Styling** | Tailwind CSS 3, PostCSS |
+| **Build Tool** | Vite 5 |
+| **Animations** | Framer Motion |
+| **Internationalization** | i18next, react-i18next |
+| **Email Service** | EmailJS |
+| **Icon Library** | Lucide React |
+| **Code Quality** | ESLint, TypeScript |
+| **Hosting** | GitHub Pages (GitHub Actions) |
 
 ---
 
@@ -230,97 +307,171 @@ portofolio/
 
 ### Deploy to GitHub Pages
 
+The portfolio is configured for automatic deployment via GitHub Pages.
+
+#### Option 1: Manual Build & Deploy
+
 ```bash
 # Build for production
 npm run build
 
-# Deploy (requires git push to main branch)
+# The dist/ folder is ready to deploy
+# Commit and push to main branch
 git add .
-git commit -m "Deploy portfolio"
+git commit -m "deploy: update portfolio"
 git push origin main
+
+# GitHub Pages will automatically deploy from dist/
 ```
 
-### Deploy to Other Platforms
+#### Option 2: GitHub Actions Workflow
 
-#### Vercel
+Create `.github/workflows/deploy.yml`:
+
+```yaml
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+```
+
+### Deploy to Vercel
+
 ```bash
 # Install Vercel CLI
 npm i -g vercel
 
-# Deploy
+# Deploy from project root
 vercel
+
+# For production
+vercel --prod
 ```
 
-#### Netlify
+### Deploy to Netlify
+
 ```bash
 # Install Netlify CLI
 npm i -g netlify-cli
 
-# Build & deploy
+# Build and deploy
 npm run build
 netlify deploy --prod --dir=dist
 ```
 
+### Deploy to Other Platforms
+
+**AWS Amplify, DigitalOcean, Railway, etc.:**
+```bash
+# Build for production
+npm run build
+
+# All platforms require the dist/ folder
+# Upload dist/ contents to your hosting service
+```
+
 ---
 
-## 📊 Performance
+## 📊 Performance & Quality
 
-- ⚡ **First Contentful Paint (FCP):** < 1s
-- 🎯 **Lighthouse Score:** 95+
-- 📱 **Mobile Optimized:** 100%
-- 🔒 **Security Grade:** A+
-
----
-
-## 🔒 Security
-
-- ✅ Environment variables kept secure
-- ✅ Input validation on all forms
-- ✅ EmailJS handles server-side delivery
-- ✅ No sensitive data stored locally
-- ✅ HTTPS enforced on production
+- **⚡ Lighthouse Score:** 95+ (Performance, Accessibility, Best Practices, SEO)
+- **🎯 First Contentful Paint (FCP):** < 1 second
+- **📱 Mobile Score:** 95+
+- **🔒 Security Grade:** A+
+- **♿ Accessibility:** WCAG 2.1 Level AA
+- **📈 Core Web Vitals:** All green
 
 ---
 
 ## 📝 Available Scripts
 
 ```bash
-npm run dev       # Start development server
-npm run build     # Build for production
-npm run preview   # Preview production build locally
-npm run lint      # Run ESLint
-npm run type-check # Check TypeScript types
+npm run dev        # Start development server with HMR
+npm run build      # Build optimized production bundle
+npm run preview    # Preview production build locally
+npm run lint       # Run ESLint on all TypeScript/JSX files
+npm run type-check # Perform TypeScript type checking
+npm run format     # Format code with Prettier (if configured)
 ```
 
 ---
 
 ## 🤝 Contributing
 
-Found a bug or have a feature request? Feel free to:
-1. [Open an issue](https://github.com/henryTeran/portofolio/issues)
-2. [Submit a pull request](https://github.com/henryTeran/portofolio/pulls)
+Contributions are welcome! To contribute:
+
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'feat: add amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
+
+### Guidelines
+- Follow the existing code style (ESLint configuration)
+- Write meaningful commit messages
+- Test your changes locally before submitting
+- Update documentation if needed
+- Respect the TypeScript strict mode
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License** – see [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
 
 ---
 
 ## 📧 Contact
 
-- **Email:** [teranhenryc@gmail.com](mailto:teranhenryc@gmail.com)
-- **LinkedIn:** [Henry Teran](https://linkedin.com/in/henry-teran)
-- **GitHub:** [@henryTeran](https://github.com/henryTeran)
-- **Portfolio:** [henryteran.github.io/portofolio](https://henryteran.github.io/portofolio)
+**Henry Teran – Full-Stack Developer**
+
+- 💼 **LinkedIn:** [Henry Teran](https://linkedin.com/in/henry-teran)
+- 🐙 **GitHub:** [@henryTeran](https://github.com/henryTeran)
+- 📧 **Email:** [teranhenryc@gmail.com](mailto:teranhenryc@gmail.com)
+- 🌐 **Portfolio:** [henryteran.github.io/portofolio](https://henryteran.github.io/portofolio)
 
 ---
 
 <div align="center">
 
-**Made with ❤️ by Henry Teran**
+### ⭐ If you find this project helpful, please give it a star!
 
-[⬆ Back to top](#-henry-teran--full-stack-developer-portfolio)
+Made with ❤️ by [Henry Teran](https://github.com/henryTeran)
+
+[🔝 Back to top](#-henry-teran--full-stack-developer-portfolio)
 
 </div>
+
+# Build & deploy
+npm run build
+netlify deploy --prod --dir=dist
+```

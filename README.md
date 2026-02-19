@@ -9,11 +9,11 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3-38B2AC?logo=tailwindcss&logoColor=white&style=flat-square)](https://tailwindcss.com)
 [![Vite](https://img.shields.io/badge/Vite-5%2B-646CFF?logo=vite&logoColor=white&style=flat-square)](https://vitejs.dev)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
-[![GitHub Pages](https://img.shields.io/badge/Live-Portfolio-blue?style=flat-square)](https://henryteran.github.io/portofolio)
+[![GitHub Pages](https://img.shields.io/badge/Live-Portfolio-blue?style=flat-square)](https://henryteran.com)
 
 **Modern, responsive full-stack portfolio showcasing expertise in React, TypeScript, and modern web development with integrated email solutions and multi-language support.**
 
-[🌐 **Live Portfolio**](https://henryteran.github.io/portofolio) • [📧 **Contact**](#-contact) • [🚀 **Quick Start**](#-quick-start)
+[🌐 **Live Portfolio**](https://henryteran.com) • [📧 **Contact**](#-contact) • [🚀 **Quick Start**](#-quick-start)
 
 </div>
 
@@ -459,7 +459,7 @@ This project is licensed under the **MIT License** – see the [LICENSE](LICENSE
 - 💼 **LinkedIn:** [Henry Teran](https://linkedin.com/in/henry-teran)
 - 🐙 **GitHub:** [@henryTeran](https://github.com/henryTeran)
 - 📧 **Email:** [teranhenryc@gmail.com](mailto:teranhenryc@gmail.com)
-- 🌐 **Portfolio:** [henryteran.github.io/portofolio](https://henryteran.github.io/portofolio)
+- 🌐 **Portfolio:** [henryteran.github.io/portofolio](https://henryteran.com)
 
 ---
 

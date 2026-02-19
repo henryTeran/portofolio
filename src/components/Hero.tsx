@@ -97,18 +97,16 @@ const Hero = () => {
                 {t('hero.hi')}
               </span>
               {/* 🔽 Titre un peu plus petit en mobile */}
-              <h1
-                className="text-3xl sm:text-5xl lg:text-7xl font-display font-extrabold mt-2 mb-1 sm:mb-2"
-                style={{ color: 'var(--text)' }}
-              >
+              <p className="mt-2 mb-1 sm:mb-2 text-3xl sm:text-5xl lg:text-7xl font-display font-extrabold"
+                style={{ color: 'var(--text)' }}>
                 Henry Teran
-              </h1>
-              <h2
+              </p>
+              <h1
                 className="text-lg sm:text-2xl lg:text-3xl font-semibold"
                 style={{ color: 'var(--primary)' }}
               >
                 {t('hero.role')}
-              </h2>
+              </h1>
             </motion.div>
 
             {/* 🔽 Texte un peu plus fin en mobile */}

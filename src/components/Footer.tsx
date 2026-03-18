@@ -12,6 +12,8 @@ const Footer = () => {
   const language: LanguageCode = isSupportedLanguage(lang) ? lang : DEFAULT_LANGUAGE;
 
   const buildLanguagePath = (segment = '') => `/${language}${segment ? `/${segment}` : ''}`;
+  const buildSectionPath = (section: 'about' | 'skills' | 'projects' | 'services' | 'contact') =>
+    `/${language}#${section}`;
 
   return (
     <footer className="bg-app border-t border-white/10 py-12">
@@ -85,16 +87,22 @@ const Footer = () => {
                 {t('nav.skills')}
               </Link>
               <Link
-                to={buildLanguagePath('projects')}
+                to={buildSectionPath('projects')}
                 className="block text-[var(--muted)] hover:text-[var(--primary)] transition-colors"
               >
                 {t('nav.projects')}
               </Link>
               <Link
-                to={buildLanguagePath('services')}
+                to={buildSectionPath('services')}
                 className="block text-[var(--muted)] hover:text-[var(--primary)] transition-colors"
               >
                 {t('nav.services')}
+              </Link>
+              <Link
+                to={buildSectionPath('contact')}
+                className="block text-[var(--muted)] hover:text-[var(--primary)] transition-colors"
+              >
+                {t('nav.contact')}
               </Link>
             </div>
           </div>

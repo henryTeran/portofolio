@@ -18,6 +18,9 @@ const Header = () => {
   const buildLanguagePath = (segment = '') =>
     `/${language}${segment ? `/${segment}` : ''}`;
 
+  const buildSectionPath = (section: 'about' | 'skills' | 'projects' | 'services' | 'contact') =>
+    `/${language}#${section}`;
+
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', onScroll);
@@ -76,13 +79,13 @@ const Header = () => {
             <NavLink to={`${buildLanguagePath()}#skills`} className="hover:text-[var(--primary)]">
               {t('nav.skills')}
             </NavLink>
-            <NavLink to={buildLanguagePath('projects')} className={desktopLinkClass}>
+            <NavLink to={buildSectionPath('projects')} className="hover:text-[var(--primary)]">
               {t('nav.projects')}
             </NavLink>
-            <NavLink to={buildLanguagePath('services')} className={desktopLinkClass}>
+            <NavLink to={buildSectionPath('services')} className="hover:text-[var(--primary)]">
               {t('nav.services')}
             </NavLink>
-            <NavLink to={buildLanguagePath('contact')} className="btn">
+            <NavLink to={buildSectionPath('contact')} className="btn">
               {t('nav.contact')}
             </NavLink>
             <LanguageSwitcher />
@@ -131,16 +134,16 @@ const Header = () => {
               {t('nav.skills')}
             </Link>
             <NavLink
-              to={buildLanguagePath('projects')}
+              to={buildSectionPath('projects')}
               onClick={closeMenu}
-              className={mobileLinkClass}
+              className="text-left hover:text-[var(--primary)] py-2"
             >
               {t('nav.projects')}
             </NavLink>
             <NavLink
-              to={buildLanguagePath('services')}
+              to={buildSectionPath('services')}
               onClick={closeMenu}
-              className={mobileLinkClass}
+              className="text-left hover:text-[var(--primary)] py-2"
             >
               {t('nav.services')}
             </NavLink>
@@ -151,7 +154,7 @@ const Header = () => {
             </div>
 
             <NavLink
-              to={buildLanguagePath('contact')}
+              to={buildSectionPath('contact')}
               onClick={closeMenu}
               className="text-left btn mt-4 w-full"
             >

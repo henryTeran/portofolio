@@ -14,11 +14,16 @@ export default function RootLanguageRedirect() {
   const pathSegments = normalizedPath.split('/').filter(Boolean);
 
   if (pathSegments.length > 0 && isSupportedLanguage(pathSegments[0])) {
-    return <Navigate to={normalizedPath} replace />;
+    const [, maybeSection] = pathSegments;
+    if (maybeSection && ROUTE_SEGMENTS.has(maybeSection)) {
+      return <Navigate to={`/${pathSegments[0]}#${maybeSection}`} replace />;
+    }
+
+    return <Navigate to={`/${pathSegments[0]}`} replace />;
   }
 
   const legacyRoute = pathSegments[0];
-  const routeSuffix = legacyRoute && ROUTE_SEGMENTS.has(legacyRoute) ? `/${legacyRoute}` : '';
+  const routeHash = legacyRoute && ROUTE_SEGMENTS.has(legacyRoute) ? `#${legacyRoute}` : '';
 
-  return <Navigate to={`/${language}${routeSuffix}`} replace />;
+  return <Navigate to={`/${language}${routeHash}`} replace />;
 }

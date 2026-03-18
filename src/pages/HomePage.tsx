@@ -18,10 +18,12 @@ const scrollToHashSection = (hash: string) => {
   }
 
   const id = hash.replace('#', '');
-  const section = document.getElementById(id);
-  if (section) {
-    section.scrollIntoView({ behavior: 'smooth' });
-  }
+  window.requestAnimationFrame(() => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
 };
 
 export default function HomePage() {

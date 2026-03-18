@@ -1,9 +1,9 @@
 const LANGUAGE_SET = new Set(['fr', 'en', 'es']);
 const ROUTE_MAP = new Map([
-  ['/', '/'],
-  ['/services', '/services'],
-  ['/projects', '/projects'],
-  ['/contact', '/contact'],
+  ['/', 'home'],
+  ['/services', 'services'],
+  ['/projects', 'projects'],
+  ['/contact', 'contact'],
 ]);
 
 export default function middleware(request) {
@@ -17,10 +17,18 @@ export default function middleware(request) {
   }
 
   const normalizedPath = url.pathname.replace(/\/+$/, '') || '/';
-  const firstSegment = normalizedPath.split('/').filter(Boolean)[0] || '';
+  const pathSegments = normalizedPath.split('/').filter(Boolean);
+  const firstSegment = pathSegments[0] || '';
+  const secondSegment = pathSegments[1] || '';
 
   // Avoid loops for already-localized routes
   if (LANGUAGE_SET.has(firstSegment)) {
+    if (['services', 'projects', 'contact'].includes(secondSegment)) {
+      url.pathname = `/${firstSegment}`;
+      url.hash = `#${secondSegment}`;
+      return Response.redirect(url.toString(), 301);
+    }
+
     return;
   }
 
@@ -29,14 +37,15 @@ export default function middleware(request) {
     return;
   }
 
-  const mappedRoute = ROUTE_MAP.get(normalizedPath);
-  if (!mappedRoute) {
+  const mappedHash = ROUTE_MAP.get(normalizedPath);
+  if (!mappedHash) {
     return;
   }
 
   // Preserve other query params, remove only lang
   url.searchParams.delete('lang');
-  url.pathname = `/${lang}${mappedRoute === '/' ? '' : mappedRoute}`;
+  url.pathname = `/${lang}`;
+  url.hash = mappedHash === 'home' ? '' : `#${mappedHash}`;
 
   return Response.redirect(url.toString(), 301);
 }

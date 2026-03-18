@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import { Navigate, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ensureLanguageResources } from '../i18n';
 import i18n from '../i18n';
+import HomePage from '../pages/HomePage';
 import {
   DEFAULT_LANGUAGE,
   getPreferredLanguage,
@@ -10,9 +11,9 @@ import {
   type LanguageCode,
 } from '../constants/i18n';
 
-const mapLegacySectionToRoute: Record<string, string> = {
-  accueil: '',
-  home: '',
+const mapLegacySectionToHash: Record<string, string> = {
+  accueil: 'home',
+  home: 'home',
   services: 'services',
   projects: 'projects',
   contact: 'contact',
@@ -51,9 +52,9 @@ export default function LanguageLayout() {
 
     if (location.hash) {
       const legacyHash = location.hash.replace('#', '');
-      const mappedRoute = mapLegacySectionToRoute[legacyHash];
-      if (mappedRoute !== undefined) {
-        navigate(`/${currentLanguage}${mappedRoute ? `/${mappedRoute}` : ''}`, { replace: true });
+      const mappedHash = mapLegacySectionToHash[legacyHash];
+      if (mappedHash && mappedHash !== legacyHash) {
+        navigate(`/${currentLanguage}#${mappedHash}`, { replace: true });
       }
     }
   }, [currentLanguage, location.hash, location.pathname, location.search, navigate]);
@@ -66,5 +67,5 @@ export default function LanguageLayout() {
     void preload();
   }, []);
 
-  return <Outlet />;
+  return <HomePage />;
 }

@@ -36,14 +36,18 @@ export default function LanguageSwitcher(){
     return `/${pathSegments.join('/')}`;
   };
 
+  const currentLanguage = getCurrentLanguage();
+
   const handleLanguageChange = (nextLanguage: LanguageCode) => {
+    if (nextLanguage === currentLanguage) {
+      return;
+    }
+
     const nextPath = `${replaceLanguageInPath(nextLanguage)}${location.search}${location.hash}`;
     trackLanguageChange(nextLanguage);
     void i18n.changeLanguage(nextLanguage);
     navigate(nextPath);
   };
-
-  const currentLanguage = getCurrentLanguage();
 
   return (
     <div className="inline-flex gap-1 p-1 rounded-xl border border-white/10 bg-white/5">

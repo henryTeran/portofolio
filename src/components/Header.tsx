@@ -5,6 +5,7 @@ import { Link, NavLink, useParams } from 'react-router-dom';
 import LanguageSwitcher from './LanguageSwitcher';
 import ThemeToggle from './ThemeToggle';
 import { DEFAULT_LANGUAGE, isSupportedLanguage, type LanguageCode } from '../constants/i18n';
+import { trackCTA } from '../analytics/trackingEvents';
 
 const Header = () => {
   const base = import.meta.env.BASE_URL;
@@ -82,7 +83,11 @@ const Header = () => {
             <Link to={buildSectionPath('services')} className="hover:text-[var(--primary)]">
               {t('nav.services')}
             </Link>
-            <Link to={buildSectionPath('contact')} className="btn">
+            <Link
+              to={buildSectionPath('contact')}
+              onClick={() => trackCTA('header_contact')}
+              className="btn"
+            >
               {t('nav.contact')}
             </Link>
             <LanguageSwitcher />
@@ -152,7 +157,10 @@ const Header = () => {
 
             <Link
               to={buildSectionPath('contact')}
-              onClick={closeMenu}
+              onClick={() => {
+                trackCTA('header_contact');
+                closeMenu();
+              }}
               className="text-left btn mt-4 w-full"
             >
               {t('nav.contact')}

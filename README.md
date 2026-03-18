@@ -283,7 +283,7 @@ portofolio/
 ├── public/
 │   ├── logo-dark.svg              # Dark theme logo
 │   ├── logo-light.svg             # Light theme logo
-│   └── 404.html                   # 404 page for GitHub Pages
+│   └── 404.html                   # Static fallback page
 ├── index.html                     # HTML template
 ├── tailwind.config.js             # Tailwind CSS configuration
 ├── postcss.config.js              # PostCSS configuration
@@ -312,105 +312,23 @@ portofolio/
 | **Email Service** | EmailJS |
 | **Icon Library** | Lucide React |
 | **Code Quality** | ESLint, TypeScript |
-| **Hosting** | GitHub Pages (GitHub Actions) |
+| **Hosting** | Vercel |
 
 ---
 
-## 🚀 Deployment
+## 🚀 Deployment (Vercel)
 
-### Deploy to GitHub Pages
+This repository is now **Vercel-only**.
 
-The portfolio is configured for automatic deployment via GitHub Pages.
+1. Import the project in Vercel (Framework: Vite).
+2. Build Command: `npm run build`.
+3. Output Directory: `dist`.
+4. Configure environment variables listed in `VERCEL-MIGRATION.md`.
+5. Add `henryteran.com` as primary domain and `www.henryteran.com` as redirect.
 
-#### Option 1: Manual Build & Deploy
+Detailed migration, redirects, and Search Console checklist:
 
-```bash
-# Build for production
-npm run build
-
-# The dist/ folder is ready to deploy
-# Commit and push to main branch
-git add .
-git commit -m "deploy: update portfolio"
-git push origin main
-
-# GitHub Pages will automatically deploy from dist/
-```
-
-#### Option 2: GitHub Actions Workflow
-
-Create `.github/workflows/deploy.yml`:
-
-```yaml
-name: Deploy to GitHub Pages
-
-on:
-  push:
-    branches: [ main ]
-
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build
-        run: npm run build
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-```
-
-### Deploy to Vercel
-
-```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy from project root
-vercel
-
-# For production
-vercel --prod
-```
-
-### Deploy to Netlify
-
-```bash
-# Install Netlify CLI
-npm i -g netlify-cli
-
-# Build and deploy
-npm run build
-netlify deploy --prod --dir=dist
-```
-
-### Deploy to Other Platforms
-
-**AWS Amplify, DigitalOcean, Railway, etc.:**
-```bash
-# Build for production
-npm run build
-
-# All platforms require the dist/ folder
-# Upload dist/ contents to your hosting service
-```
+- `VERCEL-MIGRATION.md`
 
 ---
 
@@ -432,8 +350,8 @@ npm run dev        # Start development server with HMR
 npm run build      # Build optimized production bundle
 npm run preview    # Preview production build locally
 npm run lint       # Run ESLint on all TypeScript/JSX files
-npm run type-check # Perform TypeScript type checking
-npm run format     # Format code with Prettier (if configured)
+npm run generate:sitemap # Generate multilingual sitemap.xml
+npm run vercel:check     # Generate sitemap + production build
 ```
 
 ---
@@ -470,7 +388,7 @@ This project is licensed under the **MIT License** – see the [LICENSE](LICENSE
 - 💼 **LinkedIn:** [Henry Teran](https://linkedin.com/in/henry-teran)
 - 🐙 **GitHub:** [@henryTeran](https://github.com/henryTeran)
 - 📧 **Email:** [teranhenryc@gmail.com](mailto:teranhenryc@gmail.com)
-- 🌐 **Portfolio:** [henryteran.github.io/portofolio](https://henryteran.com)
+- 🌐 **Portfolio:** [henryteran.com](https://henryteran.com)
 
 ---
 
@@ -483,22 +401,3 @@ Made with ❤️ by [Henry Teran](https://github.com/henryTeran)
 [🔝 Back to top](#top)
 
 </div>
-
-# Build & deploy
-npm run build
-netlify deploy --prod --dir=dist
-```
-
-## 🌐 Edge/Server SEO Redirects
-
-Production-ready redirect and canonical domain configs are available in:
-
-- `deploy/nginx/henryteran.com.conf`
-- `deploy/apache/.htaccess-seo-migration`
-- `deploy/vercel/vercel.json` + `deploy/vercel/middleware.js`
-- `deploy/netlify/netlify.toml` + `deploy/netlify/edge-functions/seo-migration.js`
-- `deploy/cloudflare/worker.js` (or `deploy/cloudflare/rules.md`)
-
-Validation and post-deploy SEO checklist:
-
-- `deploy/SEO-EDGE-MIGRATION.md`

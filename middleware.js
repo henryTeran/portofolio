@@ -1,6 +1,3 @@
-// Vercel Edge Middleware (optional but recommended)
-// Place this file at project root as `middleware.js` when deploying on Vercel.
-
 const LANGUAGE_SET = new Set(['fr', 'en', 'es']);
 const ROUTE_MAP = new Map([
   ['/', '/'],
@@ -13,19 +10,16 @@ export default function middleware(request) {
   const url = new URL(request.url);
   const host = url.hostname.toLowerCase();
 
-  const hasWww = host.startsWith('www.');
-  const isHttp = (request.headers.get('x-forwarded-proto') || 'https') !== 'https';
-
-  if (hasWww || isHttp) {
-    url.protocol = 'https:';
+  // Canonical host: non-www
+  if (host === 'www.henryteran.com') {
     url.hostname = 'henryteran.com';
     return Response.redirect(url.toString(), 301);
   }
 
-  const path = url.pathname.replace(/\/+$/, '') || '/';
-  const firstSegment = path.split('/').filter(Boolean)[0] || '';
+  const normalizedPath = url.pathname.replace(/\/+$/, '') || '/';
+  const firstSegment = normalizedPath.split('/').filter(Boolean)[0] || '';
 
-  // Avoid loops: never redirect already localized paths
+  // Avoid loops for already-localized routes
   if (LANGUAGE_SET.has(firstSegment)) {
     return;
   }
@@ -35,17 +29,18 @@ export default function middleware(request) {
     return;
   }
 
-  const mappedPath = ROUTE_MAP.get(path);
-  if (!mappedPath) {
+  const mappedRoute = ROUTE_MAP.get(normalizedPath);
+  if (!mappedRoute) {
     return;
   }
 
+  // Preserve other query params, remove only lang
   url.searchParams.delete('lang');
-  url.pathname = `/${lang}${mappedPath === '/' ? '' : mappedPath}`;
+  url.pathname = `/${lang}${mappedRoute === '/' ? '' : mappedRoute}`;
 
   return Response.redirect(url.toString(), 301);
 }
 
 export const config = {
-  matcher: ['/((?!assets|api|_next|favicon.ico|robots.txt|sitemap.xml).*)'],
+  matcher: ['/((?!api|assets|_next|favicon.ico|robots.txt|sitemap.xml).*)'],
 };

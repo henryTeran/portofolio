@@ -31,9 +31,17 @@
 
 ### 🌍 Internationalization (i18n)
 - **Three Languages:** 🇫🇷 Français, 🇬🇧 English, 🇪🇸 Español
-- **Dynamic Switching** – Instant language changes without page reload
+- **SEO Routes by Language** – `/fr`, `/en`, `/es` with dedicated pages (`/services`, `/projects`, `/contact`)
+- **Dynamic Switching** – Instant language changes while preserving current route context
 - **Complete Localization** – All UI text, forms, and templates translated
 - **Context-Aware** – Email language matches user's selected language
+
+### 🔎 SEO Architecture
+- **Canonical URLs** – Automatic `<link rel="canonical">` by localized page route
+- **`hreflang` Tags** – `fr`, `en`, `es`, and `x-default` for all localized pages
+- **Dynamic Metadata** – Per-page/per-language title and description
+- **Structured Data** – JSON-LD `Person` profile for portfolio indexing
+- **Indexable Pages** – `robots` meta configured to `index,follow`
 
 ### 🎨 User Interface & Experience
 - ✨ **Dark/Light Mode** – Seamless theme switching with persistent storage
@@ -74,6 +82,9 @@ npm run dev
 
 # Build for production
 npm run build
+
+# Generate multilingual sitemap.xml
+npm run generate:sitemap
 
 # Preview production build locally
 npm run preview

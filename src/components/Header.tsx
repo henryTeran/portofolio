@@ -1,14 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Link, NavLink, useParams } from 'react-router-dom';
 import LanguageSwitcher from './LanguageSwitcher';
 import ThemeToggle from './ThemeToggle';
+import { DEFAULT_LANGUAGE, isSupportedLanguage, type LanguageCode } from '../constants/i18n';
 
 const Header = () => {
   const base = import.meta.env.BASE_URL;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { t } = useTranslation();
+  const { lang = DEFAULT_LANGUAGE } = useParams();
+
+  const language: LanguageCode = isSupportedLanguage(lang) ? lang : DEFAULT_LANGUAGE;
+
+  const buildLanguagePath = (segment = '') =>
+    `/${language}${segment ? `/${segment}` : ''}`;
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 50);
@@ -16,18 +24,15 @@ const Header = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-    setIsMenuOpen(false);
-  };
-
-  // remonter tout en haut quand on clique sur le logo
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setIsMenuOpen(false);
-  };
+  const closeMenu = () => setIsMenuOpen(false);
 
   const hasBackground = isScrolled || isMenuOpen;
+
+  const desktopLinkClass = ({ isActive }: { isActive: boolean }) =>
+    `hover:text-[var(--primary)] ${isActive ? 'text-[var(--primary)]' : ''}`;
+
+  const mobileLinkClass = ({ isActive }: { isActive: boolean }) =>
+    `text-left py-2 hover:text-[var(--primary)] ${isActive ? 'text-[var(--primary)]' : ''}`;
 
   return (
     <header
@@ -40,11 +45,11 @@ const Header = () => {
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo cliquable */}
-          <button
-            type="button"
-            onClick={scrollToTop}
+          <Link
+            to={buildLanguagePath()}
+            onClick={closeMenu}
             className="flex items-center focus:outline-none"
-            aria-label="Revenir en haut de la page"
+            aria-label="Aller à la page d'accueil"
           >
             {/* clair */}
             <img
@@ -58,28 +63,28 @@ const Header = () => {
               alt="Henry Teran - logo sombre"
               className="hidden dark:block w-40 sm:w-52"
             />
-          </button>
+          </Link>
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-6 text-[var(--muted)]">
-            <button onClick={() => scrollTo('accueil')} className="hover:text-[var(--primary)]">
+            <NavLink to={buildLanguagePath()} end className={desktopLinkClass}>
               {t('nav.home')}
-            </button>
-            <button onClick={() => scrollTo('about')} className="hover:text-[var(--primary)]">
+            </NavLink>
+            <NavLink to={`${buildLanguagePath()}#about`} className="hover:text-[var(--primary)]">
               {t('nav.about')}
-            </button>
-            <button onClick={() => scrollTo('skills')} className="hover:text-[var(--primary)]">
+            </NavLink>
+            <NavLink to={`${buildLanguagePath()}#skills`} className="hover:text-[var(--primary)]">
               {t('nav.skills')}
-            </button>
-            <button onClick={() => scrollTo('projects')} className="hover:text-[var(--primary)]">
+            </NavLink>
+            <NavLink to={buildLanguagePath('projects')} className={desktopLinkClass}>
               {t('nav.projects')}
-            </button>
-            <button onClick={() => scrollTo('services')} className="hover:text-[var(--primary)]">
+            </NavLink>
+            <NavLink to={buildLanguagePath('services')} className={desktopLinkClass}>
               {t('nav.services')}
-            </button>
-            <button onClick={() => scrollTo('contact')} className="btn">
+            </NavLink>
+            <NavLink to={buildLanguagePath('contact')} className="btn">
               {t('nav.contact')}
-            </button>
+            </NavLink>
             <LanguageSwitcher />
             <ThemeToggle />
           </div>
@@ -103,48 +108,55 @@ const Header = () => {
           `}
         >
           <div className="flex flex-col p-4 space-y-3">
-            <button
-              onClick={() => scrollTo('accueil')}
-              className="text-left hover:text-[var(--primary)] py-2"
+            <NavLink
+              to={buildLanguagePath()}
+              end
+              onClick={closeMenu}
+              className={mobileLinkClass}
             >
               {t('nav.home')}
-            </button>
-            <button
-              onClick={() => scrollTo('about')}
+            </NavLink>
+            <Link
+              to={`${buildLanguagePath()}#about`}
+              onClick={closeMenu}
               className="text-left hover:text-[var(--primary)] py-2"
             >
               {t('nav.about')}
-            </button>
-            <button
-              onClick={() => scrollTo('skills')}
+            </Link>
+            <Link
+              to={`${buildLanguagePath()}#skills`}
+              onClick={closeMenu}
               className="text-left hover:text-[var(--primary)] py-2"
             >
               {t('nav.skills')}
-            </button>
-            <button
-              onClick={() => scrollTo('projects')}
-              className="text-left hover:text-[var(--primary)] py-2"
+            </Link>
+            <NavLink
+              to={buildLanguagePath('projects')}
+              onClick={closeMenu}
+              className={mobileLinkClass}
             >
               {t('nav.projects')}
-            </button>
-            <button
-              onClick={() => scrollTo('services')}
-              className="text-left hover:text-[var(--primary)] py-2"
+            </NavLink>
+            <NavLink
+              to={buildLanguagePath('services')}
+              onClick={closeMenu}
+              className={mobileLinkClass}
             >
               {t('nav.services')}
-            </button>
+            </NavLink>
 
             <div className="flex items-center justify-between pt-2">
               <LanguageSwitcher />
               <ThemeToggle />
             </div>
 
-            <button
-              onClick={() => scrollTo('contact')}
+            <NavLink
+              to={buildLanguagePath('contact')}
+              onClick={closeMenu}
               className="text-left btn mt-4 w-full"
             >
               {t('nav.contact')}
-            </button>
+            </NavLink>
           </div>
         </div>
       </nav>

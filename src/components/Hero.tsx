@@ -39,7 +39,7 @@ const Hero = () => {
 
   return (
     <section
-      id="accueil"
+      id="home"
       // 🔽 Moins haut en mobile, plein écran seulement en desktop
       className="min-h-[80vh] lg:min-h-screen flex justify-center items-start lg:items-center relative overflow-hidden pt-20 sm:pt-24 lg:pt-0"
     >

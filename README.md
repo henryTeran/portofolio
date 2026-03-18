@@ -488,3 +488,17 @@ Made with ❤️ by [Henry Teran](https://github.com/henryTeran)
 npm run build
 netlify deploy --prod --dir=dist
 ```
+
+## 🌐 Edge/Server SEO Redirects
+
+Production-ready redirect and canonical domain configs are available in:
+
+- `deploy/nginx/henryteran.com.conf`
+- `deploy/apache/.htaccess-seo-migration`
+- `deploy/vercel/vercel.json` + `deploy/vercel/middleware.js`
+- `deploy/netlify/netlify.toml` + `deploy/netlify/edge-functions/seo-migration.js`
+- `deploy/cloudflare/worker.js` (or `deploy/cloudflare/rules.md`)
+
+Validation and post-deploy SEO checklist:
+
+- `deploy/SEO-EDGE-MIGRATION.md`

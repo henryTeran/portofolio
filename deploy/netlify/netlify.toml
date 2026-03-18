@@ -1,0 +1,25 @@
+[build]
+  publish = "dist"
+  command = "npm run build"
+
+[[redirects]]
+  from = "http://www.henryteran.com/*"
+  to = "https://henryteran.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.henryteran.com/*"
+  to = "https://henryteran.com/:splat"
+  status = 301
+  force = true
+
+# SPA fallback
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[edge_functions]]
+  function = "seo-migration"
+  path = "/*"

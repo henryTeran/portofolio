@@ -7,6 +7,7 @@ import { sendContactEmail, initEmailJS, validateContactForm } from '../services/
 import type { ContactFormData } from '../services/emailService';
 
 import QuoteModal from './QuoteModal';
+import { trackContactSubmit } from '../analytics/trackingEvents';
 
 const Contact = () => {
   const { t } = useTranslation();
@@ -64,6 +65,7 @@ const Contact = () => {
       );
 
       if (ok) {
+        trackContactSubmit('contact_section');
         setSubmitStatus('success');
         setFormData({ name: '', email: '', message: '' });
         setTimeout(() => setSubmitStatus('idle'), 5000);

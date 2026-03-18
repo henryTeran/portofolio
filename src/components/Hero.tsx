@@ -2,11 +2,14 @@ import React from 'react';
 import { ArrowRight, Code2, Database, Smartphone } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import { trackCTA } from '../analytics/trackingEvents';
 
 const Hero = () => {
   const { t } = useTranslation();
-  const scrollToContact = () =>
+  const scrollToContact = () => {
+    trackCTA('hero_work_together');
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -132,9 +135,10 @@ const Hero = () => {
                 {t('hero.cta.work')} <ArrowRight size={20} />
               </button>
               <button
-                onClick={() =>
-                  document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
-                }
+                onClick={() => {
+                  trackCTA('hero_view_projects');
+                  document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+                }}
                 className="kbd"
               >
                 {t('hero.cta.projects')}

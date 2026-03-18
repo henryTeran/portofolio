@@ -5,6 +5,7 @@ import {
   isSupportedLanguage,
   type LanguageCode,
 } from '../constants/i18n';
+import { trackLanguageChange } from '../analytics/trackingEvents';
 
 const langs = [
   { code:'fr', label:'FR' },
@@ -37,6 +38,7 @@ export default function LanguageSwitcher(){
 
   const handleLanguageChange = (nextLanguage: LanguageCode) => {
     const nextPath = `${replaceLanguageInPath(nextLanguage)}${location.search}${location.hash}`;
+    trackLanguageChange(nextLanguage);
     void i18n.changeLanguage(nextLanguage);
     navigate(nextPath);
   };

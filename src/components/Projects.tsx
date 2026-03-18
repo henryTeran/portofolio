@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import { trackProjectClick } from '../analytics/trackingEvents';
 
 const Projects = () => {
   const { t } = useTranslation();
@@ -34,11 +35,12 @@ const Projects = () => {
           {projects.map((project, index) => (
             <motion.div
               key={project.title}
-              className="card transition-all duration-300 group hover:transform hover:scale-[1.02]"
+              className="card transition-all duration-300 group hover:transform hover:scale-[1.02] cursor-pointer"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
+              onClick={() => trackProjectClick(project.title)}
             >
               <div className="flex items-start justify-between mb-4">
                 <div>

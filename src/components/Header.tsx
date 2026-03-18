@@ -34,9 +34,6 @@ const Header = () => {
   const desktopLinkClass = ({ isActive }: { isActive: boolean }) =>
     `hover:text-[var(--primary)] ${isActive ? 'text-[var(--primary)]' : ''}`;
 
-  const mobileLinkClass = ({ isActive }: { isActive: boolean }) =>
-    `text-left py-2 hover:text-[var(--primary)] ${isActive ? 'text-[var(--primary)]' : ''}`;
-
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
@@ -73,21 +70,21 @@ const Header = () => {
             <NavLink to={buildLanguagePath()} end className={desktopLinkClass}>
               {t('nav.home')}
             </NavLink>
-            <NavLink to={`${buildLanguagePath()}#about`} className="hover:text-[var(--primary)]">
+            <Link to={buildSectionPath('about')} className="hover:text-[var(--primary)]">
               {t('nav.about')}
-            </NavLink>
-            <NavLink to={`${buildLanguagePath()}#skills`} className="hover:text-[var(--primary)]">
+            </Link>
+            <Link to={buildSectionPath('skills')} className="hover:text-[var(--primary)]">
               {t('nav.skills')}
-            </NavLink>
-            <NavLink to={buildSectionPath('projects')} className="hover:text-[var(--primary)]">
+            </Link>
+            <Link to={buildSectionPath('projects')} className="hover:text-[var(--primary)]">
               {t('nav.projects')}
-            </NavLink>
-            <NavLink to={buildSectionPath('services')} className="hover:text-[var(--primary)]">
+            </Link>
+            <Link to={buildSectionPath('services')} className="hover:text-[var(--primary)]">
               {t('nav.services')}
-            </NavLink>
-            <NavLink to={buildSectionPath('contact')} className="btn">
+            </Link>
+            <Link to={buildSectionPath('contact')} className="btn">
               {t('nav.contact')}
-            </NavLink>
+            </Link>
             <LanguageSwitcher />
             <ThemeToggle />
           </div>
@@ -115,51 +112,51 @@ const Header = () => {
               to={buildLanguagePath()}
               end
               onClick={closeMenu}
-              className={mobileLinkClass}
+              className="text-left py-2 hover:text-[var(--primary)]"
             >
               {t('nav.home')}
             </NavLink>
             <Link
-              to={`${buildLanguagePath()}#about`}
+              to={buildSectionPath('about')}
               onClick={closeMenu}
               className="text-left hover:text-[var(--primary)] py-2"
             >
               {t('nav.about')}
             </Link>
             <Link
-              to={`${buildLanguagePath()}#skills`}
+              to={buildSectionPath('skills')}
               onClick={closeMenu}
               className="text-left hover:text-[var(--primary)] py-2"
             >
               {t('nav.skills')}
             </Link>
-            <NavLink
+            <Link
               to={buildSectionPath('projects')}
               onClick={closeMenu}
               className="text-left hover:text-[var(--primary)] py-2"
             >
               {t('nav.projects')}
-            </NavLink>
-            <NavLink
+            </Link>
+            <Link
               to={buildSectionPath('services')}
               onClick={closeMenu}
               className="text-left hover:text-[var(--primary)] py-2"
             >
               {t('nav.services')}
-            </NavLink>
+            </Link>
 
             <div className="flex items-center justify-between pt-2">
               <LanguageSwitcher />
               <ThemeToggle />
             </div>
 
-            <NavLink
+            <Link
               to={buildSectionPath('contact')}
               onClick={closeMenu}
               className="text-left btn mt-4 w-full"
             >
               {t('nav.contact')}
-            </NavLink>
+            </Link>
           </div>
         </div>
       </nav>

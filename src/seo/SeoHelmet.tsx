@@ -14,27 +14,6 @@ export default function SeoHelmet({ language, page }: SeoHelmetProps) {
   const seo = SEO_CONFIG[page][language];
   const canonical = `${siteUrl}/${language}`;
 
-  const personJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: 'Henry Teran',
-    jobTitle: 'Software Engineer',
-    description: seo.description,
-    url: siteUrl,
-    image: `${siteUrl}/logo-light.svg`,
-    sameAs: ['https://github.com/henryTeran', 'https://linkedin.com/in/henry-teran'],
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Geneva',
-      addressCountry: 'CH',
-    },
-    worksFor: {
-      '@type': 'Organization',
-      name: 'Independent Consultant',
-    },
-    knowsAbout: ['React', 'TypeScript', 'Python', 'Software Architecture', 'ERP', 'AI Integration'],
-  };
-
   return (
     <>
       <Helmet>
@@ -51,7 +30,6 @@ export default function SeoHelmet({ language, page }: SeoHelmetProps) {
         <meta name="twitter:title" content={seo.title} />
         <meta name="twitter:description" content={seo.description} />
         <link rel="canonical" href={canonical} />
-        <script type="application/ld+json">{JSON.stringify(personJsonLd)}</script>
       </Helmet>
       <HreflangLinks currentLanguage={language} />
     </>

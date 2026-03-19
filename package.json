@@ -11,6 +11,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "generate:sitemap": "node scripts/generate-sitemap.mjs",
+    "generate:csp-hash": "node scripts/generate-csp-jsonld-hash.mjs",
     "vercel:check": "npm run generate:sitemap && npm run build"
   },
   "dependencies": {

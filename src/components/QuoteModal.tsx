@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { sendQuoteEmail, validateQuoteForm, QuoteFormData } from '../services/emailService';
@@ -10,6 +10,7 @@ interface QuoteModalProps {
 
 const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
   const { t } = useTranslation();
+  const contentRef = useRef<HTMLDivElement>(null);
   const [isDark, setIsDark] = useState(true);
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -46,6 +47,23 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
     observer.observe(root, { attributes: true, attributeFilter: ['class'] });
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    contentRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentStep]);
 
   const projectTypes = t('quoteModal.step2.projectTypes', { returnObjects: true }) as string[];
   const availableFeatures = t('quoteModal.step2.featuresList', { returnObjects: true }) as string[];
@@ -138,38 +156,38 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
   const bgProgressBar = isDark ? 'bg-slate-700' : 'bg-slate-300';
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className={`${bgModal} rounded-2xl border ${borderColor} w-full max-w-4xl max-h-[90vh] overflow-hidden`}>
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-end justify-center overflow-y-auto overscroll-contain p-0 sm:items-center sm:p-4">
+      <div className={`${bgModal} flex h-[100dvh] w-full flex-col overflow-hidden rounded-none border ${borderColor} sm:h-auto sm:max-h-[90vh] sm:max-w-4xl sm:rounded-2xl`}>
         {/* Header */}
-        <div className={`flex items-center justify-between p-6 border-b ${borderColor}`}>
+        <div className={`sticky top-0 z-10 flex items-start justify-between border-b ${borderColor} ${bgModal} px-4 py-4 sm:p-6`}>
           <div>
-            <h2 className={`text-2xl font-bold ${textPrimary}`}>{t('quoteModal.title')}</h2>
+            <h2 className={`pr-4 text-2xl font-bold leading-tight ${textPrimary}`}>{t('quoteModal.title')}</h2>
             <p className={textSecondary}>{t('quoteModal.step', { step: currentStep })}</p>
           </div>
-          <button onClick={onClose} className={`p-2 ${bgHover} rounded-lg transition-colors`}>
+          <button onClick={onClose} className={`shrink-0 p-2 ${bgHover} rounded-lg transition-colors`}>
             <X size={24} className={textPrimary} />
           </button>
         </div>
 
         {/* Progress Bar */}
-        <div className={`px-6 py-4 ${bgProgress}`}>
-          <div className="flex items-center justify-between mb-2">
+        <div className={`px-4 py-4 sm:px-6 ${bgProgress}`}>
+          <div className="mb-3 flex items-center justify-between gap-2 sm:mb-2 sm:gap-0">
             {[1, 2, 3, 4].map((step) => (
-              <div key={step} className="flex items-center">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+              <div key={step} className="flex min-w-0 flex-1 items-center last:flex-initial">
+                <div className={`h-8 w-8 shrink-0 rounded-full flex items-center justify-center text-sm font-semibold ${
                   step <= currentStep ? 'bg-blue-500 text-white' : `${bgProgressBar} ${textSecondary}`
                 }`}>
                   {step}
                 </div>
                 {step < 4 && (
-                  <div className={`w-16 h-1 mx-2 ${
+                  <div className={`mx-2 h-1 flex-1 ${
                     step < currentStep ? 'bg-blue-500' : bgProgressBar
                   }`} />
                 )}
               </div>
             ))}
           </div>
-          <div className={`flex justify-between text-xs ${textSecondary}`}>
+          <div className={`grid grid-cols-4 gap-2 text-center text-[11px] leading-tight sm:text-xs ${textSecondary}`}>
             <span>{t('quoteModal.steps.info')}</span>
             <span>{t('quoteModal.steps.project')}</span>
             <span>{t('quoteModal.steps.planning')}</span>
@@ -178,12 +196,12 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto max-h-[60vh]">
+        <div ref={contentRef} className="min-h-0 flex-1 overflow-y-auto px-4 py-5 sm:p-6">
           {/* Étape 1: Informations personnelles */}
           {currentStep === 1 && (
             <div className="space-y-6">
               <h3 className={`text-xl font-semibold mb-4 ${textPrimary}`}>{t('quoteModal.step1.title')}</h3>
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid gap-4 md:grid-cols-2">
                 <div>
                   <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
                     {t('quoteModal.step1.fullName')}
@@ -278,7 +296,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                 <label className={`block text-sm font-medium ${textSecondary} mb-3`}>
                   {t('quoteModal.step2.features')}
                 </label>
-                <div className="grid md:grid-cols-2 gap-2">
+                <div className="grid gap-2 md:grid-cols-2">
                   {availableFeatures.map((feature: string) => (
                     <label key={feature} className={`flex items-center p-3 ${bgInput} rounded-lg ${bgHoverDarker} transition-colors cursor-pointer`}>
                       <input
@@ -297,7 +315,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                 <label className={`block text-sm font-medium ${textSecondary} mb-3`}>
                   {t('quoteModal.step2.technologies')}
                 </label>
-                <div className="grid md:grid-cols-3 gap-2">
+                <div className="grid gap-2 md:grid-cols-3">
                   {availableTechnologies.map((tech: string) => (
                     <label key={tech} className={`flex items-center p-3 ${bgInput} rounded-lg ${bgHoverDarker} transition-colors cursor-pointer`}>
                       <input
@@ -319,7 +337,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
             <div className="space-y-6">
               <h3 className={`text-xl font-semibold mb-4 ${textPrimary}`}>{t('quoteModal.step3.title')}</h3>
               
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid gap-6 md:grid-cols-2">
                 <div>
                   <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
                     {t('quoteModal.step3.timeline')}
@@ -359,9 +377,9 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                 <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
                   {t('quoteModal.step3.urgency')}
                 </label>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
                   {urgencyLevels.map((level: string) => (
-                    <label key={level} className={`flex items-center p-4 ${bgInput} rounded-lg ${bgHoverDarker} transition-colors cursor-pointer`}>
+                    <label key={level} className={`flex items-center p-3 sm:p-4 ${bgInput} rounded-lg ${bgHoverDarker} transition-colors cursor-pointer`}>
                       <input
                         type="radio"
                         name="urgency"
@@ -450,16 +468,16 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
         </div>
 
         {/* Footer */}
-        <div className={`flex items-center justify-between p-6 border-t ${borderColor}`}>
+        <div className={`sticky bottom-0 flex flex-col gap-3 border-t ${borderColor} ${bgModal} px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:p-6`}>
           <button
             onClick={prevStep}
             disabled={currentStep === 1}
-            className={`px-6 py-2 ${textSecondary} disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
+            className={`order-2 px-6 py-2 text-left sm:order-1 ${textSecondary} disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
           >
             {t('quoteModal.buttons.previous')}
           </button>
           
-          <div className="flex gap-3">
+          <div className="order-1 flex w-full gap-3 sm:order-2 sm:w-auto">
             {currentStep < 4 ? (
               <button
                 onClick={nextStep}
@@ -468,7 +486,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                   (currentStep === 2 && (!formData.projectType || !formData.projectDescription)) ||
                   (currentStep === 3 && (!formData.timeline || !formData.budget))
                 }
-                className="bg-blue-500 hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed px-6 py-2 rounded-lg font-semibold transition-colors text-white"
+                className="w-full rounded-lg bg-blue-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:py-2"
               >
                 {t('quoteModal.buttons.next')}
               </button>
@@ -476,7 +494,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting || submitStatus === 'success'}
-                className="bg-blue-500 hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed px-8 py-2 rounded-lg font-semibold flex items-center gap-2 transition-colors text-white"
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-8 py-3 font-semibold text-white transition-colors hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:py-2"
               >
                 {isSubmitting ? (
                   <>

@@ -7,7 +7,6 @@ import {
   DEFAULT_LANGUAGE,
   getPreferredLanguage,
   isSupportedLanguage,
-  SUPPORTED_LANGUAGES,
   type LanguageCode,
 } from '../constants/i18n';
 
@@ -58,14 +57,6 @@ export default function LanguageLayout() {
       }
     }
   }, [currentLanguage, location.hash, location.pathname, location.search, navigate]);
-
-  useEffect(() => {
-    const preload = async () => {
-      await Promise.all(SUPPORTED_LANGUAGES.map((supportedLanguage) => ensureLanguageResources(supportedLanguage)));
-    };
-
-    void preload();
-  }, []);
 
   return <HomePage />;
 }

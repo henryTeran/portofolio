@@ -23,10 +23,6 @@ export const ensureLanguageResources = async (language: LanguageCode) => {
   i18n.addResourceBundle(language, 'translation', module.default, true, true);
 };
 
-export const preloadCriticalTranslations = async () => {
-  await Promise.all(SUPPORTED_LANGUAGES.map((language) => ensureLanguageResources(language)));
-};
-
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)

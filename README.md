@@ -31,14 +31,15 @@
 
 ### 🌍 Internationalization (i18n)
 - **Three Languages:** 🇫🇷 Français, 🇬🇧 English, 🇪🇸 Español
-- **SEO Routes by Language** – `/fr`, `/en`, `/es` with dedicated pages (`/services`, `/projects`, `/contact`)
+- **Single Landing by Language** – `/fr`, `/en`, `/es`
+- **Hash Navigation** – sections navigated with `/:lang#about`, `/:lang#projects`, `/:lang#services`, `/:lang#contact`
 - **Dynamic Switching** – Instant language changes while preserving current route context
 - **Complete Localization** – All UI text, forms, and templates translated
 - **Context-Aware** – Email language matches user's selected language
 
 ### 🔎 SEO Architecture
-- **Canonical URLs** – Automatic `<link rel="canonical">` by localized page route
-- **`hreflang` Tags** – `fr`, `en`, `es`, and `x-default` for all localized pages
+- **Canonical URLs** – One canonical URL per language landing (`/fr`, `/en`, `/es`)
+- **`hreflang` Tags** – Runtime `fr`, `en`, `es` + `x-default` aligned with language landings
 - **Dynamic Metadata** – Per-page/per-language title and description
 - **Structured Data** – JSON-LD `Person` profile for portfolio indexing
 - **Indexable Pages** – `robots` meta configured to `index,follow`

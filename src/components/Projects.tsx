@@ -1,22 +1,40 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import { X } from 'lucide-react';
 import { trackProjectClick } from '../analytics/trackingEvents';
+
+type Project = {
+  key: string;
+  title: string;
+  period: string;
+  category: string;
+  description: string;
+  features: string[];
+  technologies: string[];
+};
 
 const Projects = () => {
   const { t } = useTranslation();
+  const [selectedProject, setSelectedProject] = React.useState<Project | null>(null);
 
   // Récupérer les 6 projets depuis i18n
-  const projectsList = t('projects.list', { returnObjects: true }) as Record<string, {
-    title: string;
-    period: string;
-    category: string;
-    description: string;
-    features: string[];
-    technologies: string[];
-  }>;
+  const projectsList = t('projects.list', { returnObjects: true }) as Record<
+    string,
+    Omit<Project, 'key'>
+  >;
 
-  const projects = Object.values(projectsList);
+  const projects = Object.entries(projectsList).map(([key, project]) => ({
+    key,
+    ...project,
+  }));
+
+  const openProjectDetails = (project: Project) => {
+    trackProjectClick(project.title);
+    setSelectedProject(project);
+  };
+
+  const closeProjectDetails = () => setSelectedProject(null);
 
   return (
     <section id="projects" className="py-20 bg-app">
@@ -34,13 +52,12 @@ const Projects = () => {
         <div className="grid lg:grid-cols-3 gap-8 mb-16">
           {projects.map((project, index) => (
             <motion.div
-              key={project.title}
-              className="card transition-all duration-300 group hover:transform hover:scale-[1.02] cursor-pointer"
+              key={project.key}
+              className="card transition-all duration-300 group hover:transform hover:scale-[1.02]"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              onClick={() => trackProjectClick(project.title)}
             >
               <div className="flex items-start justify-between mb-4">
                 <div>
@@ -82,10 +99,81 @@ const Projects = () => {
                 </div>
               </div>
 
+              <button
+                type="button"
+                onClick={() => openProjectDetails(project)}
+                aria-label={`${t('projects.learnmore')} ${project.title}`}
+                className="mt-2 inline-flex items-center rounded-lg border border-[var(--primary)]/40 px-4 py-2 text-sm font-semibold text-[var(--primary)] transition-colors hover:bg-[var(--primary)]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2"
+              >
+                {t('projects.learnmore')}
+              </button>
+
             </motion.div>
           ))}
         </div>
       </div>
+
+      {selectedProject && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={selectedProject.title}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4"
+          onClick={closeProjectDetails}
+        >
+          <div
+            className="w-full max-w-2xl rounded-2xl border border-white/10 bg-[var(--bg)] p-6 shadow-xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="mb-4 flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs uppercase tracking-wider text-[var(--primary)]">{selectedProject.category}</p>
+                <h3 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>
+                  {selectedProject.title}
+                </h3>
+                <p className="text-sm text-[var(--muted)]">{selectedProject.period}</p>
+              </div>
+              <button
+                type="button"
+                aria-label="Close project details"
+                onClick={closeProjectDetails}
+                className="rounded-lg p-2 text-[var(--muted)] transition-colors hover:bg-white/10 hover:text-[var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <p className="mb-4 leading-relaxed text-[var(--muted)]">{selectedProject.description}</p>
+
+            <div className="mb-4">
+              <h4 className="mb-2 text-sm font-semibold uppercase tracking-wider text-[var(--muted)]">
+                {t('projects.featuresTitle')}
+              </h4>
+              <ul className="list-disc space-y-1 pl-5 text-sm text-[var(--muted)]">
+                {selectedProject.features.map((feature) => (
+                  <li key={feature}>{feature}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="mb-2 text-sm font-semibold uppercase tracking-wider text-[var(--muted)]">
+                {t('projects.techTitle')}
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {selectedProject.technologies.map((technology) => (
+                  <span
+                    key={technology}
+                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-[var(--muted)]"
+                  >
+                    {technology}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

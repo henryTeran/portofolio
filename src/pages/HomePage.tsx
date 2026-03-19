@@ -38,7 +38,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-app">
-      <SeoHelmet language={language} page="home" pathname={`/${language}/`} />
+      <SeoHelmet language={language} page="landing" />
       <Header />
       <main>
         <Hero />

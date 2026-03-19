@@ -72,7 +72,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
   const timelineOptions = t('quoteModal.step3.timelineOptions', { returnObjects: true }) as string[];
   const urgencyLevels = t('quoteModal.step3.urgencyLevels', { returnObjects: true }) as string[];
 
-  const handleInputChange = (field: keyof QuoteFormData, value: any) => {
+  const handleInputChange = <K extends keyof QuoteFormData>(field: K, value: QuoteFormData[K]) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 

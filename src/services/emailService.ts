@@ -5,6 +5,7 @@ const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID as string;
 const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string;
 const TPL_CONTACT = import.meta.env.VITE_EMAILJS_TPL_CONTACT as string;
 const TPL_QUOTE = import.meta.env.VITE_EMAILJS_TPL_QUOTE as string;
+const isDev = import.meta.env.DEV;
 
 export interface ContactFormData {
   name: string;
@@ -67,7 +68,9 @@ export const initEmailJS = (): void => {
   }
   try {
     emailjs.init(PUBLIC_KEY);
-    console.log('[EmailJS] Initialisé avec succès');
+    if (isDev) {
+      console.debug('[EmailJS] Initialisé avec succès');
+    }
   } catch (error) {
     console.error('[EmailJS] Erreur lors de l\'initialisation:', error);
   }
@@ -126,7 +129,9 @@ export const sendContactEmail = async (
       tags: sanitizeString(extras?.tags || '')
     };
 
-    console.log('[EmailJS Contact] Envoi avec les paramètres:', templateParams);
+    if (isDev) {
+      console.debug('[EmailJS Contact] Envoi en cours');
+    }
 
     if (!SERVICE_ID || !TPL_CONTACT) {
       console.error('[EmailJS Contact] SERVICE_ID ou TPL_CONTACT manquant dans .env');
@@ -142,7 +147,9 @@ export const sendContactEmail = async (
         safeParams,
         PUBLIC_KEY
       );
-      console.log('[EmailJS Contact] Succès:', response);
+      if (isDev) {
+        console.debug('[EmailJS Contact] Succès:', response.status);
+      }
     } catch (err: unknown) {
       console.error('[EmailJS Contact] Erreur lors de l\'envoi (détails):', err);
       if (err && typeof err === 'object') {
@@ -193,7 +200,9 @@ export const sendQuoteEmail = async (formData: QuoteFormData): Promise<boolean> 
       lang: getCurrentLang()
     };
 
-    console.log('[EmailJS Quote] Envoi avec les paramètres:', templateParams);
+    if (isDev) {
+      console.debug('[EmailJS Quote] Envoi en cours');
+    }
 
     if (!SERVICE_ID || !TPL_QUOTE) {
       console.error('[EmailJS Quote] SERVICE_ID ou TPL_QUOTE manquant dans .env');
@@ -209,7 +218,9 @@ export const sendQuoteEmail = async (formData: QuoteFormData): Promise<boolean> 
         safeParams,
         PUBLIC_KEY
       );
-      console.log('[EmailJS Quote] Succès:', response);
+      if (isDev) {
+        console.debug('[EmailJS Quote] Succès:', response.status);
+      }
     } catch (err: unknown) {
       console.error('[EmailJS Quote] Erreur lors de l\'envoi (détails):', err);
       if (err && typeof err === 'object') {

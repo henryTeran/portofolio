@@ -5,13 +5,11 @@ import { HelmetProvider } from 'react-helmet-async';
 import App from './App.tsx';
 import AnalyticsTracker from './analytics/AnalyticsTracker';
 import './i18n';
-import { preloadCriticalTranslations } from './i18n';
 import './styles/theme.css';
 import './index.css';
 import { initEmailJS } from './services/emailService';
 
 initEmailJS();
-void preloadCriticalTranslations();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

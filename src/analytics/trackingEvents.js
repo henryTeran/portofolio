@@ -6,22 +6,30 @@
 import ReactGA from 'react-ga4';
 import { trackPage } from './analytics';
 
+const isDev = import.meta.env.DEV;
+
 // ─── Re-export for convenience ────────────────────────────────────────────────
 export { trackPage };
 
 // ─── Internal helper ──────────────────────────────────────────────────────────
 export const trackEventSafely = (eventName, params = {}) => {
-  console.debug('[GA4] Sending custom event', { eventName, params });
+  if (isDev) {
+    console.debug('[GA4] Sending custom event', { eventName, params });
+  }
 
   try {
     ReactGA.event(eventName, params);
-    console.debug('[GA4] Custom event sent', { eventName, params });
+    if (isDev) {
+      console.debug('[GA4] Custom event sent', { eventName, params });
+    }
   } catch (error) {
-    console.debug('[GA4] Custom event failed', {
-      eventName,
-      params,
-      error,
-    });
+    if (isDev) {
+      console.debug('[GA4] Custom event failed', {
+        eventName,
+        params,
+        error,
+      });
+    }
   }
 };
 

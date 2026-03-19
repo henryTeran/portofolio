@@ -8,12 +8,11 @@ const siteUrl = (import.meta.env.VITE_SITE_URL ?? 'https://henryteran.com').repl
 type SeoHelmetProps = {
   language: LanguageCode;
   page: SeoPageKey;
-  pathname: string;
 };
 
-export default function SeoHelmet({ language, page, pathname }: SeoHelmetProps) {
+export default function SeoHelmet({ language, page }: SeoHelmetProps) {
   const seo = SEO_CONFIG[page][language];
-  const canonical = `${siteUrl}${pathname}`;
+  const canonical = `${siteUrl}/${language}`;
 
   const personJsonLd = {
     '@context': 'https://schema.org',
@@ -54,7 +53,7 @@ export default function SeoHelmet({ language, page, pathname }: SeoHelmetProps) 
         <link rel="canonical" href={canonical} />
         <script type="application/ld+json">{JSON.stringify(personJsonLd)}</script>
       </Helmet>
-      <HreflangLinks currentPathname={pathname} />
+      <HreflangLinks currentLanguage={language} />
     </>
   );
 }

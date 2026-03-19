@@ -1,3 +1,13 @@
+// Disable Vercel's built-in body parser so we can read the raw stream ourselves.
+// Required because Vercel only auto-parses application/json but not
+// application/csp-report or application/reports+json — those arrive as an
+// unconsumed stream unless we opt-out here.
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
 const SUPPORTED_CONTENT_TYPES = new Set([
   'application/csp-report',
   'application/reports+json',
@@ -127,12 +137,6 @@ const parseIncomingBody = (body: unknown): unknown => {
   }
 
   return body;
-};
-
-const isEmptyObject = (value: unknown): boolean => {
-  const record = asRecord(value);
-  if (!record) return false;
-  return Object.keys(record).length === 0;
 };
 
 const readRawBody = (req: RequestLike): Promise<string | null> => {
@@ -307,15 +311,12 @@ export default function handler(req: RequestLike, res: ResponseLike) {
     return res.status(400).json({ ok: false, error: 'Invalid body format' });
   }
 
+  // Body parser is disabled (see config above). Always read the raw stream
+  // so all content-type variants (csp-report, reports+json, json) are supported.
   const resolvePayload = async (): Promise<unknown> => {
-    const parsed = parseIncomingBody(req.body);
-
-    if (parsed === null || parsed === undefined || isEmptyObject(parsed)) {
-      const raw = await readRawBody(req);
-      if (raw) return parseIncomingBody(raw);
-    }
-
-    return parsed;
+    const raw = await readRawBody(req);
+    if (raw) return parseIncomingBody(raw);
+    return parseIncomingBody(req.body);
   };
 
   const process = async () => {

@@ -10,6 +10,7 @@ type RequestLike = {
   method?: string;
   body?: unknown;
   headers?: Record<string, string | string[] | undefined>;
+  on?: (event: 'data' | 'end' | 'error', listener: (...args: unknown[]) => void) => void;
 };
 
 type ResponseLike = {
@@ -128,6 +129,44 @@ const parseIncomingBody = (body: unknown): unknown => {
   return body;
 };
 
+const isEmptyObject = (value: unknown): boolean => {
+  const record = asRecord(value);
+  if (!record) return false;
+  return Object.keys(record).length === 0;
+};
+
+const readRawBody = (req: RequestLike): Promise<string | null> => {
+  return new Promise((resolve) => {
+    if (typeof req.on !== 'function') {
+      resolve(null);
+      return;
+    }
+
+    const chunks: Buffer[] = [];
+
+    req.on('data', (chunk: unknown) => {
+      if (typeof chunk === 'string') {
+        chunks.push(Buffer.from(chunk));
+        return;
+      }
+
+      if (chunk && typeof Buffer !== 'undefined' && Buffer.isBuffer(chunk)) {
+        chunks.push(chunk);
+      }
+    });
+
+    req.on('end', () => {
+      if (chunks.length === 0) {
+        resolve(null);
+        return;
+      }
+      resolve(Buffer.concat(chunks).toString('utf8'));
+    });
+
+    req.on('error', () => resolve(null));
+  });
+};
+
 const extractRawReports = (payload: unknown): UnknownRecord[] => {
   const collected: UnknownRecord[] = [];
 
@@ -139,6 +178,18 @@ const extractRawReports = (payload: unknown): UnknownRecord[] => {
 
     const record = asRecord(entry);
     if (!record) return;
+
+    const reports = record.reports;
+    if (Array.isArray(reports)) {
+      reports.forEach(visit);
+      return;
+    }
+
+    const singleReport = record.report;
+    if (singleReport !== undefined) {
+      visit(singleReport);
+      return;
+    }
 
     const legacy = asRecord(record['csp-report']);
     if (legacy) {
@@ -256,29 +307,46 @@ export default function handler(req: RequestLike, res: ResponseLike) {
     return res.status(400).json({ ok: false, error: 'Invalid body format' });
   }
 
-  const parsedBody = parseIncomingBody(req.body);
-  const rawReports = extractRawReports(parsedBody);
+  const resolvePayload = async (): Promise<unknown> => {
+    const parsed = parseIncomingBody(req.body);
 
-  if (rawReports.length === 0) {
+    if (parsed === null || parsed === undefined || isEmptyObject(parsed)) {
+      const raw = await readRawBody(req);
+      if (raw) return parseIncomingBody(raw);
+    }
+
+    return parsed;
+  };
+
+  const process = async () => {
+    const parsedBody = await resolvePayload();
+    const rawReports = extractRawReports(parsedBody);
+
+    if (rawReports.length === 0) {
+      return res.status(400).json({ ok: false, error: 'Invalid body format' });
+    }
+
+    const nowIso = new Date().toISOString();
+    const userAgent = toStringOrNull(getHeader(req, 'user-agent'));
+
+    const normalizedReports = rawReports
+      .map((raw) => normalizeReport(raw, userAgent, nowIso))
+      .filter(hasMeaningfulData);
+
+    if (normalizedReports.length === 0) {
+      return res.status(400).json({ ok: false, error: 'Invalid body format' });
+    }
+
+    normalizedReports.forEach(logCompact);
+
+    if (isDev) {
+      console.debug('[CSP][Report-Only][Debug]', JSON.stringify(normalizedReports));
+    }
+
+    return res.status(204).end();
+  };
+
+  process().catch(() => {
     return res.status(400).json({ ok: false, error: 'Invalid body format' });
-  }
-
-  const nowIso = new Date().toISOString();
-  const userAgent = toStringOrNull(getHeader(req, 'user-agent'));
-
-  const normalizedReports = rawReports
-    .map((raw) => normalizeReport(raw, userAgent, nowIso))
-    .filter(hasMeaningfulData);
-
-  if (normalizedReports.length === 0) {
-    return res.status(400).json({ ok: false, error: 'Invalid body format' });
-  }
-
-  normalizedReports.forEach(logCompact);
-
-  if (isDev) {
-    console.debug('[CSP][Report-Only][Debug]', JSON.stringify(normalizedReports));
-  }
-
-  return res.status(204).end();
+  });
 }

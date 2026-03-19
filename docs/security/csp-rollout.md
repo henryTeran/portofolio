@@ -110,3 +110,56 @@ Consulter ensuite les logs Vercel (Runtime logs) pour analyser les violations r�
 - aucun blocage sur polices Google
 - aucune erreur console CSP sur parcours principaux
 - décision explicite sur maintien/suppression de `stats.g.doubleclick.net`
+
+---
+
+## 5) Monitoring immédiat (sans CLI Vercel)
+
+La CLI `vercel` n'est pas disponible sur cet environnement local. Alternative pragmatique immédiate:
+
+1. Ouvrir Vercel Dashboard > Project > Functions > `api/csp-report` > Logs.
+2. Ouvrir le site en production sur `/fr`, `/en`, `/es` et exécuter les parcours:
+   - navigation par ancres (`#about`, `#projects`, `#services`, `#contact`)
+   - soumission formulaire contact
+   - ouverture du devis
+   - changement de langue
+3. Vérifier ensuite les logs de la fonction `api/csp-report`.
+
+### Tests synthétiques (pour valider le pipeline de report)
+
+Dans DevTools console sur `https://henryteran.com/fr`, exécuter:
+
+```js
+// 1) Violation img-src (domaine non autorisé)
+const img = new Image();
+img.src = 'https://example.com/csp-probe.png';
+document.body.appendChild(img);
+
+// 2) Violation connect-src (endpoint non autorisé)
+fetch('https://example.com/csp-probe', { mode: 'no-cors' }).catch(() => {});
+```
+
+Attendu:
+- événements `Content Security Policy` dans DevTools Console
+- nouvelles entrées JSON dans les logs de `api/csp-report`
+
+---
+
+## 6) Triage des violations: priorités
+
+Priorité P0 (corriger avant CSP bloquante):
+- `effectiveDirective=connect-src` sur `api.emailjs.com`, `google-analytics.com`, `region1.google-analytics.com`.
+- `effectiveDirective=script-src` pour `www.googletagmanager.com`.
+
+Priorité P1 (analyse):
+- `blockedUri=https://stats.g.doubleclick.net`:
+  - garder si observé régulièrement avec GA4 réel,
+  - retirer sinon pour durcir la policy.
+
+Priorité P2 (durcissement progressif):
+- retrait de `'unsafe-inline'` dans `script-src` après migration JSON-LD vers hash/nonce.
+- retrait de `'unsafe-inline'` dans `style-src` après migration des styles inline React.
+
+Règle de décision recommandée:
+- garder une origine uniquement si violation récurrente + besoin fonctionnel prouvé.
+- supprimer toute origine non observée sur une fenêtre de 7 jours réels.

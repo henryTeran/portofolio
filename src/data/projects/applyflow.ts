@@ -5,6 +5,6 @@ export const applyflow: PortfolioProject = {
   taglineKey: 'portfolio.applyflow.tagline', summaryKey: 'portfolio.applyflow.summary',
   role: ['Full-Stack Engineering', 'Applied AI'], period: '2025–2026',
   technologies: ['React', 'TypeScript', 'FastAPI', 'PostgreSQL', 'Redis', 'Docker', 'OpenAI'],
-  capabilities: ['Authentication', 'Job offers', 'AI matching', 'Application tracking', 'Background jobs'],
+  capabilities: ['Authentication', 'Job offers', 'AI matching', 'Application tracking', 'Cover letter generation', 'Timeline', 'Background jobs', 'User isolation'],
   featured: true,
 };

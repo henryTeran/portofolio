@@ -30,7 +30,7 @@ export default function CaseStudyPage({ project, language, narrative }: { projec
       {narrative?.businessProblem && section(labels.problem, <p>{narrative.businessProblem}</p>)}
       {narrative?.roles && section(labels.role, list(narrative.roles))}
       {narrative?.solution && section(labels.solution, <p>{narrative.solution}</p>)}
-      {narrative?.architecture && section(labels.architecture, <><p className="mb-7">{narrative.architecture.summary}</p><ArchitectureDiagram layers={narrative.architecture.layers} /></>)}
+      {narrative?.architecture && section(labels.architecture, <><p className="mb-7">{narrative.architecture.summary}</p><ArchitectureDiagram layers={narrative.architecture.layers} label={labels.architecture} /></>)}
       {narrative?.aiLayer && section(labels.ai, <><p className="mb-7">{narrative.aiLayer.summary}</p>{list(narrative.aiLayer.capabilities)}</>)}
       {narrative?.challenges?.length ? section(labels.challenges, <div className="grid gap-6 sm:grid-cols-2">{narrative.challenges.map((challenge) => <div key={challenge.title}><h3 className="font-semibold text-[var(--v2-text)]">{challenge.title}</h3><p className="mt-2 text-sm leading-relaxed">{challenge.detail}</p></div>)}</div>) : null}
       {section(labels.capabilities, list(narrative?.capabilities ?? project.capabilities))}

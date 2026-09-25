@@ -32,7 +32,7 @@ export interface QuoteFormData {
   additionalInfo?: string;
 }
 
-const sanitizeString = (value: any): string => {
+const sanitizeString = (value: unknown): string => {
   if (value === null || value === undefined) return '';
   return String(value).trim();
 };

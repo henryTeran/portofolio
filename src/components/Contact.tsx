@@ -31,9 +31,6 @@ const Contact = () => {
     initEmailJS();
   }, []);
 
-  const isValidEmail = (email: string) =>
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 

@@ -21,14 +21,15 @@ const mapLegacySectionToHash: Record<string, string> = {
 
 export default function LanguageLayout() {
   const { lang = DEFAULT_LANGUAGE, slug } = useParams();
-  const location = useLocation();
-  const navigate = useNavigate();
-
   if (!isSupportedLanguage(lang)) {
     return <Navigate to={`/${DEFAULT_LANGUAGE}`} replace />;
   }
+  return <ValidLanguageLayout currentLanguage={lang} slug={slug} />;
+}
 
-  const currentLanguage = lang as LanguageCode;
+function ValidLanguageLayout({ currentLanguage, slug }: { currentLanguage: LanguageCode; slug?: string }) {
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const init = async () => {

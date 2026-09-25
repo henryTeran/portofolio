@@ -19,6 +19,14 @@ describe('public mail endpoint', () => {
   it('rejects cross origin requests', async () => {
     expect((await handleMailRequest(request({}, 'https://example.org'), 'contact')).status).toBe(403);
   });
+  it('allows the configured local Vite proxy origin', async () => {
+    const localRequest = new Request('http://localhost:3000/api/contact', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', origin: 'http://localhost:5173' },
+      body: JSON.stringify({ name: 'Visitor', email: 'visitor@example.com', message: 'A useful message', language: 'en' }),
+    });
+    expect((await handleMailRequest(localRequest, 'contact')).status).toBe(200);
+  });
   it('accepts a complete project brief and rejects an incomplete one', async () => {
     const brief = {
       name: 'Visitor', email: 'visitor@example.com', language: 'fr',

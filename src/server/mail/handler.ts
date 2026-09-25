@@ -7,7 +7,11 @@ export async function handleMailRequest(request: Request, kind: 'contact' | 'bri
   const origin = request.headers.get('origin');
   if (origin) {
     try {
-      if (new URL(origin).host !== new URL(request.url).host) throw new Error('Cross-origin request');
+      const source = new URL(origin);
+      const destination = new URL(request.url);
+      const localViteProxy = source.origin === 'http://localhost:5173' &&
+        destination.hostname === 'localhost' && destination.port === '3000';
+      if (source.host !== destination.host && !localViteProxy) throw new Error('Cross-origin request');
     } catch {
       return Response.json({ error: 'Invalid request' }, { status: 403 });
     }

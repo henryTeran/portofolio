@@ -15,7 +15,7 @@
 
 ### `connect-src`
 - `'self'` (requêtes first-party)
-- `https://api.emailjs.com` (envoi des formulaires)
+- `self` couvre les endpoints Contact et Project Brief
 - `https://www.google-analytics.com` (collecte GA4)
 - `https://region1.google-analytics.com` (collecte GA4 régionale)
 - `https://www.googletagmanager.com` (support GA)
@@ -60,7 +60,7 @@
 ```text
 default-src 'self';
 script-src 'self' 'unsafe-inline' 'report-sample' https://www.googletagmanager.com;
-connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com https://stats.g.doubleclick.net https://api.emailjs.com;
+connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com https://stats.g.doubleclick.net;
 img-src 'self' data:;
 style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
 font-src 'self' data: https://fonts.gstatic.com;
@@ -148,7 +148,7 @@ Attendu:
 ## 6) Triage des violations: priorités
 
 Priorité P0 (corriger avant CSP bloquante):
-- `effectiveDirective=connect-src` sur `api.emailjs.com`, `google-analytics.com`, `region1.google-analytics.com`.
+- `effectiveDirective=connect-src` sur `google-analytics.com`, `region1.google-analytics.com`.
 - `effectiveDirective=script-src` pour `www.googletagmanager.com`.
 
 Priorité P1 (analyse):

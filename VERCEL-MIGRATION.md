@@ -73,15 +73,15 @@ Current sitemap contains localized routes only and no `?lang=` URLs.
 
 Set these in **Project Settings -> Environment Variables**:
 
-- `VITE_EMAILJS_SERVICE_ID`
-- `VITE_EMAILJS_PUBLIC_KEY`
-- `VITE_EMAILJS_TPL_CONTACT`
-- `VITE_EMAILJS_TPL_QUOTE`
+- `SMTP_HOST`
+- `SMTP_PORT`, `SMTP_SECURE`
+- `SMTP_USER`, `SMTP_PASSWORD`
+- `MAIL_FROM`, `MAIL_TO`, `MAIL_ACKNOWLEDGEMENT`
 - `VITE_SITE_URL` = `https://henryteran.com`
 
 Recommended scopes:
 - Production: all variables
-- Preview: all variables (or test EmailJS values)
+- Preview: all variables (or test SMTP values)
 - Development: optional but recommended for parity
 
 ## 6) 301 test strategy (exact commands)

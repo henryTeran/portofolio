@@ -15,7 +15,6 @@
     "vercel:check": "npm run generate:sitemap && npm run build"
   },
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
     "@supabase/supabase-js": "^2.57.4",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.24",

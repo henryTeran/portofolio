@@ -5,9 +5,10 @@ const siteUrl = (import.meta.env.VITE_SITE_URL ?? 'https://henryteran.com').repl
 
 type HreflangLinksProps = {
   currentLanguage: string;
+  pathSuffix?: string;
 };
 
-export default function HreflangLinks({ currentLanguage }: HreflangLinksProps) {
+export default function HreflangLinks({ currentLanguage, pathSuffix = '' }: HreflangLinksProps) {
   const canonicalLanguage = SUPPORTED_LANGUAGES.includes(currentLanguage as (typeof SUPPORTED_LANGUAGES)[number])
     ? currentLanguage
     : 'en';
@@ -15,9 +16,9 @@ export default function HreflangLinks({ currentLanguage }: HreflangLinksProps) {
   return (
     <Helmet>
       {SUPPORTED_LANGUAGES.map((lang) => {
-        return <link key={lang} rel="alternate" hrefLang={lang} href={`${siteUrl}/${lang}`} />;
+        return <link key={lang} rel="alternate" hrefLang={lang} href={`${siteUrl}/${lang}${pathSuffix}`} />;
       })}
-      <link rel="alternate" hrefLang="x-default" href={`${siteUrl}/${canonicalLanguage}`} />
+      <link rel="alternate" hrefLang="x-default" href={`${siteUrl}/${canonicalLanguage}${pathSuffix}`} />
     </Helmet>
   );
 }

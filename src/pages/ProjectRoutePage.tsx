@@ -7,6 +7,7 @@ import { sectionPath } from '../router/paths';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import CaseStudyPage from '../features/case-study/CaseStudyPage';
+import SeoHelmet from '../seo/SeoHelmet';
 
 export default function ProjectRoutePage() {
   const { lang, slug = '' } = useParams();
@@ -14,6 +15,7 @@ export default function ProjectRoutePage() {
   const project = getProject(slug);
 
   return <div className="min-h-screen bg-[var(--v2-background)] text-[var(--v2-text)]">
+    {project && <SeoHelmet language={language} projectSlug={project.slug} />}
     <Header />
     {project
       ? <CaseStudyPage project={project} language={language} narrative={getCaseStudy(language, slug)} />

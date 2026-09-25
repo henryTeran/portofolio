@@ -8,13 +8,15 @@ export interface ProjectVisual {
 }
 
 export interface ProjectCaseStudy {
-  contextKey: string;
-  problemKey: string;
-  solutionKey: string;
-  architecture: string[];
-  aiLayer: string[];
-  challenges: string[];
-  outcomes: string[];
+  context?: string;
+  businessProblem?: string;
+  roles?: string[];
+  solution?: string;
+  capabilities?: string[];
+  architecture?: { summary: string; layers: string[] };
+  aiLayer?: { summary: string; capabilities: string[] };
+  challenges?: { title: string; detail: string }[];
+  outcomes?: string[];
 }
 
 export interface PortfolioProject {
@@ -30,7 +32,6 @@ export interface PortfolioProject {
   featured: boolean;
   links?: { github?: string; demo?: string };
   visuals?: ProjectVisual[];
-  caseStudy?: ProjectCaseStudy;
 }
 
 export interface Experience {

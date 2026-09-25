@@ -17,7 +17,7 @@ export default function Header() {
   const links = [
     { id: 'projects', label: copy.work },
     { id: 'expertise', label: copy.expertise },
-    { id: 'services', label: copy.approach },
+    { id: 'approach', label: copy.approach },
     { id: 'about', label: copy.journey },
   ];
 

@@ -44,7 +44,7 @@ describe('Smoke tests', () => {
     );
 
     await user.click(
-      screen.getByRole('button', { name: /request a quote|solicitar presupuesto|demande de devis/i })
+      screen.getByRole('button', { name: /describe my project|describir mi proyecto|décrire mon projet/i })
     );
 
     expect(

@@ -3,6 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import { trackProjectClick } from '../analytics/trackingEvents';
+import { useParams } from 'react-router-dom';
+import { DEFAULT_LANGUAGE, isSupportedLanguage } from '../constants/i18n';
+import { featuredProjects } from '../data/projects';
+import { getProjectCopy } from '../content/projects';
 
 type Project = {
   key: string;
@@ -16,18 +20,22 @@ type Project = {
 
 const Projects = () => {
   const { t } = useTranslation();
+  const { lang } = useParams();
+  const language = isSupportedLanguage(lang) ? lang : DEFAULT_LANGUAGE;
   const [selectedProject, setSelectedProject] = React.useState<Project | null>(null);
 
-  // Récupérer les 6 projets depuis i18n
-  const projectsList = t('projects.list', { returnObjects: true }) as Record<
-    string,
-    Omit<Project, 'key'>
-  >;
-
-  const projects = Object.entries(projectsList).map(([key, project]) => ({
-    key,
-    ...project,
-  }));
+  const projects: Project[] = featuredProjects.map((project) => {
+    const copy = getProjectCopy(language, project.slug);
+    return {
+      key: project.slug,
+      title: project.title,
+      period: project.period,
+      category: copy?.category ?? '',
+      description: copy?.summary ?? '',
+      features: project.capabilities,
+      technologies: project.technologies,
+    };
+  });
 
   const openProjectDetails = (project: Project) => {
     trackProjectClick(project.title);

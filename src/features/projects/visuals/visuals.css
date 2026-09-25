@@ -28,3 +28,10 @@
 .visual-task>span{color:var(--visual-accent);font-size:1rem}
 .visual-task-line{height:3px;background:var(--v2-border);width:65%;margin-top:1rem}
 .visual-timeline{font-size:.7rem;color:var(--v2-text-secondary);padding-top:1rem}
+.visual-sources{display:flex;gap:.75rem;justify-content:center}.visual-sources span{border:1px solid var(--v2-border);border-radius:.6rem;padding:.65rem 1.5rem;font-weight:600;font-size:.8rem}
+.visual-connector{text-align:center;color:var(--visual-accent);line-height:1.5rem}
+.visual-report{margin-top:1rem;border:1px solid var(--v2-border);border-radius:.5rem;padding:1rem;background:var(--v2-background)}
+.visual-report>div:first-child{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.5rem}
+.visual-export{font-size:.65rem;color:var(--visual-accent)}
+.visual-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem;font-size:.65rem;color:var(--v2-text-secondary)}
+.visual-fields i{display:block;height:3px;margin-top:.7rem;background:var(--v2-border)}

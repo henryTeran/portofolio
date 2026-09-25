@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Mail, Linkedin, Github, Send, MapPin, Clock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 // ⬇️ adapte l'import selon le nom de ton fichier (email.service ou emailService)
-import { sendContactEmail, initEmailJS, validateContactForm } from '../services/emailService'
+import { sendContactEmail, validateContactForm } from '../services/emailService'
 import type { ContactFormData } from '../services/emailService';
 
 import QuoteModal from './QuoteModal';
@@ -27,10 +27,6 @@ const Contact = () => {
   // Honeypot anti-bot
   const [website, setWebsite] = useState(''); // doit rester vide
 
-  useEffect(() => {
-    initEmailJS();
-  }, []);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -53,13 +49,7 @@ const Contact = () => {
     setSubmitStatus('idle');
 
     try {
-      const ok = await sendContactEmail(
-        formData,
-        {
-          sourcePage: `${window.location.pathname}#contact`,
-          tags: 'lead, portfolio'
-        }
-      );
+      const ok = await sendContactEmail(formData);
 
       if (ok) {
         trackContactSubmit('contact_section');

@@ -8,7 +8,6 @@ import LanguageLayout from '../layouts/LanguageLayout';
 import Contact from '../components/Contact';
 
 vi.mock('../services/emailService', () => ({
-  initEmailJS: vi.fn(),
   sendContactEmail: vi.fn().mockResolvedValue(true),
   validateContactForm: vi.fn(() => ({ isValid: true, errors: [] })),
   sendQuoteEmail: vi.fn().mockResolvedValue(true),

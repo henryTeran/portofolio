@@ -1,4 +1,16 @@
 :root{
+  /* V2 design tokens: ready for progressive section migration. */
+  --v2-background:#F8FAFB;
+  --v2-surface:#FFFFFF;
+  --v2-surface-raised:#EDF1F4;
+  --v2-text:#101820;
+  --v2-text-secondary:#526071;
+  --v2-accent:#168E85;
+  --v2-accent-secondary:#5A69CC;
+  --v2-border:rgba(16,24,32,.12);
+  --v2-content-width:80rem;
+  --v2-section-space:clamp(5rem,10vw,9rem);
+  --v2-radius:1rem;
   /* LIGHT */
   --bg:#F9FAFB;
   --card:#FFFFFF;
@@ -9,6 +21,14 @@
   --accent:#F97316;       /* orange-500 */
 }
 :root.dark{
+  --v2-background:#07090D;
+  --v2-surface:#0D1117;
+  --v2-surface-raised:#131820;
+  --v2-text:#F5F7FA;
+  --v2-text-secondary:#A8B1BD;
+  --v2-accent:#6CE5D8;
+  --v2-accent-secondary:#7C8CFF;
+  --v2-border:rgba(245,247,250,.12);
   /* DARK */
   --bg:#0B1220;           /* bleu nuit */
   --card:#101827;         /* slate-900 */

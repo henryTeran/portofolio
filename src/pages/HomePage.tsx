@@ -7,7 +7,7 @@ import Header from '../components/Header';
 import Hero from '../components/Hero';
 import SelectedWork from '../features/projects/SelectedWork';
 import Services from '../components/Services';
-import Skills from '../components/Skills';
+import ExpertiseSection from '../features/expertise/ExpertiseSection';
 import { DEFAULT_LANGUAGE, isSupportedLanguage, type LanguageCode } from '../constants/i18n';
 import SeoHelmet from '../seo/SeoHelmet';
 
@@ -42,9 +42,9 @@ export default function HomePage() {
       <Header />
       <main>
         <Hero />
-        <About />
-        <Skills />
         <SelectedWork />
+        <ExpertiseSection />
+        <About />
         <Services />
         <Contact />
       </main>

@@ -16,7 +16,7 @@ export default function Header() {
   const copy = navigationCopy[language];
   const links = [
     { id: 'projects', label: copy.work },
-    { id: 'skills', label: copy.expertise },
+    { id: 'expertise', label: copy.expertise },
     { id: 'services', label: copy.approach },
     { id: 'about', label: copy.journey },
   ];

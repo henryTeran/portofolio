@@ -5,6 +5,6 @@ export const wellsync: PortfolioProject = {
   taglineKey: 'portfolio.wellsync.tagline', summaryKey: 'portfolio.wellsync.summary',
   role: ['Full-Stack Engineering', 'Mobile Product'], period: '2025',
   technologies: ['Angular', 'Ionic', 'Firebase', 'OpenAI', 'TypeScript'],
-  capabilities: ['Wellness tracking', 'Personalized recommendations', 'Contextual AI'],
+  capabilities: ['Wellness tracking', 'Roles', 'Contextual assistant', 'Real-time data', 'Notifications'],
   featured: true,
 };

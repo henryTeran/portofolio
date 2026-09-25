@@ -4,9 +4,19 @@ import { describe, expect, it } from 'vitest';
 import { HelmetProvider } from 'react-helmet-async';
 import ProjectRoutePage from '../../pages/ProjectRoutePage';
 import { adjacentProjects } from '../../data/projects';
+import { getCaseStudy } from '../../content/case-studies';
 import '../../i18n';
 
 describe('case study routing', () => {
+  it.each(['zigoma', 'applyflow', 'jobtrace-ai', 'wellsync'])('resolves %s in all three languages', (slug) => {
+    for (const language of ['fr', 'en', 'es'] as const) {
+      expect(getCaseStudy(language, slug)?.context).toBeTruthy();
+      expect(getCaseStudy(language, slug)?.solution).toBeTruthy();
+    }
+  });
+  it('does not resolve an unknown project', () => {
+    expect(getCaseStudy('fr', 'unknown')).toBeUndefined();
+  });
   it('renders a localized known project and its neighboring projects', () => {
     render(<HelmetProvider><MemoryRouter initialEntries={['/fr/projects/zigoma']}><Routes><Route path="/:lang/projects/:slug" element={<ProjectRoutePage />} /></Routes></MemoryRouter></HelmetProvider>);
     expect(screen.getByRole('heading', { level: 1, name: 'ZIGOMA' })).toBeInTheDocument();

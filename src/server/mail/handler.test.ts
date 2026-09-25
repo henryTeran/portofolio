@@ -19,4 +19,13 @@ describe('public mail endpoint', () => {
   it('rejects cross origin requests', async () => {
     expect((await handleMailRequest(request({}, 'https://example.org'), 'contact')).status).toBe(403);
   });
+  it('accepts a complete project brief and rejects an incomplete one', async () => {
+    const brief = {
+      name: 'Visitor', email: 'visitor@example.com', language: 'fr',
+      projectType: 'Application métier', projectDescription: 'A detailed business application request',
+      features: ['CRM'], technologies: ['React'], timeline: '3 mois', budget: '10–20k',
+    };
+    expect((await handleMailRequest(request(brief), 'brief')).status).toBe(200);
+    expect((await handleMailRequest(request({ ...brief, projectDescription: 'short' }), 'brief')).status).toBe(400);
+  });
 });

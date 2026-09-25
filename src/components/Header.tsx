@@ -18,7 +18,7 @@ export default function Header() {
     { id: 'projects', label: copy.work },
     { id: 'expertise', label: copy.expertise },
     { id: 'approach', label: copy.approach },
-    { id: 'about', label: copy.journey },
+    { id: 'journey', label: copy.journey },
   ];
 
   useEffect(() => setOpen(false), [location.pathname, location.hash]);

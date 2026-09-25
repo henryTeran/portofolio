@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import About from '../components/About';
+import JourneySection from '../features/journey/JourneySection';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -45,7 +45,7 @@ export default function HomePage() {
         <SelectedWork />
         <ExpertiseSection />
         <PrinciplesSection />
-        <About />
+        <JourneySection />
         <Contact />
       </main>
       <Footer />

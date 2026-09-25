@@ -5,7 +5,7 @@ import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
-import Projects from '../components/Projects';
+import SelectedWork from '../features/projects/SelectedWork';
 import Services from '../components/Services';
 import Skills from '../components/Skills';
 import { DEFAULT_LANGUAGE, isSupportedLanguage, type LanguageCode } from '../constants/i18n';
@@ -44,7 +44,7 @@ export default function HomePage() {
         <Hero />
         <About />
         <Skills />
-        <Projects />
+        <SelectedWork />
         <Services />
         <Contact />
       </main>

@@ -42,3 +42,11 @@
 .visual-wellness-mark{width:3.5rem;height:3.5rem;border:1px solid var(--visual-accent);border-radius:50%;display:grid;place-items:center;color:var(--visual-accent);font-size:2rem;margin:1rem auto}
 .visual-phone-home{width:35%;height:3px;background:var(--v2-border);margin:1rem auto .25rem;border-radius:1rem}
 .visual-realtime{padding:1rem 0;font-size:.7rem}.visual-realtime>span{color:var(--visual-accent);font-size:1.5rem}.visual-realtime .visual-heading{margin:.4rem 0}
+:root:not(.dark) .product-visual{--visual-accent:#08786f}
+:root:not(.dark) .product-visual--applyflow{--visual-accent:#565fb8}
+section .visual-flow{--visual-accent:var(--v2-accent)}
+section .visual-flow li{font-size:.95rem;padding:1rem}
+.product-visual .visual-flow{--visual-accent:inherit}
+.product-visual .visual-flow li{font-size:.75rem;padding:.7rem}
+:root:not(.dark) section .visual-flow{--visual-accent:#08786f}
+@media(max-width:430px){.visual-modules{grid-template-columns:1fr}.visual-modules li{flex-direction:row;align-items:center}.product-visual .visual-flow li{padding:.55rem}}

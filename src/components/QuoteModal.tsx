@@ -11,6 +11,8 @@ interface QuoteModalProps {
 const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
   const { t } = useTranslation();
   const contentRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const [isDark, setIsDark] = useState(true);
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -53,13 +55,32 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
       return;
     }
 
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    closeButtonRef.current?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onClose();
+      }
+      if (event.key === 'Tab' && dialogRef.current) {
+        const controls = Array.from(dialogRef.current.querySelectorAll<HTMLElement>('button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), a[href]'));
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
 
     return () => {
       document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', onKeyDown);
+      previousFocus?.focus();
     };
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   useEffect(() => {
     contentRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
@@ -157,14 +178,14 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-end justify-center overflow-y-auto overscroll-contain p-0 sm:items-center sm:p-4">
-      <div className={`${bgModal} flex h-[100dvh] w-full flex-col overflow-hidden rounded-none border ${borderColor} sm:h-auto sm:max-h-[90vh] sm:max-w-4xl sm:rounded-2xl`}>
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="project-brief-title" className={`${bgModal} flex h-[100dvh] w-full flex-col overflow-hidden rounded-none border ${borderColor} sm:h-auto sm:max-h-[90vh] sm:max-w-4xl sm:rounded-2xl`}>
         {/* Header */}
         <div className={`sticky top-0 z-10 flex items-start justify-between border-b ${borderColor} ${bgModal} px-4 py-4 sm:p-6`}>
           <div>
-            <h2 className={`pr-4 text-2xl font-bold leading-tight ${textPrimary}`}>{t('quoteModal.title')}</h2>
+            <h2 id="project-brief-title" className={`pr-4 text-2xl font-bold leading-tight ${textPrimary}`}>{t('quoteModal.title')}</h2>
             <p className={textSecondary}>{t('quoteModal.step', { step: currentStep })}</p>
           </div>
-          <button onClick={onClose} className={`shrink-0 p-2 ${bgHover} rounded-lg transition-colors`}>
+          <button ref={closeButtonRef} type="button" aria-label={t('quoteModal.buttons.close')} onClick={onClose} className={`shrink-0 p-2 ${bgHover} rounded-lg transition-colors focus-visible:outline-2 focus-visible:outline-blue-500`}>
             <X size={24} className={textPrimary} />
           </button>
         </div>
@@ -203,10 +224,11 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
               <h3 className={`text-xl font-semibold mb-4 ${textPrimary}`}>{t('quoteModal.step1.title')}</h3>
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
-                  <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
+                  <label htmlFor="brief-name" className={`block text-sm font-medium ${textSecondary} mb-2`}>
                     {t('quoteModal.step1.fullName')}
                   </label>
                   <input
+                    id="brief-name"
                     type="text"
                     value={formData.name}
                     onChange={(e) => handleInputChange('name', e.target.value)}
@@ -216,10 +238,11 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                   />
                 </div>
                 <div>
-                  <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
+                  <label htmlFor="brief-email" className={`block text-sm font-medium ${textSecondary} mb-2`}>
                     {t('quoteModal.step1.email')}
                   </label>
                   <input
+                    id="brief-email"
                     type="email"
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
@@ -229,10 +252,11 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                   />
                 </div>
                 <div>
-                  <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
+                  <label htmlFor="brief-phone" className={`block text-sm font-medium ${textSecondary} mb-2`}>
                     {t('quoteModal.step1.phone')}
                   </label>
                   <input
+                    id="brief-phone"
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => handleInputChange('phone', e.target.value)}
@@ -241,10 +265,11 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                   />
                 </div>
                 <div>
-                  <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
+                  <label htmlFor="brief-company" className={`block text-sm font-medium ${textSecondary} mb-2`}>
                     {t('quoteModal.step1.company')}
                   </label>
                   <input
+                    id="brief-company"
                     type="text"
                     value={formData.company}
                     onChange={(e) => handleInputChange('company', e.target.value)}
@@ -262,10 +287,11 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
               <h3 className={`text-xl font-semibold mb-4 ${textPrimary}`}>{t('quoteModal.step2.title')}</h3>
               
               <div>
-                <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
+                <label htmlFor="brief-project-type" className={`block text-sm font-medium ${textSecondary} mb-2`}>
                   {t('quoteModal.step2.projectType')}
                 </label>
                 <select
+                  id="brief-project-type"
                   value={formData.projectType}
                   onChange={(e) => handleInputChange('projectType', e.target.value)}
                   className={`w-full px-4 py-3 ${bgInput} border ${bgInputBorder} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${textPrimary}`}
@@ -279,10 +305,11 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
+                <label htmlFor="brief-description" className={`block text-sm font-medium ${textSecondary} mb-2`}>
                   {t('quoteModal.step2.description')}
                 </label>
                 <textarea
+                  id="brief-description"
                   value={formData.projectDescription}
                   onChange={(e) => handleInputChange('projectDescription', e.target.value)}
                   rows={4}
@@ -292,10 +319,10 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                 />
               </div>
 
-              <div>
-                <label className={`block text-sm font-medium ${textSecondary} mb-3`}>
+              <div role="group" aria-label={t('quoteModal.step2.features')}>
+                <p className={`block text-sm font-medium ${textSecondary} mb-3`}>
                   {t('quoteModal.step2.features')}
-                </label>
+                </p>
                 <div className="grid gap-2 md:grid-cols-2">
                   {availableFeatures.map((feature: string) => (
                     <label key={feature} className={`flex items-center p-3 ${bgInput} rounded-lg ${bgHoverDarker} transition-colors cursor-pointer`}>
@@ -311,10 +338,10 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
-              <div>
-                <label className={`block text-sm font-medium ${textSecondary} mb-3`}>
+              <div role="group" aria-label={t('quoteModal.step2.technologies')}>
+                <p className={`block text-sm font-medium ${textSecondary} mb-3`}>
                   {t('quoteModal.step2.technologies')}
-                </label>
+                </p>
                 <div className="grid gap-2 md:grid-cols-3">
                   {availableTechnologies.map((tech: string) => (
                     <label key={tech} className={`flex items-center p-3 ${bgInput} rounded-lg ${bgHoverDarker} transition-colors cursor-pointer`}>
@@ -339,10 +366,11 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
               
               <div className="grid gap-6 md:grid-cols-2">
                 <div>
-                  <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
+                  <label htmlFor="brief-timeline" className={`block text-sm font-medium ${textSecondary} mb-2`}>
                     {t('quoteModal.step3.timeline')}
                   </label>
                   <select
+                    id="brief-timeline"
                     value={formData.timeline}
                     onChange={(e) => handleInputChange('timeline', e.target.value)}
                     className={`w-full px-4 py-3 ${bgInput} border ${bgInputBorder} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${textPrimary}`}
@@ -356,10 +384,11 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
+                  <label htmlFor="brief-budget" className={`block text-sm font-medium ${textSecondary} mb-2`}>
                     {t('quoteModal.step3.budget')}
                   </label>
                   <select
+                    id="brief-budget"
                     value={formData.budget}
                     onChange={(e) => handleInputChange('budget', e.target.value)}
                     className={`w-full px-4 py-3 ${bgInput} border ${bgInputBorder} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${textPrimary}`}
@@ -373,10 +402,10 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
-              <div>
-                <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
+              <div role="group" aria-label={t('quoteModal.step3.urgency')}>
+                <p className={`block text-sm font-medium ${textSecondary} mb-2`}>
                   {t('quoteModal.step3.urgency')}
-                </label>
+                </p>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
                   {urgencyLevels.map((level: string) => (
                     <label key={level} className={`flex items-center p-3 sm:p-4 ${bgInput} rounded-lg ${bgHoverDarker} transition-colors cursor-pointer`}>
@@ -394,10 +423,10 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
-              <div>
-                <label className={`block text-sm font-medium ${textSecondary} mb-3`}>
+              <div role="group" aria-label={t('quoteModal.step3.additionalServices')}>
+                <p className={`block text-sm font-medium ${textSecondary} mb-3`}>
                   {t('quoteModal.step3.additionalServices')}
-                </label>
+                </p>
                 <div className="space-y-3">
                   {[
                     { key: 'hasDesign', label: t('quoteModal.step3.design') },
@@ -426,10 +455,11 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
               <h3 className={`text-xl font-semibold mb-4 ${textPrimary}`}>{t('quoteModal.step4.title')}</h3>
               
               <div>
-                <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
+                <label htmlFor="brief-additional-info" className={`block text-sm font-medium ${textSecondary} mb-2`}>
                   {t('quoteModal.step4.additionalInfo')}
                 </label>
                 <textarea
+                  id="brief-additional-info"
                   value={formData.additionalInfo}
                   onChange={(e) => handleInputChange('additionalInfo', e.target.value)}
                   rows={4}

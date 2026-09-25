@@ -33,7 +33,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--v2-border)] bg-[var(--v2-background)]/95 text-[var(--v2-text)] backdrop-blur-md">
-      <nav className="mx-auto flex max-w-[var(--v2-content-width)] items-center justify-between gap-4 px-5 py-4 sm:px-8" aria-label="Primary">
+      <nav className="mx-auto flex max-w-[var(--v2-content-width)] items-center justify-between gap-4 px-5 py-4 sm:px-8" aria-label={copy.nav}>
         <Link to={homePath(language)} className="shrink-0 text-lg font-bold tracking-tight outline-offset-4 focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]" onClick={() => setOpen(false)}>
           Henry Teran<span className="text-[var(--v2-accent)]">.</span>
         </Link>

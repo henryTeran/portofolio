@@ -50,6 +50,9 @@ describe('Smoke tests', () => {
     expect(
       screen.getByText(/custom quote request|solicitud de presupuesto personalizado|demande de devis personnalisé/i)
     ).toBeInTheDocument();
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    await user.keyboard('{Escape}');
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
   it('submits contact form successfully', async () => {

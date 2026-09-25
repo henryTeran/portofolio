@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Sun, Moon } from 'lucide-react';
+import { useParams } from 'react-router-dom';
+import { DEFAULT_LANGUAGE, isSupportedLanguage } from '../constants/i18n';
+import { navigationCopy } from '../content/navigation';
 
 export default function ThemeToggle() {
+  const { lang } = useParams();
+  const language = lang && isSupportedLanguage(lang) ? lang : DEFAULT_LANGUAGE;
   const [dark, setDark] = useState<boolean>(() => {
     const saved = localStorage.getItem('theme');
     return saved ? saved === 'dark' : true;
@@ -27,7 +32,8 @@ export default function ThemeToggle() {
 
   return (
     <button
-      aria-label="Basculer thème"
+      aria-label={navigationCopy[language].theme}
+      aria-pressed={dark}
       onClick={() => setDark(v => !v)}
       className="inline-flex items-center justify-center h-9 w-9 rounded-xl border border-white/10 bg-white/10 hover:bg-white/20 transition"
     >

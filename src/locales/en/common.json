@@ -325,6 +325,7 @@
       "errorMessage": "Error sending. Please try again or contact me directly."
     },
     "buttons": {
+      "close": "Close Project Brief",
       "previous": "Previous",
       "next": "Next",
       "submit": "Send request",

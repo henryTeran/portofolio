@@ -325,6 +325,7 @@
       "errorMessage": "Erreur lors de l'envoi. Veuillez réessayer ou me contacter directement."
     },
     "buttons": {
+      "close": "Fermer le Project Brief",
       "previous": "Précédent",
       "next": "Suivant",
       "submit": "Envoyer la demande",

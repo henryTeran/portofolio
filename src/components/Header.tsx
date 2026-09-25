@@ -3,6 +3,7 @@ import { Menu, X } from 'lucide-react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import LanguageSwitcher from './LanguageSwitcher';
 import ThemeToggle from './ThemeToggle';
+import BrandLogo from './BrandLogo';
 import { DEFAULT_LANGUAGE, isSupportedLanguage } from '../constants/i18n';
 import { navigationCopy } from '../content/navigation';
 import { homePath, sectionPath } from '../router/paths';
@@ -34,8 +35,8 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--v2-border)] bg-[var(--v2-background)]/95 text-[var(--v2-text)] backdrop-blur-md">
       <nav className="mx-auto flex max-w-[var(--v2-content-width)] items-center justify-between gap-4 px-5 py-4 sm:px-8" aria-label={copy.nav}>
-        <Link to={homePath(language)} className="shrink-0 text-lg font-bold tracking-tight outline-offset-4 focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]" onClick={() => setOpen(false)}>
-          Henry Teran<span className="text-[var(--v2-accent)]">.</span>
+        <Link to={homePath(language)} className="shrink-0 outline-offset-4 focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]" onClick={() => setOpen(false)}>
+          <BrandLogo className="w-[150px] sm:w-[180px]" />
         </Link>
         <div className="hidden items-center gap-5 xl:gap-7 lg:flex">
           {links.map((item) => <Link key={item.id} to={sectionPath(language, item.id)} className="text-sm text-[var(--v2-text-secondary)] transition-colors hover:text-[var(--v2-text)] focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]">{item.label}</Link>)}

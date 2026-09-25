@@ -3,6 +3,7 @@ import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { ensureLanguageResources } from '../i18n';
 import i18n from '../i18n';
 import HomePage from '../pages/HomePage';
+import ProjectRoutePage from '../pages/ProjectRoutePage';
 import {
   DEFAULT_LANGUAGE,
   getPreferredLanguage,
@@ -19,7 +20,7 @@ const mapLegacySectionToHash: Record<string, string> = {
 };
 
 export default function LanguageLayout() {
-  const { lang = DEFAULT_LANGUAGE } = useParams();
+  const { lang = DEFAULT_LANGUAGE, slug } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -58,5 +59,5 @@ export default function LanguageLayout() {
     }
   }, [currentLanguage, location.hash, location.pathname, location.search, navigate]);
 
-  return <HomePage />;
+  return slug ? <ProjectRoutePage /> : <HomePage />;
 }

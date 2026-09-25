@@ -13,6 +13,7 @@ export default function AppRouter() {
       <Routes>
         <Route path="/" element={<RootLanguageRedirect />} />
         <Route path="/:lang" element={<LanguageLayout />} />
+        <Route path="/:lang/projects/:slug" element={<LanguageLayout />} />
         <Route path="*" element={<RootLanguageRedirect />} />
       </Routes>
     </Suspense>

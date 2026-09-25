@@ -1,4 +1,3 @@
-import React from 'react';
 import { Code, Building, Smartphone, Brain, ShoppingCart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -11,35 +10,35 @@ const Services = () => {
       description: t('services.fullstack.desc'),
       icon: Code,
       color: 'blue',
-      includes: t('services.fullstack.includes', { returnObjects: true }),
+      includes: t('services.fullstack.includes', { returnObjects: true }) as string[],
     },
     {
       title: t('services.erp.title'),
       description: t('services.erp.desc'),
       icon: Building,
       color: 'green',
-      includes: t('services.erp.includes', { returnObjects: true }),
+      includes: t('services.erp.includes', { returnObjects: true }) as string[],
     },
     {
       title: t('services.mobile.title'),
       description: t('services.mobile.desc'),
       icon: Smartphone,
       color: 'emerald',
-      includes: t('services.mobile.includes', { returnObjects: true }),
+      includes: t('services.mobile.includes', { returnObjects: true }) as string[],
     },
     {
       title: t('services.ai.title'),
       description: t('services.ai.desc'),
       icon: Brain,
       color: 'teal',
-      includes: t('services.ai.includes', { returnObjects: true }),
+      includes: t('services.ai.includes', { returnObjects: true }) as string[],
     },
     {
       title: t('services.ecommerce.title'),
       description: t('services.ecommerce.desc'),
       icon: ShoppingCart,
       color: 'blue',
-      includes: t('services.ecommerce.includes', { returnObjects: true }),
+      includes: t('services.ecommerce.includes', { returnObjects: true }) as string[],
     }
   ];
   const steps = [

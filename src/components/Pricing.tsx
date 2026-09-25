@@ -1,4 +1,3 @@
-import React from 'react';
 import { Clock, MapPin, Euro } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 

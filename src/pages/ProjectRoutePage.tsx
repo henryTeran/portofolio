@@ -8,7 +8,7 @@ import { homePath } from '../router/paths';
 export default function ProjectRoutePage() {
   const { lang, slug = '' } = useParams();
   const { t } = useTranslation();
-  const language = isSupportedLanguage(lang) ? lang : DEFAULT_LANGUAGE;
+  const language = lang && isSupportedLanguage(lang) ? lang : DEFAULT_LANGUAGE;
   const project = getProject(slug);
   const copy = getProjectCopy(language, slug);
 

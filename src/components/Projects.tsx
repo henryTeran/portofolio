@@ -21,7 +21,7 @@ type Project = {
 const Projects = () => {
   const { t } = useTranslation();
   const { lang } = useParams();
-  const language = isSupportedLanguage(lang) ? lang : DEFAULT_LANGUAGE;
+  const language = lang && isSupportedLanguage(lang) ? lang : DEFAULT_LANGUAGE;
   const [selectedProject, setSelectedProject] = React.useState<Project | null>(null);
 
   const projects: Project[] = featuredProjects.map((project) => {

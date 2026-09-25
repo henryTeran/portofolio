@@ -1,4 +1,3 @@
-import React from 'react';
 import { Code, Server, Smartphone, Brain, Database, GitBranch } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 

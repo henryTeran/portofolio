@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import LanguageSwitcher from './LanguageSwitcher';
@@ -11,12 +11,13 @@ import { trackCTA } from '../analytics/trackingEvents';
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
   const { lang } = useParams();
   const location = useLocation();
   const language = lang && isSupportedLanguage(lang) ? lang : DEFAULT_LANGUAGE;
   const copy = navigationCopy[language];
   const links = [
-    { id: 'projects', label: copy.work },
+    { id: 'work', label: copy.work },
     { id: 'expertise', label: copy.expertise },
     { id: 'approach', label: copy.approach },
   ];
@@ -24,7 +25,7 @@ export default function Header() {
   useEffect(() => setOpen(false), [location.pathname, location.hash]);
   useEffect(() => {
     if (!open) return;
-    const onEscape = (event: KeyboardEvent) => { if (event.key === 'Escape') setOpen(false); };
+    const onEscape = (event: KeyboardEvent) => { if (event.key === 'Escape') { setOpen(false); menuButton.current?.focus(); } };
     window.addEventListener('keydown', onEscape);
     return () => window.removeEventListener('keydown', onEscape);
   }, [open]);
@@ -43,7 +44,7 @@ export default function Header() {
           <LanguageSwitcher />
           <ThemeToggle />
         </div>
-        <button type="button" className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-[var(--v2-border)] lg:hidden" aria-label={open ? copy.close : copy.menu} aria-expanded={open} aria-controls="mobile-navigation" onClick={() => setOpen((value) => !value)}>
+        <button ref={menuButton} type="button" className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-[var(--v2-border)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--v2-accent)] lg:hidden" aria-label={open ? copy.close : copy.menu} aria-expanded={open} aria-controls="mobile-navigation" onClick={() => setOpen((value) => !value)}>
           {open ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
         </button>
       </nav>

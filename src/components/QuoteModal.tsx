@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { sendQuoteEmail, validateQuoteForm, QuoteFormData } from '../services/emailService';
+import FormDisclosure from '../privacy/FormDisclosure';
 
 interface QuoteModalProps {
   isOpen: boolean;
@@ -497,6 +498,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
           )}
         </div>
 
+        {currentStep === 4 && <div className="px-4 pb-5 sm:px-6"><FormDisclosure kind="brief" /></div>}
         {/* Footer */}
         <div className={`sticky bottom-0 flex flex-col gap-3 border-t ${borderColor} ${bgModal} px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:p-6`}>
           <button

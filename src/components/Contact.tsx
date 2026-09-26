@@ -7,6 +7,7 @@ import { contactCopy } from '../content/contact';
 import { sendContactEmail, validateContactForm, type ContactFormData } from '../services/emailService';
 import { trackContactSubmit, trackCTA } from '../analytics/trackingEvents';
 import QuoteModal from './QuoteModal';
+import FormDisclosure from '../privacy/FormDisclosure';
 
 export default function Contact() {
   const { t } = useTranslation();
@@ -56,6 +57,7 @@ export default function Contact() {
             <div className="sr-only" aria-hidden="true"><label htmlFor="website">Website</label><input id="website" name="website" value={website} onChange={(event) => setWebsite(event.target.value)} tabIndex={-1} autoComplete="off" /></div>
             <button type="submit" disabled={submitting} className="inline-flex min-h-12 items-center gap-2 rounded-lg bg-[var(--v2-accent)] px-5 py-3 font-semibold text-[#07120f] disabled:opacity-60">{submitting ? t('contact.form.submitting') : t('contact.form.submit')}<ArrowUpRight size={17} aria-hidden="true" /></button>
             <p role="status" aria-live="polite" className={`text-sm ${status === 'error' ? 'text-red-500' : 'text-[var(--v2-accent)]'}`}>{status === 'success' ? t('contact.form.success') : status === 'error' ? t('contact.form.error') : ''}</p>
+            <FormDisclosure kind="contact" />
           </form>
         </div>
         <div className="flex flex-col justify-between rounded-2xl border border-[var(--v2-border)] bg-[var(--v2-surface)] p-7 sm:p-10">

@@ -1,13 +1,23 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
 import { HelmetProvider } from 'react-helmet-async';
 import ProjectRoutePage from '../../pages/ProjectRoutePage';
-import { adjacentProjects } from '../../data/projects';
+import { adjacentProjects, featuredProjects } from '../../data/projects';
 import { getCaseStudy } from '../../content/case-studies';
 import '../../i18n';
 
 describe('case study routing', () => {
+  it.each(featuredProjects)('renders the master followed by curated real screenshots for $title', (project) => {
+    render(<HelmetProvider><MemoryRouter initialEntries={[`/en/projects/${project.slug}`]}><Routes><Route path="/:lang/projects/:slug" element={<ProjectRoutePage />} /></Routes></MemoryRouter></HelmetProvider>);
+    const images = within(screen.getByRole('main')).getAllByRole('img');
+    expect(images[0]).toHaveAttribute('src', project.masterVisual!.src);
+    expect(images[0]).toHaveAttribute('loading', 'eager');
+    expect(images).toHaveLength(1 + project.visuals!.length);
+    expect(screen.getByRole('heading', { name: /Inside the product/ })).toBeInTheDocument();
+    for (const image of images.slice(1)) expect(image).toHaveAttribute('loading', 'lazy');
+    expect(project.visuals!.length).toBeLessThanOrEqual(project.slug === 'zigoma' ? 6 : 4);
+  });
   it.each(['zigoma', 'applyflow', 'jobtrace-ai', 'wellsync'])('resolves %s in all three languages', (slug) => {
     for (const language of ['fr', 'en', 'es'] as const) {
       expect(getCaseStudy(language, slug)?.context).toBeTruthy();

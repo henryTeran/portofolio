@@ -18,6 +18,8 @@
 .screenshot-caption { margin-top: .85rem; min-height: 3em; font-size: .8rem; line-height: 1.5; color: var(--v2-text-secondary); }
 .screenshot-gallery { display: grid; gap: 2rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .screenshot-gallery figure { min-width: 0; }
+.screenshot-gallery figure:first-child { grid-column: 1 / -1; }
+.screenshot-gallery figure:first-child .screenshot-device--mobile { width: min(100%, 300px); }
 .screenshot-gallery figcaption strong { display: block; color: var(--v2-text); margin-bottom: .25rem; }
 @keyframes screenshot-enter { from { opacity: .3; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 @media (max-width: 640px) { .screenshot-gallery { grid-template-columns: minmax(0, 1fr); } }

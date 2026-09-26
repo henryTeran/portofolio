@@ -78,29 +78,6 @@ export const wellsync: PortfolioProject = {
     }
   },
   {
-    "id": "sport",
-    "src": "/images/projects/wellsync/sport-routine.webp",
-    "width": 405,
-    "height": 862,
-    "featured": true,
-    "kind": "mobile",
-    "label": {
-      "fr": "Sport",
-      "en": "Fitness",
-      "es": "Deporte"
-    },
-    "caption": {
-      "fr": "Routine sportive organisée par journée.",
-      "en": "Fitness routine organized by day.",
-      "es": "Rutina deportiva organizada por día."
-    },
-    "alt": {
-      "fr": "WELLSYNC - Sport",
-      "en": "WELLSYNC - Fitness",
-      "es": "WELLSYNC - Deporte"
-    }
-  },
-  {
     "id": "ai",
     "src": "/images/projects/wellsync/ai-chat.webp",
     "width": 405,
@@ -147,4 +124,5 @@ export const wellsync: PortfolioProject = {
     }
   }
 ],
+
 };

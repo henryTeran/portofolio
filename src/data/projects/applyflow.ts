@@ -122,29 +122,7 @@ export const applyflow: PortfolioProject = {
       "en": "APPLYFLOW - Offers",
       "es": "APPLYFLOW - Ofertas"
     }
-  },
-  {
-    "id": "detail",
-    "src": "/images/projects/applyflow/offer-detail-top.webp",
-    "width": 1920,
-    "height": 964,
-    "featured": false,
-    "kind": "desktop",
-    "label": {
-      "fr": "Détail",
-      "en": "Details",
-      "es": "Detalle"
-    },
-    "caption": {
-      "fr": "Informations utiles avant de candidater.",
-      "en": "Relevant information before applying.",
-      "es": "Información útil antes de postular."
-    },
-    "alt": {
-      "fr": "APPLYFLOW - Détail",
-      "en": "APPLYFLOW - Details",
-      "es": "APPLYFLOW - Detalle"
-    }
   }
 ],
+
 };

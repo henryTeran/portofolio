@@ -7,7 +7,7 @@ import { getProjectCopy } from '../../content/projects';
 import { caseStudyLabels } from '../../content/case-studies/labels';
 import { sectionPath } from '../../router/paths';
 import ProjectMasterVisual from '../projects/ProjectMasterVisual';
-import ScreenshotGallery from '../projects/ScreenshotGallery';
+import ProductShowcaseSlider from '../projects/ProductShowcaseSlider';
 import { screenshotLabels } from '../projects/screenshotLabels';
 import ArchitectureDiagram from './ArchitectureDiagram';
 import CaseStudyNavigation from './CaseStudyNavigation';
@@ -33,7 +33,7 @@ export default function CaseStudyPage({ project, language, narrative }: { projec
       {narrative?.businessProblem && section(labels.problem, <p>{narrative.businessProblem}</p>)}
       {narrative?.roles && section(labels.role, list(narrative.roles))}
       {narrative?.solution && section(labels.solution, <p>{narrative.solution}</p>)}
-      {!!project.productSlides?.length && section(screenshotLabels[language], <ScreenshotGallery project={project} language={language} />)}
+      {!!project.productSlides?.length && section(screenshotLabels[language], <ProductShowcaseSlider key={project.slug} project={project} language={language} />)}
       {narrative?.architecture && section(labels.architecture, <><p className="mb-7">{narrative.architecture.summary}</p><ArchitectureDiagram layers={narrative.architecture.layers} label={labels.architecture} /></>)}
       {narrative?.aiLayer && section(labels.ai, <><p className="mb-7">{narrative.aiLayer.summary}</p>{list(narrative.aiLayer.capabilities)}</>)}
       {narrative?.challenges?.length ? section(labels.challenges, <div className="grid gap-6 sm:grid-cols-2">{narrative.challenges.map((challenge) => <div key={challenge.title}><h3 className="font-semibold text-[var(--v2-text)]">{challenge.title}</h3><p className="mt-2 text-sm leading-relaxed">{challenge.detail}</p></div>)}</div>) : null}

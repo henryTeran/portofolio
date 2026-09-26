@@ -13,7 +13,7 @@ describe('case study routing', () => {
     const images = within(screen.getByRole('main')).getAllByRole('img');
     expect(images[0]).toHaveAttribute('src', project.masterVisual!.src);
     expect(images[0]).toHaveAttribute('loading', 'eager');
-    expect(images).toHaveLength(1 + project.productSlides!.length);
+    expect(images).toHaveLength(2);
     expect(screen.getByRole('heading', { name: /Inside the product/ })).toBeInTheDocument();
     for (const image of images.slice(1)) expect(image).toHaveAttribute('loading', 'lazy');
     expect(project.productSlides!.length).toBeLessThanOrEqual(project.slug === 'zigoma' ? 6 : 4);

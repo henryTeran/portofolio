@@ -2,7 +2,7 @@ import { useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const sectionAliases: Record<string, string> = {
-  work: 'projects', skills: 'expertise', services: 'approach', about: 'journey',
+  work: 'projects', skills: 'expertise', services: 'approach', about: 'projects', journey: 'projects',
 };
 
 export default function RouteScrollManager() {

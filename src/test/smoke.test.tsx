@@ -33,7 +33,7 @@ describe('Smoke tests', () => {
     await waitFor(() => {
       expect(document.documentElement.lang).toBe('fr');
     });
-    for (const id of ['projects', 'expertise', 'approach', 'journey', 'contact']) {
+    for (const id of ['projects', 'expertise', 'approach', 'contact']) {
       expect(document.getElementById(id)).toBeInTheDocument();
       expect(document.querySelector(`footer a[href="/fr#${id}"]`)).toBeInTheDocument();
     }

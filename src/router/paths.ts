@@ -9,6 +9,5 @@ export const portfolioNavigation: readonly NavigationItem[] = [
   { id: 'work', labelKey: 'nav.projects', sectionId: 'work' },
   { id: 'expertise', labelKey: 'nav.skills', sectionId: 'expertise' },
   { id: 'approach', labelKey: 'nav.services', sectionId: 'approach' },
-  { id: 'journey', labelKey: 'nav.about', sectionId: 'journey' },
   { id: 'contact', labelKey: 'nav.contact', sectionId: 'contact' },
 ];

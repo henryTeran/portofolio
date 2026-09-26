@@ -35,7 +35,7 @@ it.each(['fr', 'en', 'es'] as const)('resets project navigation, moves focus and
   expect(scroll).toHaveBeenCalledOnce(); expect(screen.getByRole('main')).toHaveFocus();
 });
 
-it.each([['work', 'projects'], ['expertise', 'expertise'], ['approach', 'approach'], ['journey', 'journey'], ['skills', 'expertise'], ['services', 'approach'], ['about', 'journey'], ['contact', 'contact'], ['projects', 'projects']])('resolves #%s without resetting to the top', (hash, id) => {
+it.each([['work', 'projects'], ['expertise', 'expertise'], ['approach', 'approach'], ['journey', 'projects'], ['skills', 'expertise'], ['services', 'approach'], ['about', 'projects'], ['contact', 'contact'], ['projects', 'projects']])('resolves #%s without resetting to the top', (hash, id) => {
   const scroll = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
   const anchor = vi.spyOn(HTMLElement.prototype, 'scrollIntoView').mockImplementation(() => {});
   mount(`/fr#${hash}`);

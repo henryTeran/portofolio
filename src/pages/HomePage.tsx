@@ -1,7 +1,6 @@
 import SectionTransition from '../features/motion/SectionTransition';
 import { useSectionMotion } from '../features/motion/useSectionMotion';
 import { useParams } from 'react-router-dom';
-import JourneySection from '../features/journey/JourneySection';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -30,8 +29,6 @@ export default function HomePage() {
         <ExpertiseSection />
         <SectionTransition />
         <PrinciplesSection />
-        <SectionTransition />
-        <JourneySection />
         <SectionTransition />
         <Contact />
       </main>

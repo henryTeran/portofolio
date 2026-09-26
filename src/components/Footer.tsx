@@ -14,7 +14,7 @@ export default function Footer() {
   const copy = navigationCopy[language];
   const links = [
     { id: 'projects', label: copy.work }, { id: 'expertise', label: copy.expertise },
-    { id: 'approach', label: copy.approach }, { id: 'journey', label: copy.journey },
+    { id: 'approach', label: copy.approach },
     { id: 'contact', label: copy.contact },
   ];
 

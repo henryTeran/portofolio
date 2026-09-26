@@ -6,7 +6,7 @@ import { workCopy } from '../../content/work';
 import { featuredProjects } from '../../data/projects';
 import { projectPath } from '../../router/paths';
 import { trackProjectClick } from '../../analytics/trackingEvents';
-import ProjectPreview from './ProjectPreview';
+import ProjectMasterVisual from './ProjectMasterVisual';
 
 export default function SelectedWork() {
   const { lang } = useParams();
@@ -19,8 +19,9 @@ export default function SelectedWork() {
       <div className="space-y-16 lg:space-y-24">
         {featuredProjects.map((project, index) => {
           const detail = getProjectCopy(language, project.slug);
-          return <article key={project.slug} data-project={project.slug} className={`project-card grid items-center gap-7 border-t border-[var(--v2-border)] pt-7 lg:grid-cols-2 lg:gap-12 ${index === 0 ? 'lg:grid-cols-[.82fr_1.18fr]' : ''}`}>
-            <div className="min-w-0">
+          return <article key={project.slug} data-project={project.slug} className="project-card master-work-card border-t border-[var(--v2-border)] pt-7">
+            <ProjectMasterVisual project={project} language={language} />
+            <div className="min-w-0 master-work-details">
               <div className="mb-7 flex items-center gap-4 text-xs font-mono tracking-widest text-[var(--v2-text-secondary)]"><span className="text-[var(--v2-accent)]">0{index + 1}</span><span>{detail?.category}</span></div>
               <h3 className={`font-display font-semibold leading-none tracking-[-.05em] ${index === 0 ? 'text-[clamp(3.6rem,6vw,6rem)]' : 'text-[clamp(3rem,5vw,4.8rem)]'}`}>{project.title}</h3>
               <p className="mt-5 text-xl font-medium">{detail?.tagline}</p>
@@ -30,7 +31,6 @@ export default function SelectedWork() {
               <p className="mt-5 text-xs text-[var(--v2-text-secondary)]">{project.technologies.slice(0, 5).join(' · ')}</p>
               <Link to={projectPath(language, project.slug)} onClick={() => trackProjectClick(project.title)} className="mt-7 inline-flex min-h-11 items-center gap-2 border-b border-[var(--v2-accent)] pb-1 font-semibold text-[var(--v2-accent)] hover:gap-3 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[var(--v2-accent)]">{copy.explore}<ArrowUpRight size={18} aria-hidden="true" /></Link>
             </div>
-            <ProjectPreview project={project} label={copy.preview} />
           </article>;
         })}
       </div>

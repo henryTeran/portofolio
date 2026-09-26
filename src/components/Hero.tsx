@@ -15,7 +15,7 @@ export default function Hero() {
 
   return (
     <section id="home" className="hero-section overflow-hidden bg-[var(--v2-background)] text-[var(--v2-text)]">
-      <HeroAtmosphere language={language} />
+      <HeroAtmosphere />
       <div className="relative mx-auto grid max-w-[var(--v2-content-width)] gap-14 px-5 pb-20 pt-20 sm:px-8 sm:pt-24 lg:min-h-[740px] lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,.85fr)] lg:items-center lg:gap-10 lg:pb-28 lg:pt-28">
         <div className="max-w-3xl">
           <p className="mb-7 text-xs font-semibold tracking-[.22em] text-[var(--v2-accent)] sm:text-sm">{copy.eyebrow}</p>

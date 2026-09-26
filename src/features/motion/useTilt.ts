@@ -21,6 +21,8 @@ export function useTilt<T extends HTMLElement>() {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
         element.style.setProperty('--tilt-x', `${-y * 6}deg`); element.style.setProperty('--tilt-y', `${x * 8}deg`);
+        element.style.setProperty('--pointer-x', `${(x + 1) * 50}%`);
+        element.style.setProperty('--pointer-y', `${(y + 1) * 50}%`);
         element.setAttribute('data-tilting', 'true');
       });
     };

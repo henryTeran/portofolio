@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import JourneySection from '../features/journey/JourneySection';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
@@ -11,30 +10,10 @@ import ExpertiseSection from '../features/expertise/ExpertiseSection';
 import { DEFAULT_LANGUAGE, isSupportedLanguage, type LanguageCode } from '../constants/i18n';
 import SeoHelmet from '../seo/SeoHelmet';
 
-const scrollToHashSection = (hash: string) => {
-  if (!hash) {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    return;
-  }
-
-  const id = hash.replace('#', '');
-  window.requestAnimationFrame(() => {
-    const section = document.getElementById(id);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  });
-};
-
 export default function HomePage() {
   const { lang = DEFAULT_LANGUAGE } = useParams();
-  const location = useLocation();
 
   const language: LanguageCode = isSupportedLanguage(lang) ? lang : DEFAULT_LANGUAGE;
-
-  useEffect(() => {
-    scrollToHashSection(location.hash);
-  }, [location.hash]);
 
   return (
     <div className="min-h-screen bg-app">

@@ -6,9 +6,9 @@ export const sectionPath = (language: LanguageCode, sectionId: string) => `${hom
 export const projectPath = (language: LanguageCode, slug: string) => `${homePath(language)}/projects/${slug}`;
 
 export const portfolioNavigation: readonly NavigationItem[] = [
-  { id: 'work', labelKey: 'nav.projects', sectionId: 'projects' },
-  { id: 'expertise', labelKey: 'nav.skills', sectionId: 'skills' },
-  { id: 'approach', labelKey: 'nav.services', sectionId: 'services' },
-  { id: 'journey', labelKey: 'nav.about', sectionId: 'about' },
+  { id: 'work', labelKey: 'nav.projects', sectionId: 'work' },
+  { id: 'expertise', labelKey: 'nav.skills', sectionId: 'expertise' },
+  { id: 'approach', labelKey: 'nav.services', sectionId: 'approach' },
+  { id: 'journey', labelKey: 'nav.about', sectionId: 'journey' },
   { id: 'contact', labelKey: 'nav.contact', sectionId: 'contact' },
 ];

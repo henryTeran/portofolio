@@ -20,7 +20,7 @@ export default function ProjectRoutePage() {
     <Header />
     {project
       ? <CaseStudyPage project={project} language={language} narrative={getCaseStudy(language, slug)} />
-      : <main className="mx-auto flex min-h-[70vh] max-w-[var(--v2-content-width)] flex-col justify-center px-5 sm:px-8"><h1 className="text-4xl font-semibold">{caseStudyLabels[language].notFound}</h1><Link to={sectionPath(language, 'projects')} className="mt-6 text-[var(--v2-accent)] hover:underline">{caseStudyLabels[language].back}</Link></main>}
+      : <main className="mx-auto flex min-h-[70vh] max-w-[var(--v2-content-width)] flex-col justify-center px-5 sm:px-8"><h1 className="text-4xl font-semibold">{caseStudyLabels[language].notFound}</h1><Link to={sectionPath(language, 'work')} className="mt-6 text-[var(--v2-accent)] hover:underline">{caseStudyLabels[language].back}</Link></main>}
     <Footer />
   </div>;
 }

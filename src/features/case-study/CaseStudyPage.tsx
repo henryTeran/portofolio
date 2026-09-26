@@ -20,7 +20,7 @@ export default function CaseStudyPage({ project, language, narrative }: { projec
 
   return <main className="bg-[var(--v2-background)] text-[var(--v2-text)]">
     <div className="mx-auto max-w-[var(--v2-content-width)] px-5 pb-12 pt-12 sm:px-8 sm:pt-20">
-      <Link to={sectionPath(language, 'projects')} className="inline-flex min-h-11 items-center gap-2 text-sm text-[var(--v2-accent)] hover:underline focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]"><ArrowLeft size={16} aria-hidden="true" />{labels.back}</Link>
+      <Link to={sectionPath(language, 'work')} className="inline-flex min-h-11 items-center gap-2 text-sm text-[var(--v2-accent)] hover:underline focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]"><ArrowLeft size={16} aria-hidden="true" />{labels.back}</Link>
       <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_.9fr] lg:items-end lg:gap-16">
         <div><p className="text-xs font-semibold uppercase tracking-[.22em] text-[var(--v2-accent)]">{copy?.category}</p><h1 className="mt-5 font-display text-[clamp(3.6rem,7vw,7rem)] font-semibold leading-none tracking-[-.06em]">{project.title}</h1><p className="mt-6 text-2xl font-medium leading-tight sm:text-3xl">{copy?.tagline}</p><p className="mt-5 max-w-2xl text-lg leading-relaxed text-[var(--v2-text-secondary)]">{copy?.summary}</p></div>
         <div><ProjectPreview project={project} label={labels.illustrative} /></div>

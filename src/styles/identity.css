@@ -77,3 +77,14 @@ main a:focus-visible, [tabindex="-1"]:focus-visible { outline:2px solid var(--v2
 .value-number { position:absolute; right:1rem; top:-.7rem; font-size:7rem; font-weight:800; line-height:1; color:color-mix(in srgb,var(--project-color) 12%,transparent); pointer-events:none; }
 .value-outcome { border-left:3px solid var(--project-color); padding-left:1rem; flex:1; }.value-card a:hover { text-decoration-thickness:2px; }
 @media(max-width:430px) { .value-card { padding:1.5rem; } }
+
+/* Keep motion discoverable after arrival, with pause and offscreen suspension. */
+.motion-control { position:absolute; bottom:1rem; right:1.25rem; z-index:2; width:38px; height:38px; display:grid; place-items:center; color:var(--v2-text-secondary); background:var(--v2-surface); border:1px solid var(--v2-border); border-radius:50%; }
+.hero-starfield--live i { height:3px; width:clamp(160px,25vw,360px); }
+.hero-starfield--live i::after { width:10px; height:10px; box-shadow:0 0 22px 5px color-mix(in srgb,var(--accent-cyan) 50%,transparent); }
+@media(prefers-reduced-motion:no-preference) {
+ .hero-starfield--live i { animation:hero-meteor-live 8s linear infinite; animation-delay:0s; animation-play-state:paused; }
+ .hero-starfield--live i:nth-child(2) { animation-delay:2.6s; }.hero-starfield--live i:nth-child(3) { animation-delay:5.2s; }
+ .hero-starfield--live[data-active="true"] i { animation-play-state:running; }
+ @keyframes hero-meteor-live { 0% { opacity:0; transform:translate(0,0) rotate(-12deg); } 2%,16% { opacity:.95; } 22%,100% { opacity:0; transform:translate(120vw,-120px) rotate(-12deg); } }
+}

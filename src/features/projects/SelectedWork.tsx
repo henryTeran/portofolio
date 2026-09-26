@@ -23,7 +23,7 @@ export default function SelectedWork() {
             <ProjectMasterVisual project={project} language={language} />
             <div className="min-w-0 master-work-details">
               <div className="mb-7 flex items-center gap-4 text-xs font-mono tracking-widest text-[var(--v2-text-secondary)]"><span className="text-[var(--v2-accent)]">0{index + 1}</span><span>{detail?.category}</span></div>
-              <h3 className={`font-display font-semibold leading-none tracking-[-.05em] ${index === 0 ? 'text-[clamp(3.6rem,6vw,6rem)]' : 'text-[clamp(3rem,5vw,4.8rem)]'}`}>{project.title}</h3>
+              <h3 className="font-display font-semibold leading-none tracking-[-.05em] text-[clamp(3rem,5vw,4.8rem)]">{project.title}</h3>
               <p className="mt-5 text-xl font-medium">{detail?.tagline}</p>
               <p className="mt-4 max-w-lg leading-relaxed text-[var(--v2-text-secondary)]">{detail?.summary}</p>
               <dl className="mt-7 grid grid-cols-2 gap-5 border-t border-[var(--v2-border)] pt-5 text-sm"><div><dt className="text-[var(--v2-text-secondary)]">{copy.role}</dt><dd className="mt-1">{project.role.join(' · ')}</dd></div><div><dt className="text-[var(--v2-text-secondary)]">{copy.period}</dt><dd className="mt-1">{project.period}</dd></div></dl>

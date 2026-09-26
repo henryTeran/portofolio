@@ -37,7 +37,7 @@ export interface PortfolioProject {
   featured: boolean;
   links?: { github?: string; demo?: string };
   masterVisual?: ProjectVisual;
-  visuals?: ProjectVisual[];
+  productSlides?: ProjectVisual[];
   status?: 'in-development';
 }
 

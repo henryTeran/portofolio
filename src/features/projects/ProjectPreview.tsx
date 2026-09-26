@@ -14,7 +14,7 @@ export default function ProjectPreview({ project, label, eager = false }: { proj
   const tiltRef = useTilt<HTMLElement>();
   const { lang } = useParams();
   const language = lang && isSupportedLanguage(lang) ? lang : DEFAULT_LANGUAGE;
-  if (project.visuals?.length) return <ProjectPreviewTabs key={project.slug} project={project} language={language} eager={eager} />;
+  if (project.productSlides?.length) return <ProjectPreviewTabs key={project.slug} project={project} language={language} eager={eager} />;
   return <figure ref={tiltRef} data-project={project.slug} className={`product-visual product-visual--${project.slug}`} aria-label={`${project.title} — ${label}`}>
     <div className="visual-toolbar"><span className="visual-brand">{project.title}</span><span aria-hidden="true">● ● ●</span></div>
     {project.slug === 'zigoma' ? <ZigomaVisual language={language} /> : project.slug === 'applyflow' ? <ApplyflowVisual language={language} /> : project.slug === 'jobtrace-ai' ? <JobtraceVisual language={language} /> : project.slug === 'wellsync' ? <WellsyncVisual language={language} /> : null}

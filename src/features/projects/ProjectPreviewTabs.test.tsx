@@ -6,7 +6,7 @@ import ProjectPreviewTabs from './ProjectPreviewTabs';
 describe('real project previews', () => {
   it.each(featuredProjects)('switches only the active image for $title', (project) => {
     render(<ProjectPreviewTabs project={project} language="fr" />);
-    const visuals = project.visuals!.filter((visual) => visual.featured);
+    const visuals = project.productSlides!.filter((visual) => visual.featured);
     expect(screen.getAllByRole('img')).toHaveLength(1);
     expect(screen.getByRole('img')).toHaveAttribute('src', visuals[0].src);
     fireEvent.click(screen.getAllByRole('tab')[1]);

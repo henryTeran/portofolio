@@ -16,7 +16,7 @@ describe('featured project data', () => {
   });
   it('provides a curated set of existing WebP assets and localized descriptions', () => {
     for (const project of featuredProjects) {
-      const visuals = project.visuals ?? [];
+      const visuals = project.productSlides ?? [];
       expect(visuals.length).toBeGreaterThanOrEqual(4);
       expect(visuals.length).toBeLessThanOrEqual(7);
       expect(new Set(visuals.map(({ id }) => id)).size).toBe(visuals.length);

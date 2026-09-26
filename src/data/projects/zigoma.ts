@@ -15,9 +15,9 @@ export const zigoma: PortfolioProject = {
   "kind": "composite",
   "featured": true,
   "alt": {
-    "fr": "Composition ZIGOMA avec tableau de bord ERP, pipeline CRM, facturation et stock.",
-    "en": "ZIGOMA composition with ERP dashboard, CRM pipeline, invoicing and inventory.",
-    "es": "Composición ZIGOMA con panel ERP, pipeline CRM, facturación e inventario."
+    "fr": "Composition ZIGOMA avec tableau de bord ERP, pipeline CRM, facturation et projets.",
+    "en": "ZIGOMA composition with ERP dashboard, CRM pipeline, invoicing and projects.",
+    "es": "Composición ZIGOMA con panel ERP, pipeline CRM, facturación y proyectos."
   },
   "label": {
     "fr": "Vue du produit",
@@ -25,125 +25,148 @@ export const zigoma: PortfolioProject = {
     "es": "Vista del producto"
   },
   "caption": {
-    "fr": "Composition ZIGOMA avec tableau de bord ERP, pipeline CRM, facturation et stock.",
-    "en": "ZIGOMA composition with ERP dashboard, CRM pipeline, invoicing and inventory.",
-    "es": "Composición ZIGOMA con panel ERP, pipeline CRM, facturación e inventario."
+    "fr": "Composition ZIGOMA avec tableau de bord ERP, pipeline CRM, facturation et projets.",
+    "en": "ZIGOMA composition with ERP dashboard, CRM pipeline, invoicing and projects.",
+    "es": "Composición ZIGOMA con panel ERP, pipeline CRM, facturación y proyectos."
   }
 },
-  visuals: [
+  productSlides: [
   {
-    "id": "crm",
-    "src": "/images/projects/zigoma/crm/crm-overview-2048-light.webp",
-    "width": 2048,
-    "height": 1200,
-    "featured": true,
+    "id": "dashboard",
+    "src": "/images/projects/zigoma/product/01-tableau-de-bord.webp",
+    "width": 1920,
+    "height": 1080,
     "kind": "desktop",
+    "featured": true,
     "label": {
-      "fr": "CRM",
-      "en": "CRM",
-      "es": "CRM"
+      "fr": "Dashboard",
+      "en": "Dashboard",
+      "es": "Panel"
     },
     "caption": {
-      "fr": "Vue des ventes et des opportunités commerciales.",
-      "en": "Sales and business opportunity overview.",
-      "es": "Vista de ventas y oportunidades comerciales."
+      "fr": "Indicateurs et activité des domaines ERP.",
+      "en": "Indicators and activity across ERP domains.",
+      "es": "Indicadores y actividad de los dominios ERP."
     },
     "alt": {
-      "fr": "ZIGOMA - CRM",
-      "en": "ZIGOMA - CRM",
-      "es": "ZIGOMA - CRM"
+      "fr": "ZIGOMA — Indicateurs et activité des domaines ERP.",
+      "en": "ZIGOMA — Indicators and activity across ERP domains.",
+      "es": "ZIGOMA — Indicadores y actividad de los dominios ERP."
+    }
+  },
+  {
+    "id": "client",
+    "src": "/images/projects/zigoma/product/04-crm-client-360.webp",
+    "width": 1920,
+    "height": 1080,
+    "kind": "desktop",
+    "featured": false,
+    "label": {
+      "fr": "Client 360",
+      "en": "Client 360",
+      "es": "Cliente 360"
+    },
+    "caption": {
+      "fr": "Contexte client, contacts et prochaines actions.",
+      "en": "Customer context, contacts and next actions.",
+      "es": "Contexto del cliente, contactos y próximas acciones."
+    },
+    "alt": {
+      "fr": "ZIGOMA — Contexte client, contacts et prochaines actions.",
+      "en": "ZIGOMA — Customer context, contacts and next actions.",
+      "es": "ZIGOMA — Contexto del cliente, contactos y próximas acciones."
     }
   },
   {
     "id": "pipeline",
-    "src": "/images/projects/zigoma/crm/pipeline-1920x1080.webp",
+    "src": "/images/projects/zigoma/product/05-crm-pipeline.webp",
     "width": 1920,
     "height": 1080,
-    "featured": true,
     "kind": "desktop",
+    "featured": true,
     "label": {
       "fr": "Pipeline",
       "en": "Pipeline",
       "es": "Pipeline"
     },
     "caption": {
-      "fr": "Opportunités organisées par étape.",
-      "en": "Opportunities organized by stage.",
-      "es": "Oportunidades organizadas por etapa."
+      "fr": "Opportunités regroupées par étape commerciale.",
+      "en": "Opportunities grouped by sales stage.",
+      "es": "Oportunidades agrupadas por etapa comercial."
     },
     "alt": {
-      "fr": "ZIGOMA - Pipeline",
-      "en": "ZIGOMA - Pipeline",
-      "es": "ZIGOMA - Pipeline"
+      "fr": "ZIGOMA — Opportunités regroupées par étape commerciale.",
+      "en": "ZIGOMA — Opportunities grouped by sales stage.",
+      "es": "ZIGOMA — Oportunidades agrupadas por etapa comercial."
     }
   },
   {
-    "id": "ai",
-    "src": "/images/projects/zigoma/assistant-ai/1920x1080-light-open.webp",
+    "id": "invoices",
+    "src": "/images/projects/zigoma/product/13-ventes-factures.webp",
     "width": 1920,
     "height": 1080,
-    "featured": true,
     "kind": "desktop",
+    "featured": true,
+    "label": {
+      "fr": "Facturation",
+      "en": "Invoicing",
+      "es": "Facturación"
+    },
+    "caption": {
+      "fr": "Factures, montants et statuts de paiement.",
+      "en": "Invoices, amounts and payment statuses.",
+      "es": "Facturas, importes y estados de pago."
+    },
+    "alt": {
+      "fr": "ZIGOMA — Factures, montants et statuts de paiement.",
+      "en": "ZIGOMA — Invoices, amounts and payment statuses.",
+      "es": "ZIGOMA — Facturas, importes y estados de pago."
+    }
+  },
+  {
+    "id": "projects",
+    "src": "/images/projects/zigoma/product/28-projets-portefeuille.webp",
+    "width": 1920,
+    "height": 1080,
+    "kind": "desktop",
+    "featured": false,
+    "label": {
+      "fr": "Projets",
+      "en": "Projects",
+      "es": "Proyectos"
+    },
+    "caption": {
+      "fr": "Portefeuille de projets et suivi de progression.",
+      "en": "Project portfolio and progress tracking.",
+      "es": "Cartera de proyectos y seguimiento del progreso."
+    },
+    "alt": {
+      "fr": "ZIGOMA — Portefeuille de projets et suivi de progression.",
+      "en": "ZIGOMA — Project portfolio and progress tracking.",
+      "es": "ZIGOMA — Cartera de proyectos y seguimiento del progreso."
+    }
+  },
+  {
+    "id": "assistant",
+    "src": "/images/projects/zigoma/product/47-assistant.webp",
+    "width": 1920,
+    "height": 1080,
+    "kind": "desktop",
+    "featured": true,
     "label": {
       "fr": "Assistant IA",
       "en": "AI assistant",
       "es": "Asistente IA"
     },
     "caption": {
-      "fr": "Assistant accessible depuis le tableau de bord.",
-      "en": "Assistant accessible from the dashboard.",
-      "es": "Asistente disponible desde el panel."
+      "fr": "Assistant intégré au contexte du tableau de bord.",
+      "en": "Assistant integrated into the dashboard context.",
+      "es": "Asistente integrado en el contexto del panel."
     },
     "alt": {
-      "fr": "ZIGOMA - Assistant IA",
-      "en": "ZIGOMA - AI assistant",
-      "es": "ZIGOMA - Asistente IA"
-    }
-  },
-  {
-    "id": "purchases",
-    "src": "/images/projects/zigoma/achats/purchases-orders-2048-light.webp",
-    "width": 2048,
-    "height": 1200,
-    "featured": true,
-    "kind": "desktop",
-    "label": {
-      "fr": "Achats",
-      "en": "Purchases",
-      "es": "Compras"
-    },
-    "caption": {
-      "fr": "Suivi des commandes fournisseurs.",
-      "en": "Supplier order tracking.",
-      "es": "Seguimiento de pedidos a proveedores."
-    },
-    "alt": {
-      "fr": "ZIGOMA - Achats",
-      "en": "ZIGOMA - Purchases",
-      "es": "ZIGOMA - Compras"
-    }
-  },
-  {
-    "id": "opportunity",
-    "src": "/images/projects/zigoma/crm/opportunity-dark-1920x1080.webp",
-    "width": 1920,
-    "height": 1080,
-    "featured": false,
-    "kind": "desktop",
-    "label": {
-      "fr": "Opportunité",
-      "en": "Opportunity",
-      "es": "Oportunidad"
-    },
-    "caption": {
-      "fr": "Saisie structurée des informations commerciales.",
-      "en": "Structured entry of sales information.",
-      "es": "Registro estructurado de información comercial."
-    },
-    "alt": {
-      "fr": "ZIGOMA - Opportunité",
-      "en": "ZIGOMA - Opportunity",
-      "es": "ZIGOMA - Oportunidad"
+      "fr": "ZIGOMA — Assistant intégré au contexte du tableau de bord.",
+      "en": "ZIGOMA — Assistant integrated into the dashboard context.",
+      "es": "ZIGOMA — Asistente integrado en el contexto del panel."
     }
   }
 ],

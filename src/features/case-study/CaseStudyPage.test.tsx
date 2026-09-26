@@ -13,10 +13,10 @@ describe('case study routing', () => {
     const images = within(screen.getByRole('main')).getAllByRole('img');
     expect(images[0]).toHaveAttribute('src', project.masterVisual!.src);
     expect(images[0]).toHaveAttribute('loading', 'eager');
-    expect(images).toHaveLength(1 + project.visuals!.length);
+    expect(images).toHaveLength(1 + project.productSlides!.length);
     expect(screen.getByRole('heading', { name: /Inside the product/ })).toBeInTheDocument();
     for (const image of images.slice(1)) expect(image).toHaveAttribute('loading', 'lazy');
-    expect(project.visuals!.length).toBeLessThanOrEqual(project.slug === 'zigoma' ? 6 : 4);
+    expect(project.productSlides!.length).toBeLessThanOrEqual(project.slug === 'zigoma' ? 6 : 4);
   });
   it.each(['zigoma', 'applyflow', 'jobtrace-ai', 'wellsync'])('resolves %s in all three languages', (slug) => {
     for (const language of ['fr', 'en', 'es'] as const) {

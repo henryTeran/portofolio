@@ -5,7 +5,7 @@ import ProjectScreenshot from './ProjectScreenshot';
 
 
 export default function ProjectPreviewTabs({ project, language, eager = false }: { project: PortfolioProject; language: PortfolioLanguage; eager?: boolean }) {
-  const visuals = project.visuals?.filter((visual) => visual.featured).slice(0, 4) ?? [];
+  const visuals = project.productSlides?.filter((visual) => visual.featured).slice(0, 4) ?? [];
   const [active, setActive] = useState(0);
   const id = useId();
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);

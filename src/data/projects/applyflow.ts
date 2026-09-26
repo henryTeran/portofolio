@@ -30,7 +30,7 @@ export const applyflow: PortfolioProject = {
     "es": "Composición ApplyFlow con panel, oferta de empleo y candidatura asistida por IA."
   }
 },
-  visuals: [
+  productSlides: [
   {
     "id": "dashboard",
     "src": "/images/projects/applyflow/dashboard.webp",

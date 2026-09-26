@@ -15,9 +15,9 @@ export const wellsync: PortfolioProject = {
   "kind": "composite",
   "featured": true,
   "alt": {
-    "fr": "Composition WellSync avec écrans mobiles d’accueil, de nutrition et de chat IA.",
-    "en": "WellSync composition with mobile welcome, nutrition and AI chat screens.",
-    "es": "Composición WellSync con pantallas móviles de bienvenida, nutrición y chat IA."
+    "fr": "Composition WellSync avec écrans mobiles d’accueil, de nutrition, de diagnostic, de sport et de chat IA.",
+    "en": "WellSync composition with mobile welcome, nutrition, assessment, fitness and AI chat screens.",
+    "es": "Composición WellSync con pantallas móviles de bienvenida, nutrición, diagnóstico, deporte y chat IA."
   },
   "label": {
     "fr": "Vue du produit",
@@ -25,12 +25,12 @@ export const wellsync: PortfolioProject = {
     "es": "Vista del producto"
   },
   "caption": {
-    "fr": "Composition WellSync avec écrans mobiles d’accueil, de nutrition et de chat IA.",
-    "en": "WellSync composition with mobile welcome, nutrition and AI chat screens.",
-    "es": "Composición WellSync con pantallas móviles de bienvenida, nutrición y chat IA."
+    "fr": "Composition WellSync avec écrans mobiles d’accueil, de nutrition, de diagnostic, de sport et de chat IA.",
+    "en": "WellSync composition with mobile welcome, nutrition, assessment, fitness and AI chat screens.",
+    "es": "Composición WellSync con pantallas móviles de bienvenida, nutrición, diagnóstico, deporte y chat IA."
   }
 },
-  visuals: [
+  productSlides: [
   {
     "id": "diagnostic",
     "src": "/images/projects/wellsync/nutrition-diagnostic.webp",

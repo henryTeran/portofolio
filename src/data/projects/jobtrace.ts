@@ -31,7 +31,7 @@ export const jobtrace: PortfolioProject = {
     "es": "Composición JobTrace AI con indicadores de candidaturas, correos clasificados e informes mensuales."
   }
 },
-  visuals: [
+  productSlides: [
   {
     "id": "dashboard",
     "src": "/images/projects/jobtrace-ai/dashboard-clean.webp",

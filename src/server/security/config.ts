@@ -1,3 +1,4 @@
+import './localEnv';
 export const localDevelopment = () => process.env.NODE_ENV === 'development' && (!process.env.VERCEL || process.env.VERCEL_ENV === 'development');
 export const localSecurityMode = () => process.env.CONTACT_SECURITY_DEV_MODE === 'true' && localDevelopment();
 export function publicOrigin(): string {

@@ -4,6 +4,16 @@ import { getProjectCopy } from '../../content/projects';
 import { existsSync, readFileSync } from 'node:fs';
 
 describe('featured project data', () => {
+  it('provides four localized WebP master compositions', () => {
+    for (const project of featuredProjects) {
+      const visual = project.masterVisual!;
+      expect(visual.kind).toBe('composite');
+      expect(visual.src).toMatch(/masterimage\.webp$/);
+      expect(readFileSync(`public${visual.src}`).toString('ascii', 8, 12)).toBe('WEBP');
+      expect(visual.width / visual.height).toBeCloseTo(4 / 3);
+      for (const lang of ['fr', 'en', 'es'] as const) expect(visual.alt[lang].length).toBeGreaterThan(40);
+    }
+  });
   it('provides a curated set of existing WebP assets and localized descriptions', () => {
     for (const project of featuredProjects) {
       const visuals = project.visuals ?? [];

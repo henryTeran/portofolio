@@ -7,6 +7,29 @@ export const applyflow: PortfolioProject = {
   technologies: ['React', 'TypeScript', 'FastAPI', 'PostgreSQL', 'Redis', 'Docker', 'OpenAI'],
   capabilities: ['Authentication', 'Job offers', 'AI matching', 'Application tracking', 'Cover letter generation', 'Timeline', 'Background jobs', 'User isolation'],
   featured: true,
+  masterVisual: {
+  "id": "master",
+  "src": "/images/projects/applyflow/masterimage.webp",
+  "width": 1448,
+  "height": 1086,
+  "kind": "composite",
+  "featured": true,
+  "alt": {
+    "fr": "Composition ApplyFlow avec dashboard, offre d’emploi et parcours de candidature assistée par IA.",
+    "en": "ApplyFlow composition with dashboard, job offer and AI-assisted application flow.",
+    "es": "Composición ApplyFlow con panel, oferta de empleo y candidatura asistida por IA."
+  },
+  "label": {
+    "fr": "Vue du produit",
+    "en": "Product overview",
+    "es": "Vista del producto"
+  },
+  "caption": {
+    "fr": "Composition ApplyFlow avec dashboard, offre d’emploi et parcours de candidature assistée par IA.",
+    "en": "ApplyFlow composition with dashboard, job offer and AI-assisted application flow.",
+    "es": "Composición ApplyFlow con panel, oferta de empleo y candidatura asistida por IA."
+  }
+},
   visuals: [
   {
     "id": "dashboard",

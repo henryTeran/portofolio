@@ -7,6 +7,29 @@ export const wellsync: PortfolioProject = {
   technologies: ['Angular', 'Ionic', 'Firebase', 'OpenAI', 'TypeScript'],
   capabilities: ['Wellness tracking', 'Roles', 'Contextual assistant', 'Real-time data', 'Notifications'],
   featured: true,
+  masterVisual: {
+  "id": "master",
+  "src": "/images/projects/wellsync/masterimage.webp",
+  "width": 1448,
+  "height": 1086,
+  "kind": "composite",
+  "featured": true,
+  "alt": {
+    "fr": "Composition WellSync avec écrans mobiles d’accueil, de nutrition et de chat IA.",
+    "en": "WellSync composition with mobile welcome, nutrition and AI chat screens.",
+    "es": "Composición WellSync con pantallas móviles de bienvenida, nutrición y chat IA."
+  },
+  "label": {
+    "fr": "Vue du produit",
+    "en": "Product overview",
+    "es": "Vista del producto"
+  },
+  "caption": {
+    "fr": "Composition WellSync avec écrans mobiles d’accueil, de nutrition et de chat IA.",
+    "en": "WellSync composition with mobile welcome, nutrition and AI chat screens.",
+    "es": "Composición WellSync con pantallas móviles de bienvenida, nutrición y chat IA."
+  }
+},
   visuals: [
   {
     "id": "diagnostic",

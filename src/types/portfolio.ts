@@ -6,7 +6,7 @@ export interface ProjectVisual {
   alt: Record<PortfolioLanguage, string>;
   label: Record<PortfolioLanguage, string>;
   caption: Record<PortfolioLanguage, string>;
-  kind: 'desktop' | 'mobile' | 'diagram';
+  kind: 'desktop' | 'mobile' | 'composite' | 'diagram';
   featured: boolean;
   width: number;
   height: number;
@@ -36,6 +36,7 @@ export interface PortfolioProject {
   capabilities: string[];
   featured: boolean;
   links?: { github?: string; demo?: string };
+  masterVisual?: ProjectVisual;
   visuals?: ProjectVisual[];
   status?: 'in-development';
 }

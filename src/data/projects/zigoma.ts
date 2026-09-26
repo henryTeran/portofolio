@@ -7,6 +7,29 @@ export const zigoma: PortfolioProject = {
   technologies: ['Python', 'Flask', 'Firestore', 'OpenAI', 'Pandas', 'NumPy', 'Tailwind', 'WeasyPrint'],
   capabilities: ['CRM', 'Sales', 'Quotes', 'Orders', 'Delivery Notes', 'Invoicing', 'Stock', 'Projects', 'Finance', 'Analytics', 'AI Assistant'],
   featured: true,
+  masterVisual: {
+  "id": "master",
+  "src": "/images/projects/zigoma/masterimage.webp",
+  "width": 1448,
+  "height": 1086,
+  "kind": "composite",
+  "featured": true,
+  "alt": {
+    "fr": "Composition ZIGOMA avec tableau de bord ERP, pipeline CRM, facturation et stock.",
+    "en": "ZIGOMA composition with ERP dashboard, CRM pipeline, invoicing and inventory.",
+    "es": "Composición ZIGOMA con panel ERP, pipeline CRM, facturación e inventario."
+  },
+  "label": {
+    "fr": "Vue du produit",
+    "en": "Product overview",
+    "es": "Vista del producto"
+  },
+  "caption": {
+    "fr": "Composition ZIGOMA avec tableau de bord ERP, pipeline CRM, facturation et stock.",
+    "en": "ZIGOMA composition with ERP dashboard, CRM pipeline, invoicing and inventory.",
+    "es": "Composición ZIGOMA con panel ERP, pipeline CRM, facturación e inventario."
+  }
+},
   visuals: [
   {
     "id": "crm",

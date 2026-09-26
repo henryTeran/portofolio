@@ -8,6 +8,29 @@ export const jobtrace: PortfolioProject = {
   capabilities: ['Email synchronization', 'Structured extraction', 'Deduplication', 'Reporting', 'PDF'],
   featured: true,
   status: 'in-development',
+  masterVisual: {
+  "id": "master",
+  "src": "/images/projects/jobtrace-ai/masterimage.webp",
+  "width": 1448,
+  "height": 1086,
+  "kind": "composite",
+  "featured": true,
+  "alt": {
+    "fr": "Composition JobTrace AI avec indicateurs de candidatures, emails classés et rapports mensuels.",
+    "en": "JobTrace AI composition with application indicators, categorized emails and monthly reports.",
+    "es": "Composición JobTrace AI con indicadores de candidaturas, correos clasificados e informes mensuales."
+  },
+  "label": {
+    "fr": "Vue du produit",
+    "en": "Product overview",
+    "es": "Vista del producto"
+  },
+  "caption": {
+    "fr": "Composition JobTrace AI avec indicateurs de candidatures, emails classés et rapports mensuels.",
+    "en": "JobTrace AI composition with application indicators, categorized emails and monthly reports.",
+    "es": "Composición JobTrace AI con indicadores de candidaturas, correos clasificados e informes mensuales."
+  }
+},
   visuals: [
   {
     "id": "dashboard",

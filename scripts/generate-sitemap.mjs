@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 
 const siteUrl = (process.env.SITE_URL || 'https://henryteran.com').replace(/\/$/, '');
 const languages = ['fr', 'en', 'es'];
-const pageSlugs = ['', 'services', 'projects', 'contact'];
+const pageSlugs = ['', 'projects/zigoma', 'projects/applyflow', 'projects/jobtrace-ai', 'projects/wellsync', 'privacy'];
 const today = new Date().toISOString().split('T')[0];
 
 const getPriority = (slug) => {
@@ -15,7 +15,7 @@ const getPriority = (slug) => {
 
 const buildUrl = (lang, slug) => {
   if (!slug) {
-    return `${siteUrl}/${lang}/`;
+    return `${siteUrl}/${lang}`;
   }
 
   return `${siteUrl}/${lang}/${slug}`;

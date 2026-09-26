@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import { Link, useParams } from 'react-router-dom';
 import { DEFAULT_LANGUAGE, isSupportedLanguage } from '../constants/i18n';
 import { getProject } from '../data/projects';
@@ -15,7 +16,7 @@ export default function ProjectRoutePage() {
   const project = getProject(slug);
 
   return <div className="min-h-screen bg-[var(--v2-background)] text-[var(--v2-text)]">
-    {project && <SeoHelmet language={language} projectSlug={project.slug} />}
+    {project ? <SeoHelmet language={language} projectSlug={project.slug} /> : <Helmet><title>{caseStudyLabels[language].notFound} | Henry Teran</title><meta name="robots" content="noindex,nofollow" /></Helmet>}
     <Header />
     {project
       ? <CaseStudyPage project={project} language={language} narrative={getCaseStudy(language, slug)} />

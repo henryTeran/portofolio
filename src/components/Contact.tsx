@@ -1,4 +1,8 @@
-﻿import { useState, type FormEvent, type ChangeEvent } from 'react';
+import { contactFields, fieldIssue } from '../forms/validation';
+import { apiErrorMessage, type ApiCode } from '../forms/apiErrors';
+import { formCopy } from '../forms/copy';
+import { FieldValidationMessage, FormStatusSummary } from '../forms/ValidationFeedback';
+import { useState, type FormEvent, type ChangeEvent } from 'react';
 import { ArrowUpRight, Linkedin, Mail } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -11,7 +15,8 @@ import FormDisclosure from '../privacy/FormDisclosure';
 import Turnstile from '../security/Turnstile';
 
 export default function Contact() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const feedback = formCopy(i18n.language);
   const { lang } = useParams();
   const language = lang && isSupportedLanguage(lang) ? lang : DEFAULT_LANGUAGE;
   const copy = contactCopy[language];
@@ -23,20 +28,30 @@ export default function Contact() {
   const [turnstileToken, setTurnstileToken] = useState('');
   const [securityReset, setSecurityReset] = useState(0);
 
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [errorCode, setErrorCode] = useState<ApiCode>('server_error');
+  const valid = validateContactForm(form).isValid;
+  const fieldProps = (field: keyof ContactFormData) => ({
+    'aria-invalid': Boolean(touched[field] && fieldIssue(field, form[field])),
+    'aria-describedby': `${field}-feedback`,
+    onBlur: () => setTouched(current => ({ ...current, [field]: true })),
+  });
   const change = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
-    if (!turnstileToken) { setStatus('error'); return; }
-    if (!validateContactForm(form).isValid) { setStatus('error'); return; }
+    if (submitting) return;
+    const invalid = contactFields.find(field => fieldIssue(field, form[field as keyof ContactFormData]));
+    if (invalid) { setTouched({ name: true, email: true, message: true }); document.getElementById(invalid)?.focus(); return; }
+    if (!turnstileToken) { setErrorCode('turnstile_failed'); setStatus('error'); return; }
     setSubmitting(true);
     setStatus('idle');
-    const sent = await sendContactEmail(form, { website, turnstileToken });
+    const sent = await sendContactEmail(form, { website, turnstileToken }, setErrorCode);
     setSubmitting(false);
     setSecurityReset(value => value + 1);
     setStatus(sent ? 'success' : 'error');
-    if (sent) { trackContactSubmit('contact_section'); setForm({ name: '', email: '', message: '' }); }
+    if (sent) { trackContactSubmit('contact_section'); setForm({ name: '', email: '', message: '' }); setTouched({}); }
   };
 
   const openBrief = () => { trackCTA('project_brief_open'); setBriefOpen(true); };
@@ -54,14 +69,18 @@ export default function Contact() {
             <a href="mailto:teranhenryc@gmail.com" onClick={() => trackCTA('contact_email')} className="inline-flex min-h-11 items-center gap-2 text-[var(--v2-accent)] hover:underline"><Mail size={17} aria-hidden="true" />Email</a>
             <a href="https://linkedin.com/in/henry-teran" target="_blank" rel="noreferrer" onClick={() => trackCTA('contact_linkedin')} className="inline-flex min-h-11 items-center gap-2 text-[var(--v2-accent)] hover:underline"><Linkedin size={17} aria-hidden="true" />LinkedIn</a>
           </div>
-          <form id="contact-form" onSubmit={submit} className="mt-8 space-y-5 border-t border-[var(--v2-border)] pt-7">
+          <form id="contact-form" noValidate onSubmit={submit} className="mt-8 space-y-5 border-t border-[var(--v2-border)] pt-7">
             <h4 className="text-lg font-semibold">{copy.form}</h4>
-            <div className="grid gap-5 sm:grid-cols-2"><div><label htmlFor="name" className="mb-2 block text-sm">{t('contact.form.name')}</label><input id="name" name="name" value={form.name} onChange={change} autoComplete="name" required minLength={2} maxLength={120} className="w-full rounded-lg border border-[var(--v2-border)] bg-[var(--v2-surface)] px-4 py-3 text-[var(--v2-text)] focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]" /></div><div><label htmlFor="email" className="mb-2 block text-sm">{t('contact.form.email')}</label><input id="email" name="email" type="email" value={form.email} onChange={change} autoComplete="email" required maxLength={254} className="w-full rounded-lg border border-[var(--v2-border)] bg-[var(--v2-surface)] px-4 py-3 text-[var(--v2-text)] focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]" /></div></div>
-            <div><label htmlFor="message" className="mb-2 block text-sm">{t('contact.form.message')}</label><textarea id="message" name="message" value={form.message} onChange={change} required minLength={10} maxLength={5000} rows={5} className="w-full resize-y rounded-lg border border-[var(--v2-border)] bg-[var(--v2-surface)] px-4 py-3 text-[var(--v2-text)] focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]" /></div>
+            <div className="grid gap-5 sm:grid-cols-2"><div><label htmlFor="name" className="mb-2 block text-sm">{t('contact.form.name')}</label><input id="name" {...fieldProps('name')} name="name" value={form.name} onChange={change} autoComplete="name" required minLength={2} maxLength={120} className="w-full rounded-lg border border-[var(--v2-border)] bg-[var(--v2-surface)] px-4 py-3 text-[var(--v2-text)] focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]" /><FieldValidationMessage id="name" field="name" value={form.name} language={i18n.language} touched={Boolean(touched.name)} /></div><div><label htmlFor="email" className="mb-2 block text-sm">{t('contact.form.email')}</label><input id="email" {...fieldProps('email')} name="email" type="email" value={form.email} onChange={change} autoComplete="email" required maxLength={254} className="w-full rounded-lg border border-[var(--v2-border)] bg-[var(--v2-surface)] px-4 py-3 text-[var(--v2-text)] focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]" /><FieldValidationMessage id="email" field="email" value={form.email} language={i18n.language} touched={Boolean(touched.email)} /></div></div>
+            <div><label htmlFor="message" className="mb-2 block text-sm">{t('contact.form.message')}</label><textarea id="message" {...fieldProps('message')} name="message" value={form.message} onChange={change} required minLength={30} maxLength={2000} rows={5} className="w-full resize-y rounded-lg border border-[var(--v2-border)] bg-[var(--v2-surface)] px-4 py-3 text-[var(--v2-text)] focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]" /><FieldValidationMessage id="message" field="message" value={form.message} language={i18n.language} touched={Boolean(touched.message)} /></div>
             <div className="sr-only" aria-hidden="true"><label htmlFor="website">Website</label><input id="website" name="website" value={website} onChange={(event) => setWebsite(event.target.value)} tabIndex={-1} autoComplete="off" /></div>
             <Turnstile action="contact" onToken={setTurnstileToken} resetKey={securityReset} />
-            <button type="submit" disabled={submitting || !turnstileToken} className="inline-flex min-h-12 items-center gap-2 rounded-lg bg-[var(--v2-accent)] px-5 py-3 font-semibold text-[#07120f] disabled:opacity-60">{submitting ? t('contact.form.submitting') : t('contact.form.submit')}<ArrowUpRight size={17} aria-hidden="true" /></button>
-            <p role="status" aria-live="polite" className={`text-sm ${status === 'error' ? 'text-red-500' : 'text-[var(--v2-accent)]'}`}>{status === 'success' ? t('contact.form.success') : status === 'error' ? t('contact.form.error') : ''}</p>
+            <FormStatusSummary id="contact-readiness" language={i18n.language} busy={submitting} readyText={feedback.contactReady} items={[
+              ...contactFields.map(field => ({ label: feedback.labels[field], valid: !fieldIssue(field, form[field as keyof ContactFormData]) })),
+              { label: feedback.security, valid: Boolean(turnstileToken) },
+            ]} />
+            <button aria-describedby="contact-readiness" type="submit" disabled={submitting || !valid || !turnstileToken} className="inline-flex min-h-12 items-center gap-2 rounded-lg bg-[var(--v2-accent)] px-5 py-3 font-semibold text-[#07120f] disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-700 dark:disabled:bg-slate-700 dark:disabled:text-slate-200">{submitting ? t('contact.form.submitting') : t('contact.form.submit')}<ArrowUpRight size={17} aria-hidden="true" /></button>
+            <p role="status" aria-live="polite" className={`text-sm ${status === 'error' ? 'text-red-500' : 'text-[var(--v2-accent)]'}`}>{status === 'success' ? feedback.contactSuccess : status === 'error' ? apiErrorMessage(errorCode, i18n.language) : ''}</p>
             <FormDisclosure kind="contact" />
           </form>
         </div>

@@ -13,7 +13,7 @@ export type QuoteFormData = ProjectBriefData;
 export interface FormProtection { website?: string; turnstileToken?: string }
 
 const currentLanguage = (): PortfolioLanguage => {
-  const language = i18next.language.split('-')[0];
+  const language = (i18next.language || 'en').split('-')[0];
   return language === 'fr' || language === 'es' ? language : 'en';
 };
 

@@ -1,8 +1,8 @@
 ﻿import type { PortfolioLanguage } from '../../types/portfolio';
 import type { ContactMessage, ProjectBriefMessage } from './types';
+import { normalizeEmail } from '../security/email';
 
 type Payload = Record<string, unknown>;
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const readText = (data: Payload, key: string, max: number, required = false): string => {
   const value = data[key];
   if (value === undefined && !required) return '';
@@ -18,8 +18,8 @@ const assertKeys = (data: Payload, keys: string[]) => {
 };
 const identity = (data: Payload) => {
   const name = readText(data, 'name', 120, true);
-  const email = readText(data, 'email', 254, true);
-  if (name.length < 2 || !emailPattern.test(email)) throw new Error('Invalid request');
+  const email = normalizeEmail(readText(data, 'email', 254, true));
+  if (name.length < 2) throw new Error('Invalid request');
   return { name, email, language: language(data), submittedAt: new Date().toISOString() };
 };
 const list = (data: Payload, key: string): string[] => {

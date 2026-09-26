@@ -18,7 +18,7 @@ export default function CaseStudyPage({ project, language, narrative }: { projec
   const section = (title: string, content: ReactNode) => <CaseStudySection number={String(++sectionNumber).padStart(2, '0')} title={title}>{content}</CaseStudySection>;
   const list = (items: string[]) => <ul className="grid gap-3 sm:grid-cols-2">{items.map((item) => <li key={item} className="border-l-2 border-[var(--v2-accent)] pl-4 text-[var(--v2-text)]">{item}</li>)}</ul>;
 
-  return <main className="bg-[var(--v2-background)] text-[var(--v2-text)]">
+  return <main data-project={project.slug} className="bg-[var(--v2-background)] text-[var(--v2-text)]">
     <div className="mx-auto max-w-[var(--v2-content-width)] px-5 pb-12 pt-12 sm:px-8 sm:pt-20">
       <Link to={sectionPath(language, 'work')} className="inline-flex min-h-11 items-center gap-2 text-sm text-[var(--v2-accent)] hover:underline focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]"><ArrowLeft size={16} aria-hidden="true" />{labels.back}</Link>
       <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_.9fr] lg:items-end lg:gap-16">

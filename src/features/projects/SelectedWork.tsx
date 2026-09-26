@@ -19,7 +19,7 @@ export default function SelectedWork() {
       <div className="space-y-16 lg:space-y-24">
         {featuredProjects.map((project, index) => {
           const detail = getProjectCopy(language, project.slug);
-          return <article key={project.slug} className={`grid items-center gap-7 border-t border-[var(--v2-border)] pt-7 lg:grid-cols-2 lg:gap-12 ${index === 0 ? 'lg:grid-cols-[.82fr_1.18fr]' : ''}`}>
+          return <article key={project.slug} data-project={project.slug} className={`project-card grid items-center gap-7 border-t border-[var(--v2-border)] pt-7 lg:grid-cols-2 lg:gap-12 ${index === 0 ? 'lg:grid-cols-[.82fr_1.18fr]' : ''}`}>
             <div className="min-w-0">
               <div className="mb-7 flex items-center gap-4 text-xs font-mono tracking-widest text-[var(--v2-text-secondary)]"><span className="text-[var(--v2-accent)]">0{index + 1}</span><span>{detail?.category}</span></div>
               <h3 className={`font-display font-semibold leading-none tracking-[-.05em] ${index === 0 ? 'text-[clamp(3.6rem,6vw,6rem)]' : 'text-[clamp(3rem,5vw,4.8rem)]'}`}>{project.title}</h3>

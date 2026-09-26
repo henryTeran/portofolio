@@ -14,3 +14,15 @@
 .hero-badge--bottom { bottom:-.5rem; left:0; border-left:3px solid var(--accent-cyan); }
 @media(prefers-reduced-motion:no-preference) { .hero-portrait { animation:portrait-arrive .65s ease-out both; } @keyframes portrait-arrive { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } } }
 @media(max-width:767px) { .hero-portrait { max-width:320px; margin-top:0; }.hero-photo-frame { border-top-left-radius:4rem; }.hero-photo-frame figcaption { padding:1rem; font-size:.7rem; }.hero-badge { font-size:.65rem; }.hero-orbit { inset:0; } }
+
+/* Project identities shared by cards, diagrams and case studies. */
+[data-project="zigoma"] { --project-ink:var(--ink-cyan); --project-color:var(--accent-cyan); --project-secondary:var(--accent-blue); }
+[data-project="applyflow"] { --project-ink:var(--ink-violet); --project-color:var(--accent-violet); --project-secondary:var(--accent-blue); }
+[data-project="jobtrace-ai"] { --project-ink:var(--ink-emerald); --project-color:var(--accent-emerald); --project-secondary:var(--accent-cyan); }
+[data-project="wellsync"] { --project-ink:var(--ink-violet); --project-color:var(--accent-violet); --project-secondary:var(--accent-emerald); }
+[data-project] { --v2-accent:var(--project-ink); }
+.project-card { position:relative; padding:clamp(1.25rem,3vw,2.5rem); border:1px solid var(--v2-border); border-top:3px solid var(--project-color); border-radius:1.5rem; background:linear-gradient(130deg,color-mix(in srgb,var(--project-color) 6%,var(--v2-surface)),var(--v2-surface) 70%); box-shadow:var(--v2-shadow); transition:border-color .2s,box-shadow .2s; }
+.project-card:hover { border-color:color-mix(in srgb,var(--project-color) 55%,var(--v2-border)); }
+.product-visual { background-image:linear-gradient(150deg,color-mix(in srgb,var(--project-color,var(--accent-cyan)) 5%,transparent),transparent 65%); }
+.product-visual .visual-flow { --visual-accent:var(--project-ink,var(--v2-accent)); }
+main[data-project] { background-image:radial-gradient(ellipse 70% 32rem at 100% 0,color-mix(in srgb,var(--project-color) 9%,transparent),transparent); }

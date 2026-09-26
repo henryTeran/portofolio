@@ -1,10 +1,10 @@
-﻿import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Pause, Play } from 'lucide-react';
 import type { LanguageCode } from '../../constants/i18n';
 const labels = {
-  fr: { pause: 'Mettre les animations en pause', play: 'Reprendre les animations' },
-  en: { pause: 'Pause animations', play: 'Resume animations' },
-  es: { pause: 'Pausar animaciones', play: 'Reanudar animaciones' },
+  fr: { pause: 'Pause animations', play: 'Reprendre les animations', reduced: 'Animations réduites par votre système' },
+  en: { pause: 'Pause animations', play: 'Resume animations', reduced: 'Motion reduced by your system' },
+  es: { pause: 'Pausar animaciones', play: 'Reanudar animaciones', reduced: 'Movimiento reducido por tu sistema' },
 };
 export default function HeroAtmosphere({ language }: { language: LanguageCode }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -24,6 +24,11 @@ export default function HeroAtmosphere({ language }: { language: LanguageCode })
   const active = !paused && !reduced && visible && foreground;
   return <>
     <div ref={ref} className="hero-starfield hero-starfield--live" data-active={active} aria-hidden="true"><i /><i /><i /><div className="hero-grid-plane" /></div>
-    {!reduced && <button type="button" className="motion-control" aria-label={paused ? labels[language].play : labels[language].pause} title={paused ? labels[language].play : labels[language].pause} onClick={() => setPaused(value => !value)}>{paused ? <Play size={15} aria-hidden="true" /> : <Pause size={15} aria-hidden="true" />}</button>}
+    <div className="motion-controls">
+      {reduced ? <p className="motion-status">{labels[language].reduced}</p> : <button type="button" className="motion-control" onClick={() => setPaused(value => !value)}>
+        {paused ? <Play size={15} aria-hidden="true" /> : <Pause size={15} aria-hidden="true" />}
+        <span>{paused ? labels[language].play : labels[language].pause}</span>
+      </button>}
+    </div>
   </>;
 }

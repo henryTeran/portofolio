@@ -8,6 +8,16 @@ import { verificationCopy } from './verificationCopy';
 import '../i18n';
 afterEach(() => { vi.unstubAllGlobals(); window.history.replaceState({}, '', '/'); });
 describe('verification page', () => {
+  it('preserves the token in memory when changing language before confirmation', async () => {
+    const token = 'c'.repeat(43); window.history.replaceState({}, '', `/fr/verify#token=${token}`);
+    const fetcher = vi.fn().mockResolvedValue({ ok: true, json: async () => ({ status: 'verified' }) }); vi.stubGlobal('fetch', fetcher);
+    render(<HelmetProvider><MemoryRouter initialEntries={['/fr/verify']}><AppRouter /></MemoryRouter></HelmetProvider>);
+    await screen.findByRole('heading', { name: verificationCopy.fr.title });
+    await userEvent.click(screen.getByRole('button', { name: 'EN' }));
+    await userEvent.click(await screen.findByRole('button', { name: verificationCopy.en.action }));
+    expect(await screen.findByText(verificationCopy.en.verified)).toBeInTheDocument();
+    expect(JSON.parse(fetcher.mock.calls[0][1].body)).toEqual({ token });
+  });
   it.each(['fr', 'en', 'es'] as const)('requires explicit confirmation in %s and removes the token from the URL', async language => {
     const token = 'a'.repeat(43); window.history.replaceState({}, '', `/${language}/verify#token=${token}`);
     const fetcher = vi.fn().mockResolvedValue({ ok: true, json: async () => ({ status: 'verified' }) }); vi.stubGlobal('fetch', fetcher);

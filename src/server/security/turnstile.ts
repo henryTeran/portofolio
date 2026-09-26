@@ -15,5 +15,9 @@ export async function verifyTurnstile(token: unknown, action: 'contact' | 'brief
   });
   if (!response.ok) throw new Error('Security service unavailable');
   const result = await response.json() as { success?: boolean; hostname?: string; action?: string };
+  // Fixed labels only: never log the response, token, hostname or credentials.
+  if (result.success !== true) console.info('[mail-security] turnstile:provider_rejected');
+  else if (!testing && result.action !== action) console.info('[mail-security] turnstile:action_mismatch');
+  else if (!testing && result.hostname !== hostname) console.info('[mail-security] turnstile:hostname_mismatch');
   return result.success === true && (testing || (result.action === action && result.hostname === hostname));
 }

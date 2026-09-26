@@ -35,16 +35,27 @@ export async function handleMailRequest(request: Request, kind: 'contact' | 'bri
     return Response.json({ code: error instanceof PublicFormError ? error.code : 'invalid_input' }, { status: 400 });
   }
   let checkingSecurity = true;
+  let stage = 'turnstile';
   try {
-    if (!await verifyTurnstile(token, kind)) return Response.json({ code: 'turnstile_failed' }, { status: 403 });
+    if (!await verifyTurnstile(token, kind)) {
+      console.info(`[mail-security] ${kind}:turnstile_rejected`);
+      return Response.json({ code: 'turnstile_failed' }, { status: 403 });
+    }
+    console.info(`[mail-security] ${kind}:turnstile_ok`);
     checkingSecurity = false;
+    stage = 'rate_limit';
     if (!await allowSubmission(request, kind)) return Response.json({ code: 'rate_limited' }, { status: 429 });
+    console.info(`[mail-security] ${kind}:rate_limit_ok`);
+    stage = 'email_domain';
     if (await emailDomainStatus(message.email) === 'invalid') return Response.json({ code: 'invalid_domain' }, { status: 400 });
     if (abuseScore(messageText(message)) >= 5) return Response.json({ code: 'abusive_content' }, { status: 400 });
+    stage = 'duplicate_check';
     if (!await reserveSubmission(message, kind)) return Response.json({ code: 'duplicate_request' }, { status: 409, headers: { 'Cache-Control': 'no-store' } });
+    stage = 'begin_verification';
     await beginVerification(message, kind);
     return Response.json({ ok: true, status: 'pending_verification' }, { status: 200, headers: { 'Cache-Control': 'no-store' } });
   } catch (error) {
+    console.warn(`[mail-security] ${kind}:${stage}_unavailable`);
     return Response.json({ code: checkingSecurity ? 'turnstile_unavailable' : error instanceof PublicFormError ? error.code : 'server_error' }, { status: 503 });
   }
 }

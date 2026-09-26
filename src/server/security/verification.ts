@@ -27,10 +27,13 @@ export async function beginVerification(message: ContactMessage | ProjectBriefMe
   try {
     await store.set(`pending:${hash}`, JSON.stringify(pending), VERIFICATION_TTL);
     await store.set(`verification:${hash}`, JSON.stringify({ status: 'pending', expiresAt } satisfies Marker), STATUS_TTL);
+    console.info(`[mail-security] ${kind}:pending_saved`);
     // Fragment keeps the token out of server URL logs and HTTP referrers.
     sendingEmail = true;
     await mailer.sendVerificationEmail(message.email, message.language, `${origin}/${message.language}/verify#token=${token}`);
+    console.info(`[mail-security] ${kind}:verification_mail_sent`);
   } catch {
+    console.warn(`[mail-security] ${kind}:${sendingEmail ? 'verification_mail' : 'pending_storage'}_failed`);
     await Promise.allSettled([store.delete(`pending:${hash}`), store.delete(`verification:${hash}`), store.delete(duplicateKey(message, kind))]);
     throw new PublicFormError(sendingEmail ? 'smtp_error' : 'server_error');
   }
@@ -56,6 +59,7 @@ export async function completeVerification(token: unknown, store: SecurityStore 
     const mailer = mailerFactory();
     if (pending.type === 'contact') await mailer.sendContactMessage(pending.payload);
     else await mailer.sendProjectBrief(pending.payload);
+    console.info(`[mail-security] ${pending.type}:final_mail_sent`);
     await store.set(key, JSON.stringify({ ...marker, status: 'verified' }), STATUS_TTL);
     return 'verified';
   } catch {

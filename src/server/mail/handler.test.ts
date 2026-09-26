@@ -5,6 +5,7 @@ vi.mock('./mailer', () => ({ createMailService: () => ({ sendContactMessage: vi.
 vi.mock('../security/turnstile', () => ({ verifyTurnstile: vi.fn().mockResolvedValue(true) }));
 vi.mock('../security/rateLimit', () => ({ allowSubmission: vi.fn().mockResolvedValue(true) }));
 vi.mock('../security/email', async importOriginal => ({ ...await importOriginal<typeof import('../security/email')>(), emailDomainStatus: vi.fn().mockResolvedValue('valid') }));
+vi.mock('../security/abuse', async importOriginal => ({ ...await importOriginal<typeof import('../security/abuse')>(), reserveSubmission: vi.fn().mockResolvedValue(true) }));
 
 const request = (data: unknown, origin = 'https://henryteran.com') => new Request('https://henryteran.com/api/contact', {
   method: 'POST', headers: { 'content-type': 'application/json', origin }, body: JSON.stringify(data),

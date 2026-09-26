@@ -3,6 +3,7 @@ import { validateBrief, validateContact } from './validation';
 import { verifyTurnstile } from '../security/turnstile';
 import { allowSubmission } from '../security/rateLimit';
 import { emailDomainStatus } from '../security/email';
+import { abuseScore, messageText, reserveSubmission } from '../security/abuse';
 
 export async function handleMailRequest(request: Request, kind: 'contact' | 'brief'): Promise<Response> {
   if (request.method !== 'POST') return Response.json({ error: 'Method not allowed' }, { status: 405, headers: { Allow: 'POST' } });
@@ -36,6 +37,8 @@ export async function handleMailRequest(request: Request, kind: 'contact' | 'bri
     if (!await verifyTurnstile(token, kind)) return Response.json({ error: 'Unable to process request' }, { status: 403 });
     if (!await allowSubmission(request, kind)) return Response.json({ error: 'Please try again later' }, { status: 429 });
     if (await emailDomainStatus(message.email) === 'invalid') return Response.json({ error: 'Unable to process request' }, { status: 400 });
+    if (abuseScore(messageText(message)) >= 5) return Response.json({ error: 'Unable to process request' }, { status: 400 });
+    if (!await reserveSubmission(message, kind)) return Response.json({ ok: true }, { status: 200 });
     const mailer = createMailService();
     if (kind === 'contact') await mailer.sendContactMessage(message as ReturnType<typeof validateContact>);
     else await mailer.sendProjectBrief(message as ReturnType<typeof validateBrief>);

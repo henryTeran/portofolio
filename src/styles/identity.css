@@ -1,6 +1,6 @@
 /* Personal hero: restrained depth, no continuous animation. */
 .hero-section { position:relative; background-image:radial-gradient(ellipse at 85% 25%,color-mix(in srgb,var(--accent-blue) 9%,transparent),transparent 58%),radial-gradient(ellipse at 8% 5%,color-mix(in srgb,var(--accent-cyan) 8%,transparent),transparent 55%); }
-.hero-portrait { position:relative; width:100%; max-width:460px; margin:1.5rem auto; padding:1rem; isolation:isolate; }
+.hero-portrait { position:relative; width:100%; max-width:368px; margin:1.5rem auto; padding:1rem; isolation:isolate; }
 .hero-photo-frame { position:relative; overflow:hidden; border:1px solid var(--v2-border); border-radius:7rem 1.5rem 1.5rem 1.5rem; box-shadow:var(--v2-shadow); background:var(--v2-surface); }
 .hero-photo { display:block; width:100%; height:auto; aspect-ratio:1; object-fit:cover; }
 .hero-photo-frame figcaption { display:flex; justify-content:space-between; gap:1rem; padding:1.25rem; font-size:.8rem; color:var(--v2-text-secondary); }
@@ -13,7 +13,7 @@
 .hero-badge--top { right:0; top:0; }.hero-badge--top span { color:var(--ink-blue); margin-left:1rem; }
 .hero-badge--bottom { bottom:-.5rem; left:0; border-left:3px solid var(--accent-cyan); }
 @media(prefers-reduced-motion:no-preference) { .hero-portrait { animation:portrait-arrive .65s ease-out both; } @keyframes portrait-arrive { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } } }
-@media(max-width:767px) { .hero-portrait { max-width:320px; margin-top:0; }.hero-photo-frame { border-top-left-radius:4rem; }.hero-photo-frame figcaption { padding:1rem; font-size:.7rem; }.hero-badge { font-size:.65rem; }.hero-orbit { inset:0; } }
+@media(max-width:767px) { .hero-portrait { max-width:256px; margin-top:0; }.hero-photo-frame { border-top-left-radius:4rem; }.hero-photo-frame figcaption { padding:1rem; font-size:.7rem; }.hero-badge { font-size:.65rem; }.hero-orbit { inset:0; } }
 
 /* Project identities shared by cards, diagrams and case studies. */
 [data-project="zigoma"] { --project-ink:var(--ink-cyan); --project-color:var(--accent-cyan); --project-secondary:var(--accent-blue); }

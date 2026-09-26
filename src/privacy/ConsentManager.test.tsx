@@ -27,6 +27,11 @@ describe('consent controls', () => {
     expect(getConsent()?.analytics).toBe(true);
     act(() => { openCookiePreferences(); });
     expect(screen.getByRole('checkbox')).toBeChecked();
+    screen.getByRole('button', { name: 'Save my preferences' }).focus();
+    await user.tab();
+    expect(screen.getByRole('button', { name: 'Close' })).toHaveFocus();
+    await user.tab({ shift: true });
+    expect(screen.getByRole('button', { name: 'Save my preferences' })).toHaveFocus();
     await user.click(screen.getByRole('button', { name: 'Reject all' }));
     expect(getConsent()?.analytics).toBe(false);
   });

@@ -16,7 +16,13 @@ function Preferences({ language, close }: { language: LanguageCode; close: () =>
     return () => { dialog.close(); previous?.focus(); };
   }, []);
   const save = (allowed: boolean) => { saveConsent(allowed); close(); };
-  return <dialog ref={ref} className="privacy-dialog" aria-labelledby="cookie-preferences-title" onCancel={close}>
+  return <dialog ref={ref} className="privacy-dialog" aria-labelledby="cookie-preferences-title" onCancel={close} onKeyDown={event => {
+    if (event.key !== 'Tab') return;
+    const controls = Array.from(ref.current!.querySelectorAll<HTMLElement>('button, input, a[href]'));
+    const first = controls[0]; const last = controls[controls.length - 1];
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+  }}>
     <div className="privacy-dialog-heading"><h2 id="cookie-preferences-title">{copy.preferences}</h2><button type="button" className="privacy-button" onClick={close}>{copy.close}</button></div>
     <div className="privacy-category"><h3>{copy.necessary}</h3><p>{copy.always}</p></div>
     <div className="privacy-category"><label className="privacy-toggle"><input type="checkbox" checked={analytics} onChange={event => setAnalytics(event.target.checked)} aria-describedby="analytics-detail" />{copy.analytics}</label><p id="analytics-detail">{copy.detail}</p></div>

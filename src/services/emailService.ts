@@ -8,6 +8,7 @@ export interface ContactFormData {
 }
 
 export type QuoteFormData = ProjectBriefData;
+export interface FormProtection { website?: string; turnstileToken?: string }
 
 const currentLanguage = (): PortfolioLanguage => {
   const language = i18next.language.split('-')[0];
@@ -19,7 +20,7 @@ async function submit(path: string, data: Record<string, unknown>): Promise<bool
     const response = await fetch(path, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...data, language: currentLanguage(), website: '' }),
+      body: JSON.stringify({ ...data, language: currentLanguage() }),
     });
     return response.ok;
   } catch {
@@ -27,11 +28,11 @@ async function submit(path: string, data: Record<string, unknown>): Promise<bool
   }
 }
 
-export const sendContactEmail = (formData: ContactFormData): Promise<boolean> =>
-  submit('/api/contact', { ...formData });
+export const sendContactEmail = (formData: ContactFormData, protection: FormProtection = {}): Promise<boolean> =>
+  submit('/api/contact', { ...formData, ...protection });
 
-export const sendQuoteEmail = (formData: QuoteFormData): Promise<boolean> =>
-  submit('/api/project-brief', { ...formData });
+export const sendQuoteEmail = (formData: QuoteFormData, protection: FormProtection = {}): Promise<boolean> =>
+  submit('/api/project-brief', { ...formData, ...protection });
 
 export const validateContactForm = (formData: ContactFormData): { isValid: boolean; errors: string[] } => {
   const errors: string[] = [];

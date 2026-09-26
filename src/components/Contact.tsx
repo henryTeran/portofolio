@@ -25,11 +25,10 @@ export default function Contact() {
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
-    if (website) { setStatus('success'); return; }
     if (!validateContactForm(form).isValid) { setStatus('error'); return; }
     setSubmitting(true);
     setStatus('idle');
-    const sent = await sendContactEmail(form);
+    const sent = await sendContactEmail(form, { website });
     setSubmitting(false);
     setStatus(sent ? 'success' : 'error');
     if (sent) { trackContactSubmit('contact_section'); setForm({ name: '', email: '', message: '' }); }

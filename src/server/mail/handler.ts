@@ -22,6 +22,7 @@ export async function handleMailRequest(request: Request, kind: 'contact' | 'bri
   try {
     const data: unknown = JSON.parse(body);
     if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('Invalid request');
+    if ('website' in data && typeof data.website === 'string' && data.website.trim()) return Response.json({ ok: true }, { status: 200 });
     message = kind === 'contact' ? validateContact(data as Record<string, unknown>) : validateBrief(data as Record<string, unknown>);
   } catch {
     return Response.json({ error: 'Invalid request' }, { status: 400 });

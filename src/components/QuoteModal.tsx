@@ -17,6 +17,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
   const [isDark, setIsDark] = useState(true);
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [website, setWebsite] = useState('');
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   
   const [formData, setFormData] = useState<QuoteFormData>({
@@ -119,7 +120,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
     setSubmitStatus('idle');
 
     try {
-      const success = await sendQuoteEmail(formData);
+      const success = await sendQuoteEmail(formData, { website });
       if (success) {
         setSubmitStatus('success');
         setTimeout(() => {
@@ -500,6 +501,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
 
         {currentStep === 4 && <div className="px-4 pb-5 sm:px-6"><FormDisclosure kind="brief" /></div>}
         {/* Footer */}
+        <div className="sr-only" aria-hidden="true"><label htmlFor="brief-website">Website</label><input id="brief-website" name="website" value={website} onChange={event => setWebsite(event.target.value)} tabIndex={-1} autoComplete="off" /></div>
         <div className={`sticky bottom-0 flex flex-col gap-3 border-t ${borderColor} ${bgModal} px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:p-6`}>
           <button
             onClick={prevStep}

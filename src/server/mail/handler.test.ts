@@ -8,6 +8,12 @@ const request = (data: unknown, origin = 'https://henryteran.com') => new Reques
 });
 
 describe('public mail endpoint', () => {
+  it('returns a neutral success for a filled honeypot in both forms', async () => {
+    for (const kind of ['contact', 'brief'] as const) {
+      const result = await handleMailRequest(request({ website: 'bot.example' }), kind);
+      expect(result.status).toBe(200); expect(await result.json()).toEqual({ ok: true });
+    }
+  });
   it('accepts a valid contact message', async () => {
     const response = await handleMailRequest(request({ name: 'Visitor', email: 'visitor@example.com', message: 'A useful message', language: 'en' }), 'contact');
     expect(response.status).toBe(200);

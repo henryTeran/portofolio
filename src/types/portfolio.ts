@@ -1,10 +1,15 @@
 export type PortfolioLanguage = 'fr' | 'en' | 'es';
 
 export interface ProjectVisual {
+  id: string;
   src: string;
-  altKey: string;
-  width?: number;
-  height?: number;
+  alt: Record<PortfolioLanguage, string>;
+  label: Record<PortfolioLanguage, string>;
+  caption: Record<PortfolioLanguage, string>;
+  kind: 'desktop' | 'mobile' | 'diagram';
+  featured: boolean;
+  width: number;
+  height: number;
 }
 
 export interface ProjectCaseStudy {
@@ -32,6 +37,7 @@ export interface PortfolioProject {
   featured: boolean;
   links?: { github?: string; demo?: string };
   visuals?: ProjectVisual[];
+  status?: 'in-development';
 }
 
 export interface Experience {

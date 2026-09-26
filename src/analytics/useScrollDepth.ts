@@ -21,7 +21,7 @@ export default function useScrollDepth(enabled = false): void {
   // Reset fired thresholds on every route/hash change
   useEffect(() => {
     firedRef.current = new Set();
-    if (isDev) {
+    if (isDev && enabled) {
       console.debug('[GA4] Scroll tracker reset', {
         path: location.pathname,
         hash: location.hash,

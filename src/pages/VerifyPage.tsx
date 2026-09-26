@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import type { LanguageCode } from '../constants/i18n';
@@ -10,6 +10,7 @@ type State = 'ready' | 'verifying' | 'verified' | 'expired' | 'invalid' | 'alrea
 
 export default function VerifyPage({ language }: { language: LanguageCode }) {
   const [token] = useState(captureVerificationToken);
+  useEffect(() => { window.history.replaceState(window.history.state, '', window.location.pathname); }, []);
   const [state, setState] = useState<State>(token ? 'ready' : 'invalid');
   const busy = useRef(false);
   const t = verificationCopy[language];

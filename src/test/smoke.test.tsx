@@ -8,7 +8,7 @@ import LanguageLayout from '../layouts/LanguageLayout';
 import Contact from '../components/Contact';
 vi.mock('../security/Turnstile', async () => {
   const { useEffect } = await import('react');
-  return { default: ({ onToken }: { onToken: (token: string) => void }) => { useEffect(() => { onToken('test-token'); }, [onToken]); return null; } };
+  return { default: function MockTurnstile({ onToken }: { onToken: (token: string) => void }) { useEffect(() => { onToken('test-token'); }, [onToken]); return null; } };
 });
 
 vi.mock('../services/emailService', () => ({

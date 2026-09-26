@@ -19,5 +19,9 @@ describe('Turnstile server verification', () => {
   it('permits only explicit local development bypass', async () => {
     vi.stubEnv('NODE_ENV', 'development'); vi.stubEnv('VERCEL', ''); vi.stubEnv('CONTACT_SECURITY_DEV_MODE', 'true');
     expect(await verifyTurnstile('development-only', 'contact')).toBe(true);
+    vi.stubEnv('VERCEL', '1'); vi.stubEnv('VERCEL_ENV', 'development');
+    expect(await verifyTurnstile('development-only', 'contact')).toBe(true);
+    vi.stubEnv('VERCEL_ENV', 'preview'); vi.stubEnv('TURNSTILE_SECRET_KEY', '');
+    await expect(verifyTurnstile('development-only', 'contact')).rejects.toThrow();
   });
 });

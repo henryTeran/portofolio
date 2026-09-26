@@ -2,7 +2,7 @@ import { Resolver } from 'node:dns/promises';
 import { domainToASCII } from 'node:url';
 export function normalizeEmail(input: string): string {
   const trimmed = input.trim();
-  if (trimmed.length > 254 || /[\s\u0000-\u001f\u007f]/.test(trimmed)) throw new Error('Invalid email');
+  if (trimmed.length > 254 || /\s/.test(trimmed) || [...trimmed].some(char => char.charCodeAt(0) < 32 || char.charCodeAt(0) === 127)) throw new Error('Invalid email');
   const parts = trimmed.split('@');
   if (parts.length !== 2) throw new Error('Invalid email');
   const [local, rawDomain] = parts;

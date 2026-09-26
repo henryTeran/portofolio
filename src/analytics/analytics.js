@@ -30,10 +30,10 @@ export function initAnalytics() {
 
 export function syncAnalyticsConsent() {
   if (typeof window === 'undefined') return;
-  const allowed = hasAnalyticsConsent();
+  const allowed = hasAnalyticsConsent() && !location.pathname.endsWith('/verify');
   window[`ga-disable-${MEASUREMENT_ID}`] = !allowed;
   if (allowed) initAnalytics();
-  else clearAnalyticsCookies();
+  else if (!hasAnalyticsConsent()) clearAnalyticsCookies();
 }
 // Synchronous revocation also protects events fired before React re-renders.
 subscribeConsent(syncAnalyticsConsent);

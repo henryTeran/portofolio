@@ -1,6 +1,7 @@
 export const limits = { name: 120, email: 254, phone: 50, company: 150, message: 2000, projectDescription: 4000, additionalInfo: 5000 } as const;
 export const minimums = { name: 2, message: 30, projectDescription: 50 } as const;
 export type Field = keyof typeof limits | 'projectType' | 'timeline' | 'budget';
+export type BriefField = Exclude<Field, 'message'>;
 export type Issue = 'required' | 'name' | 'email' | 'phone' | 'shortMessage' | 'shortDescription' | 'tooLong';
 export function fieldIssue(field: Field, value: string): Issue | undefined {
   const text = value.trim();
@@ -23,5 +24,5 @@ export function fieldIssue(field: Field, value: string): Issue | undefined {
   if (field === 'projectDescription' && text.length < minimums.projectDescription) return 'shortDescription';
 }
 export const contactFields: Field[] = ['name', 'email', 'message'];
-export const briefSteps: Field[][] = [['name', 'email', 'phone', 'company'], ['projectType', 'projectDescription'], ['timeline', 'budget'], ['additionalInfo']];
-export const invalidFields = (data: Partial<Record<Field, string>>, fields: Field[]) => fields.filter(field => fieldIssue(field, data[field] ?? ''));
+export const briefSteps: BriefField[][] = [['name', 'email', 'phone', 'company'], ['projectType', 'projectDescription'], ['timeline', 'budget'], ['additionalInfo']];
+export const invalidFields = <T extends Field>(data: Partial<Record<Field, string>>, fields: T[]) => fields.filter(field => fieldIssue(field, data[field] ?? ''));

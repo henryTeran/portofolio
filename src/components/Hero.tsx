@@ -1,3 +1,4 @@
+import { useTilt } from '../features/motion/useTilt';
 import { ArrowDownRight, ArrowUpRight, MapPin } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { DEFAULT_LANGUAGE, isSupportedLanguage } from '../constants/i18n';
@@ -6,13 +7,15 @@ import { sectionPath } from '../router/paths';
 import { trackCTA } from '../analytics/trackingEvents';
 
 export default function Hero() {
+  const portraitRef = useTilt<HTMLElement>();
   const { lang } = useParams();
   const language = lang && isSupportedLanguage(lang) ? lang : DEFAULT_LANGUAGE;
   const copy = heroCopy[language];
 
   return (
     <section id="home" className="hero-section overflow-hidden bg-[var(--v2-background)] text-[var(--v2-text)]">
-      <div className="mx-auto grid max-w-[var(--v2-content-width)] gap-14 px-5 pb-20 pt-20 sm:px-8 sm:pt-24 lg:min-h-[740px] lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,.85fr)] lg:items-center lg:gap-10 lg:pb-28 lg:pt-28">
+      <div className="hero-starfield" aria-hidden="true"><i /><i /><i /><div className="hero-grid-plane" /></div>
+      <div className="relative mx-auto grid max-w-[var(--v2-content-width)] gap-14 px-5 pb-20 pt-20 sm:px-8 sm:pt-24 lg:min-h-[740px] lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,.85fr)] lg:items-center lg:gap-10 lg:pb-28 lg:pt-28">
         <div className="max-w-3xl">
           <p className="mb-7 text-xs font-semibold tracking-[.22em] text-[var(--v2-accent)] sm:text-sm">{copy.eyebrow}</p>
           <h1 className="font-display text-[clamp(2.65rem,4.6vw,5.1rem)] font-semibold leading-[1.05] tracking-[-.055em]">
@@ -31,7 +34,7 @@ export default function Hero() {
             <a href="https://linkedin.com/in/henry-teran" onClick={() => trackCTA('hero_linkedin')} target="_blank" rel="noreferrer" className="hover:text-[var(--v2-text)]">LinkedIn</a>
           </div>
         </div>
-        <figure className="hero-portrait">
+        <figure ref={portraitRef} className="hero-portrait">
           <div className="hero-orbit" aria-hidden="true"><span /><span /><span /></div>
           <div className="hero-photo-frame">
             <img src="/henry-portrait.webp" width="800" height="800" alt="Henry Teran" {...{ fetchpriority: 'high' }} decoding="async" className="hero-photo" />

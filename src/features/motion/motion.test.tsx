@@ -20,7 +20,7 @@ it('activates visible decorations once and disconnects on unmount', () => {
   const observe = vi.fn(), unobserve = vi.fn(), disconnect = vi.fn();
   globalThis.IntersectionObserver = vi.fn((cb: IntersectionObserverCallback) => { callback = cb; return { observe, unobserve, disconnect }; }) as unknown as typeof IntersectionObserver;
   const { container, unmount } = render(<Fixture />);
-  const target = container.querySelector('[data-section-transition]')!;
+  const target = container.querySelector('[data-motion-item]')!;
   callback!([{ isIntersecting: true, target } as IntersectionObserverEntry], {} as IntersectionObserver);
   expect(target).toHaveAttribute('data-revealed', 'true'); expect(unobserve).toHaveBeenCalledWith(target);
   unmount(); expect(disconnect).toHaveBeenCalled();

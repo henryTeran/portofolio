@@ -16,8 +16,11 @@ export function useSectionMotion() {
       }
       observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
-          if (!entry.isIntersecting) return;
-          entry.target.setAttribute('data-revealed', 'true'); observer?.unobserve(entry.target);
+          if (!entry.isIntersecting) {
+            if (entry.target.hasAttribute('data-section-transition')) entry.target.removeAttribute('data-revealed');
+            return;
+          }
+          entry.target.setAttribute('data-revealed', 'true'); if (!entry.target.hasAttribute('data-section-transition')) observer?.unobserve(entry.target);
         });
       }, { threshold: 0.15 });
       root.querySelectorAll('[data-motion-item], [data-section-transition]').forEach(node => observer?.observe(node));

@@ -6,6 +6,13 @@ import { projectBriefEmail } from './templates/project-brief-email.js';
 import { acknowledgementEmail } from './templates/acknowledgement-email.js';
 import { verificationEmail } from './templates/verification-email.js';
 
+export function logMailFailure(error: unknown): void {
+  const code = error && typeof error === 'object' && 'code' in error ? error.code : undefined;
+  const category = typeof code === 'string' && ['EAUTH', 'ECONNECTION', 'ETIMEDOUT', 'EDNS', 'ESOCKET', 'ETLS', 'EENVELOPE', 'EMESSAGE'].includes(code) ? code : 'UNKNOWN';
+  // Never log error.message, response, command or the error object: they may contain credentials.
+  console.warn(`[mail-security] smtp:${category}`);
+}
+
 export function createMailService(): MailService {
   const config = getMailConfig();
   const transport = nodemailer.createTransport({
@@ -27,7 +34,10 @@ export function createMailService(): MailService {
   }
 
   return {
-    sendVerificationEmail: async (email, language, url) => { await transport.sendMail({ from: config.from, to: email, ...verificationEmail(language, url) }); },
+    sendVerificationEmail: async (email, language, url) => {
+      try { await transport.sendMail({ from: config.from, to: email, ...verificationEmail(language, url) }); }
+      catch (error) { logMailFailure(error); throw error; }
+    },
     sendContactMessage: (message) => deliver(message, 'contact'),
     sendProjectBrief: (message) => deliver(message, 'brief'),
   };

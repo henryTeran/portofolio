@@ -28,7 +28,7 @@ export default function CaseStudyPage({ project, language, narrative }: { projec
       </div>
       <div className="mt-12 flex flex-wrap gap-x-10 gap-y-4 border-t border-[var(--v2-border)] py-6 text-sm"><div><span className="text-[var(--v2-text-secondary)]">{labels.period}</span><span className="ml-3 font-medium">{project.period}</span></div><div><span className="text-[var(--v2-text-secondary)]">{labels.role}</span><span className="ml-3 font-medium">{(narrative?.roles ?? project.role).join(' · ')}</span></div></div>
       <p className="mb-8 text-sm text-[var(--v2-text-secondary)]">{project.technologies.join(' · ')}</p>
-      <ProjectMasterVisual project={project} language={language} eager />
+      <div className="case-master"><ProjectMasterVisual project={project} language={language} eager /></div>
       {narrative?.context && section(labels.context, <p>{narrative.context}</p>)}
       {narrative?.businessProblem && section(labels.problem, <p>{narrative.businessProblem}</p>)}
       {narrative?.roles && section(labels.role, list(narrative.roles))}

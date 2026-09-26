@@ -1,3 +1,5 @@
+import { useSubmissionTracking } from '../security/submissionTracking';
+import DeliveryStatus from '../security/DeliveryStatus';
 import { contactFields, fieldIssue } from '../forms/validation';
 import { apiErrorMessage, type ApiCode } from '../forms/apiErrors';
 import { formCopy } from '../forms/copy';
@@ -17,6 +19,7 @@ import Turnstile from '../security/Turnstile';
 export default function Contact() {
   const { t, i18n } = useTranslation();
   const feedback = formCopy(i18n.language);
+  const delivery = useSubmissionTracking('contact');
   const { lang } = useParams();
   const language = lang && isSupportedLanguage(lang) ? lang : DEFAULT_LANGUAGE;
   const copy = contactCopy[language];
@@ -80,7 +83,8 @@ export default function Contact() {
               { label: feedback.security, valid: Boolean(turnstileToken) },
             ]} />
             <button aria-describedby="contact-readiness" type="submit" disabled={submitting || !valid || !turnstileToken} className="inline-flex min-h-12 items-center gap-2 rounded-lg bg-[var(--v2-accent)] px-5 py-3 font-semibold text-[var(--v2-on-accent)] disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-700 dark:disabled:bg-slate-700 dark:disabled:text-slate-200">{submitting ? t('contact.form.submitting') : t('contact.form.submit')}<ArrowUpRight size={17} aria-hidden="true" /></button>
-            <p role="status" aria-live="polite" className={`text-sm ${status === 'error' ? 'text-red-500' : 'text-[var(--v2-accent)]'}`}>{status === 'success' ? feedback.contactSuccess : status === 'error' ? apiErrorMessage(errorCode, i18n.language) : ''}</p>
+            <DeliveryStatus state={delivery} language={i18n.language} />
+            <p role="status" aria-live="polite" className={`text-sm ${status === 'error' ? 'text-red-500' : 'text-[var(--v2-accent)]'}`}>{status === 'success' && delivery === 'idle' ? feedback.contactSuccess : status === 'error' ? apiErrorMessage(errorCode, i18n.language) : ''}</p>
             <FormDisclosure kind="contact" />
           </form>
         </div>

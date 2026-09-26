@@ -1,5 +1,5 @@
 ﻿import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { beginVerification, completeVerification, tokenHash, VERIFICATION_TTL } from './verification';
+import { beginVerification, completeVerification, verificationStatus, tokenHash, VERIFICATION_TTL } from './verification';
 import { MemorySecurityStore } from './store';
 import type { MailService } from '../mail/types';
 import { verificationEmail } from '../mail/templates/verification-email';
@@ -10,6 +10,31 @@ const sentToken = (mailer: MailService) => new URL(vi.mocked(mailer.sendVerifica
 beforeEach(() => { vi.stubEnv('CONTACT_PUBLIC_URL', 'https://henryteran.com'); vi.stubEnv('CONTACT_SECURITY_HASH_SECRET', 'x'.repeat(32)); });
 afterEach(() => { vi.unstubAllEnvs(); vi.useRealTimers(); });
 describe('verification delivery', () => {
+  it.each(['contact', 'brief'] as const)('exposes read-only cross-device status for %s without granting confirmation', async kind => {
+    const store = new MemorySecurityStore(); const mailer = makeMailer();
+    const tracking = await beginVerification(message, kind, store, mailer);
+    const token = sentToken(mailer);
+    expect(tracking.receipt).not.toBe(token);
+    expect(await verificationStatus(tracking.receipt, store)).toBe('pending');
+    expect(await completeVerification(tracking.receipt, store, () => mailer)).toBe('invalid');
+    expect(await verificationStatus(token, store)).toBe('expired');
+    expect(mailer.sendContactMessage).not.toHaveBeenCalled();
+    expect(mailer.sendProjectBrief).not.toHaveBeenCalled();
+    await completeVerification(token, store, () => mailer);
+    expect(await verificationStatus(tracking.receipt, store)).toBe('verified');
+    expect(await verificationStatus(tracking.receipt, store)).toBe('verified');
+    expect(kind === 'contact' ? mailer.sendContactMessage : mailer.sendProjectBrief).toHaveBeenCalledOnce();
+  });
+  it('reports expiry and SMTP failure through the read-only receipt', async () => {
+    vi.useFakeTimers(); const store = new MemorySecurityStore(); const mailer = makeMailer();
+    const first = await beginVerification(message, 'contact', store, mailer);
+    vi.advanceTimersByTime(VERIFICATION_TTL * 1000 + 1);
+    expect(await verificationStatus(first.receipt, store)).toBe('expired');
+    const failed = makeMailer(); vi.mocked(failed.sendContactMessage).mockRejectedValue(new Error('private'));
+    const second = await beginVerification(message, 'contact', store, failed);
+    await completeVerification(sentToken(failed), store, () => failed);
+    expect(await verificationStatus(second.receipt, store)).toBe('error');
+  });
   it('only emails the visitor initially, stores a hash, then notifies Henry once even concurrently', async () => {
     const store = new MemorySecurityStore(); const mailer = makeMailer();
     await beginVerification(message, 'contact', store, mailer);

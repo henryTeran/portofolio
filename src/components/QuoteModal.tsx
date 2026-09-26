@@ -1,3 +1,5 @@
+import { useSubmissionTracking } from '../security/submissionTracking';
+import DeliveryStatus from '../security/DeliveryStatus';
 import { trackProjectBriefSubmit } from '../analytics/trackingEvents';
 import { briefSteps, fieldIssue, invalidFields, limits, type BriefField as Field } from '../forms/validation';
 import { apiErrorMessage, type ApiCode } from '../forms/apiErrors';
@@ -18,6 +20,7 @@ interface QuoteModalProps {
 const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
   const { t, i18n } = useTranslation();
   const feedback = formCopy(i18n.language);
+  const delivery = useSubmissionTracking('brief');
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [errorCode, setErrorCode] = useState<ApiCode>('server_error');
   const pendingFocus = useRef<Field | null>(null);
@@ -182,7 +185,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
   const nextStep = () => { if (!focusInvalid(briefSteps[currentStep - 1])) setCurrentStep(prev => Math.min(prev + 1, 4)); };
   const prevStep = () => setCurrentStep(prev => Math.max(prev - 1, 1));
 
-  if (!isOpen) return null;
+  if (!isOpen) return <DeliveryStatus state={delivery} language={i18n.language} />;
 
   // Classes conditionnelles basées sur le thème
   const bgModal = isDark ? 'bg-slate-900' : 'bg-white';
@@ -238,6 +241,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
 
         {/* Content */}
         <div ref={contentRef} className="min-h-0 flex-1 overflow-y-auto px-4 py-5 sm:p-6">
+          <DeliveryStatus state={delivery} language={i18n.language} />
           {/* Étape 1: Informations personnelles */}
           {currentStep === 1 && (
             <div className="space-y-6">
@@ -509,7 +513,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
-              {submitStatus === 'success' && (
+              {submitStatus === 'success' && delivery === 'idle' && (
                 <div role="status" aria-live="polite" className="flex items-center p-4 bg-green-500/20 border border-green-500/30 rounded-lg">
                   <CheckCircle className="text-green-800 dark:text-green-300 mr-3" size={20} />
                   <span className="text-green-800 dark:text-green-300">{feedback.briefSuccess}</span>
@@ -526,7 +530,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
           )}
           <div className="mt-6 space-y-4">
             {currentStep === 4 && <Turnstile action="brief" onToken={setTurnstileToken} resetKey={securityReset} />}
-            <FormStatusSummary id="brief-readiness" language={i18n.language} busy={isSubmitting} readyText={submitStatus === 'success' ? feedback.briefSuccess : currentStep === 4 ? feedback.briefReady : feedback.stepReady} items={submitStatus === 'success' ? [] : currentStep === 4 ? [
+            <FormStatusSummary id="brief-readiness" language={i18n.language} busy={isSubmitting} readyText={submitStatus === 'success' ? '' : currentStep === 4 ? feedback.briefReady : feedback.stepReady} items={submitStatus === 'success' ? [] : currentStep === 4 ? [
               { label: feedback.labels.information, valid: stepValid(1) },
               { label: feedback.labels.project, valid: stepValid(2) },
               { label: feedback.labels.planning, valid: stepValid(3) },

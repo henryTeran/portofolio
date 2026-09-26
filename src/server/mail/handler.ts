@@ -52,8 +52,8 @@ export async function handleMailRequest(request: Request, kind: 'contact' | 'bri
     stage = 'duplicate_check';
     if (!await reserveSubmission(message, kind)) return Response.json({ code: 'duplicate_request' }, { status: 409, headers: { 'Cache-Control': 'no-store' } });
     stage = 'begin_verification';
-    await beginVerification(message, kind);
-    return Response.json({ ok: true, status: 'pending_verification' }, { status: 200, headers: { 'Cache-Control': 'no-store' } });
+    const tracking = await beginVerification(message, kind);
+    return Response.json({ ok: true, status: 'pending_verification', ...tracking }, { status: 200, headers: { 'Cache-Control': 'no-store' } });
   } catch (error) {
     console.warn(`[mail-security] ${kind}:${stage}_unavailable`);
     return Response.json({ code: checkingSecurity ? 'turnstile_unavailable' : error instanceof PublicFormError ? error.code : 'server_error' }, { status: 503 });

@@ -1,3 +1,4 @@
+import { trackSubmission } from '../security/submissionTracking';
 import { briefSteps, contactFields, invalidFields } from '../forms/validation';
 import { apiCode, type ApiCode } from '../forms/apiErrors';
 import i18next from 'i18next';
@@ -28,6 +29,7 @@ async function submit(path: string, data: Record<string, unknown>, onError?: (co
       const body = await response.json().catch(() => null);
       onError?.(apiCode(body?.code));
     }
+    if (response.ok) trackSubmission(path === '/api/contact' ? 'contact' : 'brief', await response.json().catch(() => null));
     return response.ok;
   } catch {
     onError?.('server_error');

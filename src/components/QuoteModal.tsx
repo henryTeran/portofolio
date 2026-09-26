@@ -216,13 +216,13 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
             {[1, 2, 3, 4].map((step) => (
               <div key={step} className="flex min-w-0 flex-1 items-center last:flex-initial">
                 <div className={`h-8 w-8 shrink-0 rounded-full flex items-center justify-center text-sm font-semibold ${
-                  step <= currentStep ? 'bg-blue-500 text-white' : `${bgProgressBar} ${textSecondary}`
+                  step <= currentStep ? 'bg-blue-600 text-white' : `${bgProgressBar} ${textSecondary}`
                 }`}>
                   {step}
                 </div>
                 {step < 4 && (
                   <div className={`mx-2 h-1 flex-1 ${
-                    step < currentStep ? 'bg-blue-500' : bgProgressBar
+                    step < currentStep ? 'bg-blue-600' : bgProgressBar
                   }`} />
                 )}
               </div>
@@ -553,7 +553,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                 onClick={nextStep}
                 aria-describedby="brief-readiness"
                 disabled={!stepValid(currentStep) || isSubmitting}
-                className="w-full rounded-lg bg-blue-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-700 dark:disabled:bg-slate-700 dark:disabled:text-slate-200 sm:w-auto sm:py-2"
+                className="w-full rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-700 dark:disabled:bg-slate-700 dark:disabled:text-slate-200 sm:w-auto sm:py-2"
               >
                 {t('quoteModal.buttons.next')}
               </button>
@@ -562,7 +562,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                 onClick={handleSubmit}
                 aria-describedby="brief-readiness"
                 disabled={isSubmitting || !validateQuoteForm(formData).isValid || !turnstileToken || submitStatus === 'success'}
-                className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-8 py-3 font-semibold text-white transition-colors hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-700 dark:disabled:bg-slate-700 dark:disabled:text-slate-200 sm:w-auto sm:py-2"
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-8 py-3 font-semibold text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-700 dark:disabled:bg-slate-700 dark:disabled:text-slate-200 sm:w-auto sm:py-2"
               >
                 {isSubmitting ? (
                   <>

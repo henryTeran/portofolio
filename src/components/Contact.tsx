@@ -79,7 +79,7 @@ export default function Contact() {
               ...contactFields.map(field => ({ label: feedback.labels[field], valid: !fieldIssue(field, form[field as keyof ContactFormData]) })),
               { label: feedback.security, valid: Boolean(turnstileToken) },
             ]} />
-            <button aria-describedby="contact-readiness" type="submit" disabled={submitting || !valid || !turnstileToken} className="inline-flex min-h-12 items-center gap-2 rounded-lg bg-[var(--v2-accent)] px-5 py-3 font-semibold text-[#07120f] disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-700 dark:disabled:bg-slate-700 dark:disabled:text-slate-200">{submitting ? t('contact.form.submitting') : t('contact.form.submit')}<ArrowUpRight size={17} aria-hidden="true" /></button>
+            <button aria-describedby="contact-readiness" type="submit" disabled={submitting || !valid || !turnstileToken} className="inline-flex min-h-12 items-center gap-2 rounded-lg bg-[var(--v2-accent)] px-5 py-3 font-semibold text-[var(--v2-on-accent)] disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-700 dark:disabled:bg-slate-700 dark:disabled:text-slate-200">{submitting ? t('contact.form.submitting') : t('contact.form.submit')}<ArrowUpRight size={17} aria-hidden="true" /></button>
             <p role="status" aria-live="polite" className={`text-sm ${status === 'error' ? 'text-red-500' : 'text-[var(--v2-accent)]'}`}>{status === 'success' ? feedback.contactSuccess : status === 'error' ? apiErrorMessage(errorCode, i18n.language) : ''}</p>
             <FormDisclosure kind="contact" />
           </form>

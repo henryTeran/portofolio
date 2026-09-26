@@ -5,7 +5,8 @@
   --v2-surface-raised:#EDF1F4;
   --v2-text:#101820;
   --v2-text-secondary:#526071;
-  --v2-accent:#168E85;
+  --v2-accent:#0F766E;
+  --v2-on-accent:#FFFFFF;
   --v2-accent-secondary:#5A69CC;
   --v2-border:rgba(16,24,32,.12);
   --v2-content-width:80rem;
@@ -27,6 +28,7 @@
   --v2-text:#F5F7FA;
   --v2-text-secondary:#A8B1BD;
   --v2-accent:#6CE5D8;
+  --v2-on-accent:#07120F;
   --v2-accent-secondary:#7C8CFF;
   --v2-border:rgba(245,247,250,.12);
   /* DARK */

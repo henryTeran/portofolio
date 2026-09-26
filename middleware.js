@@ -23,7 +23,7 @@ export default function middleware(request) {
 
   // Avoid loops for already-localized routes
   if (LANGUAGE_SET.has(firstSegment)) {
-    if (['services', 'projects', 'contact'].includes(secondSegment)) {
+    if (pathSegments.length === 2 && ['services', 'projects', 'contact'].includes(secondSegment)) {
       url.pathname = `/${firstSegment}`;
       url.hash = `#${secondSegment}`;
       return Response.redirect(url.toString(), 301);

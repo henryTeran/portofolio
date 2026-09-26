@@ -36,7 +36,7 @@ describe('case study routing', () => {
   it('offers a route back for an unknown slug', () => {
     render(<HelmetProvider><MemoryRouter initialEntries={['/en/projects/unknown']}><Routes><Route path="/:lang/projects/:slug" element={<ProjectRoutePage />} /></Routes></MemoryRouter></HelmetProvider>);
     expect(screen.getByRole('heading', { level: 1, name: 'Project not found' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Back to selected work' })).toHaveAttribute('href', '/en#work');
+    expect(screen.getByRole('link', { name: 'Back to work' })).toHaveAttribute('href', '/en#work');
   });
   it('sets project-specific canonical, alternate languages and OpenGraph metadata', async () => {
     render(<HelmetProvider><MemoryRouter initialEntries={['/es/projects/jobtrace-ai']}><Routes><Route path="/:lang/projects/:slug" element={<ProjectRoutePage />} /></Routes></MemoryRouter></HelmetProvider>);

@@ -4,12 +4,17 @@ import type { LanguageCode } from '../../constants/i18n';
 import { adjacentProjects } from '../../data/projects';
 import { projectPath } from '../../router/paths';
 import { caseStudyLabels } from '../../content/case-studies/labels';
+import { getProjectCopy } from '../../content/projects';
+import './navigation.css';
 
 export default function CaseStudyNavigation({ language, slug }: { language: LanguageCode; slug: string }) {
   const { previous, next } = adjacentProjects(slug);
   const copy = caseStudyLabels[language];
-  return <nav className="grid gap-4 border-t border-[var(--v2-border)] py-10 sm:grid-cols-2" aria-label={language === 'fr' ? 'Autres projets' : language === 'es' ? 'Otros proyectos' : 'Other projects'}>
-    {previous && <Link to={projectPath(language, previous.slug)} className="group rounded-xl border border-[var(--v2-border)] bg-[var(--v2-surface)] p-5 hover:border-[var(--v2-accent)] focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]"><span className="flex items-center gap-2 text-sm text-[var(--v2-text-secondary)]"><ArrowLeft size={16} aria-hidden="true" />{copy.previous}</span><span className="mt-4 block text-2xl font-semibold">{previous.title}</span></Link>}
-    {next && <Link to={projectPath(language, next.slug)} className="group rounded-xl border border-[var(--v2-border)] bg-[var(--v2-surface)] p-5 hover:border-[var(--v2-accent)] focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]"><span className="flex items-center gap-2 text-sm text-[var(--v2-text-secondary)]">{copy.next}<ArrowRight size={16} aria-hidden="true" /></span><span className="mt-4 block text-2xl font-semibold">{next.title}</span></Link>}
+  return <nav className="case-project-navigation" aria-label={language === 'fr' ? 'Autres projets' : language === 'es' ? 'Otros proyectos' : 'Other projects'}>
+    {[{ project: previous, direction: 'previous', label: copy.previous }, { project: next, direction: 'next', label: copy.next }].map(({ project, direction, label }) => project && <Link key={direction} data-project={project.slug} data-direction={direction} to={projectPath(language, project.slug)} className="case-project-link">
+      <span className="case-project-direction">{direction === 'previous' && <ArrowLeft size={18} aria-hidden="true" />}{label}{direction === 'next' && <ArrowRight size={18} aria-hidden="true" />}</span>
+      <span className="case-project-name">{project.title}</span>
+      <span className="case-project-description">{getProjectCopy(language, project.slug)?.tagline}</span>
+    </Link>)}
   </nav>;
 }

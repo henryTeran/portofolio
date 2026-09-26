@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import ConsentManager from './ConsentManager';
+import Footer from '../components/Footer';
 import { CONSENT_KEY, getConsent, openCookiePreferences } from './consent';
 
 describe('consent controls', () => {
@@ -17,9 +18,9 @@ describe('consent controls', () => {
     await user.click(screen.getByRole('button', { name: 'Reject' }));
     expect(getConsent()?.analytics).toBe(false);
     expect(screen.queryByText('Your privacy')).not.toBeInTheDocument();
-    view.unmount(); render(<MemoryRouter initialEntries={['/en']}><ConsentManager /></MemoryRouter>);
+    view.unmount(); render(<MemoryRouter initialEntries={['/en']}><Footer /><ConsentManager /></MemoryRouter>);
     expect(screen.queryByText('Your privacy')).not.toBeInTheDocument();
-    act(() => { openCookiePreferences(); });
+    await user.click(screen.getByRole('button', { name: /Cookie preferences|Préférences cookies|Preferencias de cookies/ }));
     expect(screen.getByRole('checkbox', { name: 'Analytics' })).not.toBeChecked();
     await user.click(screen.getByRole('checkbox', { name: 'Analytics' }));
     await user.click(screen.getByRole('button', { name: 'Save my preferences' }));

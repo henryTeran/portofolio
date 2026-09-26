@@ -34,11 +34,11 @@ export default function Hero() {
         <figure className="hero-portrait">
           <div className="hero-orbit" aria-hidden="true"><span /><span /><span /></div>
           <div className="hero-photo-frame">
-            <img src="/henry-portrait.webp" width="800" height="800" alt="Henry Teran" fetchPriority="high" decoding="async" className="hero-photo" />
+            <img src="/henry-portrait.webp" width="800" height="800" alt="Henry Teran" {...{ fetchpriority: 'high' }} decoding="async" className="hero-photo" />
             <figcaption><span>Henry Teran</span><span>{copy.location}</span></figcaption>
           </div>
-          <div className="hero-badge hero-badge--top">Applied AI <span aria-hidden="true">?</span></div>
-          <div className="hero-badge hero-badge--bottom">Full-Stack ? Product Engineering</div>
+          <div className="hero-badge hero-badge--top">Applied AI <span aria-hidden="true">&#8599;</span></div>
+          <div className="hero-badge hero-badge--bottom">Full-Stack &middot; Product Engineering</div>
         </figure>
       </div>
     </section>

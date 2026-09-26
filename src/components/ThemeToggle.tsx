@@ -4,7 +4,7 @@ import { DEFAULT_LANGUAGE, isSupportedLanguage } from '../constants/i18n';
 import { applyTheme, readTheme, saveTheme, type ThemePreference } from '../theme/theme';
 
 const labels = {
-  fr: { label: 'Thème', system: 'Système', light: 'Clair', dark: 'Sombre' },
+  fr: { label: 'ThÃ¨me', system: 'SystÃ¨me', light: 'Clair', dark: 'Sombre' },
   en: { label: 'Theme', system: 'System', light: 'Light', dark: 'Dark' },
   es: { label: 'Tema', system: 'Sistema', light: 'Claro', dark: 'Oscuro' },
 };

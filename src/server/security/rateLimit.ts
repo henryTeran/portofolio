@@ -1,7 +1,7 @@
 import { createHmac } from 'node:crypto';
 import { isIP } from 'node:net';
-import { localDevelopment, localSecurityMode } from './config';
-import { securityStore, type SecurityStore } from './store';
+import { localDevelopment, localSecurityMode } from './config.js';
+import { securityStore, type SecurityStore } from './store.js';
 export function privateFingerprint(value: string): string {
   const secret = process.env.CONTACT_SECURITY_HASH_SECRET || (localSecurityMode() ? 'explicit-local-development-secret' : '');
   if (secret.length < 32) throw new Error('Security configuration unavailable');

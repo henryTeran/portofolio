@@ -1,5 +1,5 @@
-import type { ContactMessage, EmailContent } from '../types';
-import { emailLayout, row, section } from './layout';
+import type { ContactMessage, EmailContent } from '../types.js';
+import { emailLayout, row, section } from './layout.js';
 
 export function contactEmail(message: ContactMessage): EmailContent {
   const subject = `Nouveau message de ${message.name}`;

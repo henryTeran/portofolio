@@ -1,6 +1,6 @@
-import type { ContactMessage, ProjectBriefMessage } from '../mail/types';
-import { privateFingerprint } from './rateLimit';
-import { securityStore, type SecurityStore } from './store';
+import type { ContactMessage, ProjectBriefMessage } from '../mail/types.js';
+import { privateFingerprint } from './rateLimit.js';
+import { securityStore, type SecurityStore } from './store.js';
 // Small server-only vocabulary; single quoted/descriptive words do not trigger rejection.
 export const ABUSE_TERMS = ['connard', 'connasse', 'salaud', 'putain', 'fuck', 'fucking', 'asshole', 'bitch', 'idiota', 'cabron', 'mierda', 'gilipollas'];
 export const normalizeText = (text: string) => text.normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase().replace(/\s+/g, ' ').trim();

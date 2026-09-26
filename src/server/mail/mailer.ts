@@ -1,10 +1,10 @@
 import nodemailer from 'nodemailer';
-import { getMailConfig } from './config';
-import type { ContactMessage, MailService, ProjectBriefMessage } from './types';
-import { contactEmail } from './templates/contact-email';
-import { projectBriefEmail } from './templates/project-brief-email';
-import { acknowledgementEmail } from './templates/acknowledgement-email';
-import { verificationEmail } from './templates/verification-email';
+import { getMailConfig } from './config.js';
+import type { ContactMessage, MailService, ProjectBriefMessage } from './types.js';
+import { contactEmail } from './templates/contact-email.js';
+import { projectBriefEmail } from './templates/project-brief-email.js';
+import { acknowledgementEmail } from './templates/acknowledgement-email.js';
+import { verificationEmail } from './templates/verification-email.js';
 
 export function createMailService(): MailService {
   const config = getMailConfig();

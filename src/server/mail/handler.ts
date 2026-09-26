@@ -1,10 +1,10 @@
-import { PublicFormError } from '../../forms/apiErrors';
-import { beginVerification } from '../security/verification';
-import { validateBrief, validateContact } from './validation';
-import { verifyTurnstile } from '../security/turnstile';
-import { allowSubmission } from '../security/rateLimit';
-import { emailDomainStatus } from '../security/email';
-import { abuseScore, messageText, reserveSubmission } from '../security/abuse';
+import { PublicFormError } from '../../forms/apiErrors.js';
+import { beginVerification } from '../security/verification.js';
+import { validateBrief, validateContact } from './validation.js';
+import { verifyTurnstile } from '../security/turnstile.js';
+import { allowSubmission } from '../security/rateLimit.js';
+import { emailDomainStatus } from '../security/email.js';
+import { abuseScore, messageText, reserveSubmission } from '../security/abuse.js';
 
 export async function handleMailRequest(request: Request, kind: 'contact' | 'brief'): Promise<Response> {
   if (request.method !== 'POST') return Response.json({ error: 'Method not allowed' }, { status: 405, headers: { Allow: 'POST' } });

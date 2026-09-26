@@ -1,4 +1,4 @@
-import { localDevelopment, localSecurityMode, publicOrigin } from './config';
+import { localDevelopment, localSecurityMode, publicOrigin } from './config.js';
 const testSecrets = new Set(['1x0000000000000000000000000000000AA', '2x0000000000000000000000000000000AA', '3x0000000000000000000000000000000AA']);
 export async function verifyTurnstile(token: unknown, action: 'contact' | 'brief'): Promise<boolean> {
   if (localSecurityMode() && token === 'development-only') return true;

@@ -1,11 +1,11 @@
-import { PublicFormError } from '../../forms/apiErrors';
+import { PublicFormError } from '../../forms/apiErrors.js';
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
-import type { ContactMessage, MailService, ProjectBriefMessage } from '../mail/types';
-import { createMailService } from '../mail/mailer';
-import { publicOrigin } from './config';
-import { privateFingerprint } from './rateLimit';
-import { duplicateKey } from './abuse';
-import { securityStore, type SecurityStore } from './store';
+import type { ContactMessage, MailService, ProjectBriefMessage } from '../mail/types.js';
+import { createMailService } from '../mail/mailer.js';
+import { publicOrigin } from './config.js';
+import { privateFingerprint } from './rateLimit.js';
+import { duplicateKey } from './abuse.js';
+import { securityStore, type SecurityStore } from './store.js';
 
 export const VERIFICATION_TTL = 20 * 60;
 const STATUS_TTL = 24 * 60 * 60;

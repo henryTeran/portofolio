@@ -1,6 +1,6 @@
-import { completeVerification } from './verification';
-import { clientAddress, privateFingerprint } from './rateLimit';
-import { securityStore } from './store';
+import { completeVerification } from './verification.js';
+import { clientAddress, privateFingerprint } from './rateLimit.js';
+import { securityStore } from './store.js';
 
 export async function handleVerification(request: Request): Promise<Response> {
   const headers = { 'Cache-Control': 'no-store', 'Referrer-Policy': 'no-referrer' };

@@ -1,5 +1,5 @@
-import type { EmailContent, ProjectBriefMessage } from '../types';
-import { emailLayout, row, section } from './layout';
+import type { EmailContent, ProjectBriefMessage } from '../types.js';
+import { emailLayout, row, section } from './layout.js';
 
 export function projectBriefEmail(message: ProjectBriefMessage): EmailContent {
   const services = [message.hasDesign && 'Design', message.needsHosting && 'Hébergement', message.needsMaintenance && 'Maintenance', message.needsTraining && 'Formation'].filter(Boolean).join(', ');

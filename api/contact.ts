@@ -1,3 +1,3 @@
-import { handleMailRequest } from '../src/server/mail/handler';
+import { handleMailRequest } from '../src/server/mail/handler.js';
 
 export default { fetch: (request: Request) => handleMailRequest(request, 'contact') };

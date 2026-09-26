@@ -1,4 +1,4 @@
-import type { EmailContent } from '../types';
+import type { EmailContent } from '../types.js';
 
 export const escapeHtml = (value: string): string => value.replace(/[&<>"']/g, (character) => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',

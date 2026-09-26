@@ -1,6 +1,6 @@
-import type { EmailContent } from '../types';
-import type { PortfolioLanguage } from '../../../types/portfolio';
-import { emailLayout, escapeHtml } from './layout';
+import type { EmailContent } from '../types.js';
+import type { PortfolioLanguage } from '../../../types/portfolio.js';
+import { emailLayout, escapeHtml } from './layout.js';
 
 const copy = {
   fr: ['Merci pour votre message', 'Votre message a bien été reçu. Je reviendrai vers vous prochainement.'],

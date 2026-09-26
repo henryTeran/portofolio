@@ -1,5 +1,5 @@
-import type { PortfolioLanguage } from '../../../types/portfolio';
-import { emailLayout, escapeHtml } from './layout';
+import type { PortfolioLanguage } from '../../../types/portfolio.js';
+import { emailLayout, escapeHtml } from './layout.js';
 const copy = {
   fr: { subject: 'Confirmez votre adresse pour envoyer votre demande', intro: 'Confirmez cette adresse email pour transmettre votre demande à Henry Teran.', button: 'Confirmer ma demande', expiry: 'Ce lien est valable 20 minutes et ne peut être utilisé qu’une fois.', ignore: 'Si vous n’êtes pas à l’origine de cette demande, ignorez cet email. Aucun message ne sera transmis à Henry sans confirmation.' },
   en: { subject: 'Confirm your email to send your request', intro: 'Confirm this email address to forward your request to Henry Teran.', button: 'Confirm my request', expiry: 'This link is valid for 20 minutes and can only be used once.', ignore: 'If you did not make this request, ignore this email. Nothing will be forwarded to Henry without confirmation.' },

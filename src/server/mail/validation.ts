@@ -1,8 +1,8 @@
-import { limits, minimums } from '../../forms/validation';
-import { PublicFormError } from '../../forms/apiErrors';
-import type { PortfolioLanguage } from '../../types/portfolio';
-import type { ContactMessage, ProjectBriefMessage } from './types';
-import { normalizeEmail } from '../security/email';
+import { limits, minimums } from '../../forms/validation.js';
+import { PublicFormError } from '../../forms/apiErrors.js';
+import type { PortfolioLanguage } from '../../types/portfolio.js';
+import type { ContactMessage, ProjectBriefMessage } from './types.js';
+import { normalizeEmail } from '../security/email.js';
 
 type Payload = Record<string, unknown>;
 const readText = (data: Payload, key: string, max: number, required = false): string => {

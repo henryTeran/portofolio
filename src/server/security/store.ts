@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { localSecurityMode } from './config';
+import { localSecurityMode } from './config.js';
 
 export interface SecurityStore {
   get(key: string): Promise<string | null>;

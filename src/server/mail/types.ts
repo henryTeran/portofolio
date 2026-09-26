@@ -1,4 +1,4 @@
-import type { ProjectBriefData, PortfolioLanguage } from '../../types/portfolio';
+import type { ProjectBriefData, PortfolioLanguage } from '../../types/portfolio.js';
 
 export interface ContactMessage {
   name: string;

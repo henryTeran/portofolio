@@ -261,3 +261,17 @@ Made with ❤️ by [Henry Teran](https://github.com/henryTeran)
 [🔝 Back to top](#top)
 
 </div>
+## Contact security configuration
+
+The contact and project brief APIs fail closed until their security services are configured. See `.env.example`. Keep SMTP and security credentials in `.env.local` or Vercel environment variables, never in public `VITE_*` variables except the Turnstile site key.
+
+- Create a Cloudflare Turnstile widget for the hostname in `CONTACT_PUBLIC_URL`. Set `VITE_TURNSTILE_SITE_KEY` and server-only `TURNSTILE_SECRET_KEY`. The server validates both hostname and action (`contact` / `brief`).
+- Create an Upstash Redis database, select its region and retention settings, and set `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN`. Choose a database dedicated to this site, without eviction of active security keys. Provisioning is not automated.
+- Set `CONTACT_SECURITY_HASH_SECRET` to a cryptographically random secret of at least 32 characters. `CONTACT_PUBLIC_URL` is the trusted public origin used in verification emails; never derive it from request headers.
+- For explicit local testing only, set both `CONTACT_SECURITY_DEV_MODE=true` and `VITE_CONTACT_SECURITY_DEV_MODE=true`, run with `NODE_ENV=development`, and set `CONTACT_PUBLIC_URL=http://localhost:5173`. Local Vercel Dev must report `VERCEL_ENV=development`. This mode uses an in-process store and bypass token, visibly labelled in the forms; it is rejected on preview/production deployments. It cannot validate cross-process or production persistence. Use real Redis and official Cloudflare test keys for realistic integration tests.
+
+Production uses atomic Redis rolling limits (Contact: 5/15 minutes/IP, Brief: 3/30 minutes/IP), trusted Vercel client IP headers and HMAC fingerprints. Shared networks can share a quota; distributed attacks require additional platform protection. Duplicate reservations last 15 minutes, recipient email limits are 3/hour, and pending payloads expire after 20 minutes. Failed/used-token markers contain no form content and expire after 24 hours. MX lookup is a domain check, not proof that a mailbox exists; temporary DNS failures proceed to email confirmation.
+
+The visitor receives a minimal confirmation email before Henry receives anything. The link contains a random token in the fragment; only its SHA-256 hash is stored. The verification page is excluded from analytics, removes the fragment, and requires an explicit button click. `POST /api/verify-contact` consumes the payload atomically; GET never sends email. Notifications use the verified address as Reply-To. Payloads are deleted before final SMTP delivery. SMTP has no atomic transaction with Redis: ambiguous final delivery errors are not retried automatically, so a failed/crashed delivery may require a new request. This trades automatic recovery for avoiding duplicate notifications. No production keys, Redis service or real confirmation-delivery test have been provisioned by this implementation.
+
+References: [Cloudflare server validation](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/), [Cloudflare test keys](https://developers.cloudflare.com/turnstile/troubleshooting/testing/), [Vercel trusted IP headers](https://vercel.com/docs/headers/request-headers#x-vercel-forwarded-for), [Upstash REST API](https://upstash.com/docs/redis/features/restapi).

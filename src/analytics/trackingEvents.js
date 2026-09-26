@@ -1,10 +1,10 @@
-/**
+﻿/**
  * trackingEvents.js
  * Centralized GA4 event tracking helpers.
  * All functions are no-ops if analytics is not initialized (safe in SSR / test environments).
  */
 import ReactGA from 'react-ga4';
-import { trackPage } from './analytics';
+import { trackPage, canTrack } from './analytics';
 
 const isDev = import.meta.env.DEV;
 
@@ -13,6 +13,7 @@ export { trackPage };
 
 // ─── Internal helper ──────────────────────────────────────────────────────────
 export const trackEventSafely = (eventName, params = {}) => {
+  if (!canTrack()) return;
   if (isDev) {
     console.debug('[GA4] Sending custom event', { eventName, params });
   }
@@ -72,3 +73,4 @@ export const trackContactSubmit = (source) => {
 export const trackScrollDepth = (percent) => {
   trackEventSafely('scroll_depth', { percent });
 };
+

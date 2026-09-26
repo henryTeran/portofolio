@@ -1,27 +1,17 @@
-import { useEffect } from 'react';
+﻿import { useEffect, useSyncExternalStore } from 'react';
 import { useLocation } from 'react-router-dom';
-import { initAnalytics, trackPage } from './analytics';
+import { syncAnalyticsConsent, trackPage } from './analytics';
+import { getConsent, subscribeConsent } from '../privacy/consent';
 import useScrollDepth from './useScrollDepth';
 
-/**
- * Rendered inside BrowserRouter → useLocation() is always valid.
- * - Initializes GA4 once on mount
- * - Tracks every pathname + hash navigation (SPA page views)
- * - Tracks scroll depth thresholds (25 / 50 / 75 / 90 %) via useScrollDepth
- */
 export default function AnalyticsTracker() {
   const location = useLocation();
-
+  const consent = useSyncExternalStore(subscribeConsent, getConsent, () => null);
+  const allowed = consent?.analytics === true;
+  useEffect(() => { syncAnalyticsConsent(); }, [allowed]);
   useEffect(() => {
-    initAnalytics();
-  }, []);
-
-  useEffect(() => {
-    trackPage(location.pathname + location.hash);
-  }, [location.pathname, location.hash]);
-
-  // Scroll depth tracking — resets automatically on route change
-  useScrollDepth();
-
+    if (allowed) trackPage(location.pathname + location.hash);
+  }, [allowed, location.pathname, location.hash]);
+  useScrollDepth(allowed);
   return null;
 }

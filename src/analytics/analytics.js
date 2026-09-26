@@ -1,18 +1,44 @@
-import ReactGA from "react-ga4";
+﻿import ReactGA from 'react-ga4';
+import { hasAnalyticsConsent, subscribeConsent } from '../privacy/consent';
 
-const MEASUREMENT_ID = "G-PW4BGPSXK3";
+export const MEASUREMENT_ID = 'G-PW4BGPSXK3';
 let initialized = false;
+export const canTrack = () => initialized && hasAnalyticsConsent();
 
-export const initAnalytics = () => {
+function clearAnalyticsCookies() {
+  const names = document.cookie.split(';').map(cookie => cookie.trim().split('=')[0]).filter(name => /^_ga(?:_|$)/.test(name));
+  const parts = location.hostname.split('.');
+  const domains = ['', ...parts.map((_, index) => parts.slice(index).join('.'))];
+  for (const name of names) for (const domain of domains) {
+    document.cookie = `${name}=; Max-Age=0; path=/;${domain ? ` domain=${domain};` : ''}`;
+  }
+}
+
+export function initAnalytics() {
+  if (!hasAnalyticsConsent()) return;
+  window[`ga-disable-${MEASUREMENT_ID}`] = false;
   if (initialized) return;
-  ReactGA.initialize(MEASUREMENT_ID);
+  ReactGA.initialize(MEASUREMENT_ID, { gtagOptions: {
+    send_page_view: false,
+    allow_google_signals: false,
+    allow_ad_personalization_signals: false,
+    page_location: location.origin + location.pathname,
+    page_referrer: document.referrer ? new URL(document.referrer).origin : '',
+  } });
   initialized = true;
-};
+}
+
+export function syncAnalyticsConsent() {
+  if (typeof window === 'undefined') return;
+  const allowed = hasAnalyticsConsent();
+  window[`ga-disable-${MEASUREMENT_ID}`] = !allowed;
+  if (allowed) initAnalytics();
+  else clearAnalyticsCookies();
+}
+// Synchronous revocation also protects events fired before React re-renders.
+subscribeConsent(syncAnalyticsConsent);
 
 export const trackPage = (path) => {
-  if (!initialized) return;
-  ReactGA.send({
-    hitType: "pageview",
-    page: path,
-  });
+  if (!canTrack()) return;
+  ReactGA.send({ hitType: 'pageview', page: path, location: location.origin + location.pathname });
 };

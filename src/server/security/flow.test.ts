@@ -32,11 +32,15 @@ describe('protected contact pipeline', () => {
     };
     const response = await handleMailRequest(request(kind === 'contact' ? '/api/contact' : '/api/project-brief', payload), kind);
     expect(response.status).toBe(200); expect(fetcher).toHaveBeenCalledOnce();
+    const { receipt } = await response.json();
+    expect(await (await handleVerification(request('/api/verify-contact', { receipt }))).json()).toEqual({ status: 'pending' });
+    expect(await (await handleVerification(request('/api/verify-contact', { token: receipt }))).json()).toEqual({ status: 'invalid' });
     expect(mocks.visitor.mock.calls[0][0]).toBe(contact.email);
     const link = new URL(mocks.visitor.mock.calls[0][2]); expect(link.origin).toBe(origin);
     const token = link.hash.slice(7);
     expect(await (await handleVerification(request('/api/verify-contact', { token }))).json()).toEqual({ status: 'verified' });
     expect(await (await handleVerification(request('/api/verify-contact', { token }))).json()).toEqual({ status: 'already_verified' });
+    expect(await (await handleVerification(request('/api/verify-contact', { receipt }))).json()).toEqual({ status: 'verified' });
     expect(kind === 'contact' ? mocks.contact : mocks.brief).toHaveBeenCalledOnce();
     const output = JSON.stringify(logs.mock.calls);
     for (const privateValue of [contact.email, contact.message, token, 'private-token-fixture', 'private-test-fixture']) expect(output).not.toContain(privateValue);
@@ -44,7 +48,7 @@ describe('protected contact pipeline', () => {
   });
   it('sends only verification first, ignores duplicates, and notifies Henry after confirmation once', async () => {
     const response = await handleMailRequest(post(contact), 'contact'); expect(response.status).toBe(200);
-    expect(await response.json()).toEqual({ ok: true, status: 'pending_verification' });
+    expect(await response.json()).toEqual({ ok: true, status: 'pending_verification', receipt: expect.stringMatching(/^[A-Za-z0-9_-]{43}$/), expiresAt: expect.any(Number) });
     expect(mocks.visitor).toHaveBeenCalledOnce(); expect(mocks.contact).not.toHaveBeenCalled();
     expect((await handleMailRequest(post(contact), 'contact')).status).toBe(409); expect(mocks.visitor).toHaveBeenCalledOnce();
     const token = new URL(mocks.visitor.mock.calls[0][2]).hash.slice(7);

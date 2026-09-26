@@ -185,7 +185,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
   const nextStep = () => { if (!focusInvalid(briefSteps[currentStep - 1])) setCurrentStep(prev => Math.min(prev + 1, 4)); };
   const prevStep = () => setCurrentStep(prev => Math.max(prev - 1, 1));
 
-  if (!isOpen) return <DeliveryStatus state={delivery} language={i18n.language} />;
+  if (!isOpen) return <DeliveryStatus kind="brief" state={delivery} language={i18n.language} />;
 
   // Classes conditionnelles basées sur le thème
   const bgModal = isDark ? 'bg-slate-900' : 'bg-white';
@@ -241,7 +241,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
 
         {/* Content */}
         <div ref={contentRef} className="min-h-0 flex-1 overflow-y-auto px-4 py-5 sm:p-6">
-          <DeliveryStatus state={delivery} language={i18n.language} />
+          <DeliveryStatus kind="brief" state={delivery} language={i18n.language} />
           {/* Étape 1: Informations personnelles */}
           {currentStep === 1 && (
             <div className="space-y-6">

@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { X, Send, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { sendQuoteEmail, validateQuoteForm, QuoteFormData } from '../services/emailService';
@@ -43,6 +43,31 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
   });
 
   // Détecter le thème au montage du composant
+  const resetForm = useCallback(() => {
+    setWebsite('');
+    setTurnstileToken('');
+    setCurrentStep(1);
+    setSubmitStatus('idle');
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      company: '',
+      projectType: '',
+      projectDescription: '',
+      features: [],
+      technologies: [],
+      timeline: '',
+      budget: '',
+      urgency: '',
+      hasDesign: false,
+      needsHosting: false,
+      needsMaintenance: false,
+      needsTraining: false,
+      additionalInfo: ''
+    });
+  }, []);
+
   useEffect(() => {
     const root = document.documentElement;
     setIsDark(root.classList.contains('dark'));
@@ -57,6 +82,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
 
   useEffect(() => {
     if (!isOpen) {
+      resetForm();
       return;
     }
 
@@ -85,7 +111,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
       document.removeEventListener('keydown', onKeyDown);
       previousFocus?.focus();
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, resetForm]);
 
   useEffect(() => {
     contentRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
@@ -127,10 +153,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
       const success = await sendQuoteEmail(formData, { website, turnstileToken });
       if (success) {
         setSubmitStatus('success');
-        setTimeout(() => {
-          onClose();
-          resetForm();
-        }, 2000);
+
       } else {
         setSubmitStatus('error');
       }
@@ -141,29 +164,6 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
       setIsSubmitting(false);
       setSecurityReset(value => value + 1);
     }
-  };
-
-  const resetForm = () => {
-    setCurrentStep(1);
-    setSubmitStatus('idle');
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      company: '',
-      projectType: '',
-      projectDescription: '',
-      features: [],
-      technologies: [],
-      timeline: '',
-      budget: '',
-      urgency: '',
-      hasDesign: false,
-      needsHosting: false,
-      needsMaintenance: false,
-      needsTraining: false,
-      additionalInfo: ''
-    });
   };
 
   const nextStep = () => setCurrentStep(prev => Math.min(prev + 1, 4));
@@ -556,4 +556,6 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
 };
 
 export default QuoteModal;
+
+
 

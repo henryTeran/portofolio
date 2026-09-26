@@ -16,6 +16,8 @@ describe('analytics consent gate', () => {
     expect(ReactGA.initialize).toHaveBeenCalledOnce();
     trackPage('/fr'); trackCTA('hero'); trackProjectClick('ZIGOMA'); trackScrollDepth(25); trackContactSubmit('contact_section');
     expect(ReactGA.send).toHaveBeenCalledOnce(); expect(ReactGA.event).toHaveBeenCalledTimes(4);
+    trackPage('/en/verify#token=private-token');
+    expect(ReactGA.send).toHaveBeenCalledOnce();
     document.cookie = '_ga=test; path=/';
     saveConsent(false); trackPage('/en'); trackCTA('hero');
     expect(ReactGA.send).toHaveBeenCalledOnce(); expect(ReactGA.event).toHaveBeenCalledTimes(4);

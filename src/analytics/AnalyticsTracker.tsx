@@ -8,10 +8,10 @@ export default function AnalyticsTracker() {
   const location = useLocation();
   const consent = useSyncExternalStore(subscribeConsent, getConsent, () => null);
   const allowed = consent?.analytics === true;
-  useEffect(() => { syncAnalyticsConsent(); }, [allowed]);
+  useEffect(() => { syncAnalyticsConsent(); }, [allowed, location.pathname]);
   useEffect(() => {
     if (allowed) trackPage(location.pathname + location.hash);
   }, [allowed, location.pathname, location.hash]);
-  useScrollDepth(allowed);
+  useScrollDepth(allowed && !location.pathname.endsWith('/verify'));
   return null;
 }

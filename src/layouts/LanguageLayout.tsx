@@ -5,6 +5,7 @@ import i18n from '../i18n';
 import HomePage from '../pages/HomePage';
 import ProjectRoutePage from '../pages/ProjectRoutePage';
 import PrivacyPage from '../pages/PrivacyPage';
+import VerifyPage from '../pages/VerifyPage';
 import {
   DEFAULT_LANGUAGE,
   getPreferredLanguage,
@@ -61,5 +62,6 @@ function ValidLanguageLayout({ currentLanguage, slug }: { currentLanguage: Langu
     }
   }, [currentLanguage, location.hash, location.pathname, location.search, navigate]);
 
+  if (location.pathname === `/${currentLanguage}/verify`) return <VerifyPage language={currentLanguage} />;
   return location.pathname === `/${currentLanguage}/privacy` ? <PrivacyPage language={currentLanguage} /> : slug ? <ProjectRoutePage /> : <HomePage />;
 }

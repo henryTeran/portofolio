@@ -15,6 +15,7 @@ export default function AppRouter() {
         <Route path="/:lang" element={<LanguageLayout />} />
         <Route path="/:lang/projects/:slug" element={<LanguageLayout />} />
         <Route path="/:lang/privacy" element={<LanguageLayout />} />
+        <Route path="/:lang/verify" element={<LanguageLayout />} />
         <Route path="*" element={<RootLanguageRedirect />} />
       </Routes>
     </Suspense>

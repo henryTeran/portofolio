@@ -202,7 +202,7 @@
       "messagePlaceholder": "Describe tu proyecto...",
       "submit": "Enviar mensaje",
       "submitting": "Enviando...",
-      "success": "¡Mensaje enviado con éxito! Te contactaré en 24h.",
+      "success": "Revisa tu correo para confirmar tu solicitud.",
       "error": "Error al enviar. Por favor, inténtalo de nuevo o contáctame directamente."
     },
     "quote": {
@@ -321,7 +321,7 @@
       "features": "Funcionalidades:",
       "selected": "seleccionadas",
       "technologies": "Tecnologías:",
-      "successMessage": "¡Solicitud enviada con éxito! Te contactaré en 24h.",
+      "successMessage": "Revisa tu correo para confirmar tu solicitud.",
       "errorMessage": "Error al enviar. Por favor, inténtalo de nuevo o contáctame directamente."
     },
     "buttons": {

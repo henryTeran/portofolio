@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+﻿import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
@@ -91,8 +91,9 @@ describe('Smoke tests', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(/message sent successfully|mensaje enviado con éxito|message envoyé avec succès/i)
+        screen.getByText(/check your inbox|confirmer votre demande|confirmar tu solicitud/i)
       ).toBeInTheDocument();
     });
   });
 });
+

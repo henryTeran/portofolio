@@ -202,7 +202,7 @@
       "messagePlaceholder": "Describe your project...",
       "submit": "Send message",
       "submitting": "Sending...",
-      "success": "Message sent successfully! I will get back to you within 24h.",
+      "success": "Check your inbox to confirm your request.",
       "error": "Error sending. Please try again or contact me directly."
     },
     "quote": {
@@ -321,7 +321,7 @@
       "features": "Features:",
       "selected": "selected",
       "technologies": "Technologies:",
-      "successMessage": "Request sent successfully! I will get back to you within 24h.",
+      "successMessage": "Check your inbox to confirm your request.",
       "errorMessage": "Error sending. Please try again or contact me directly."
     },
     "buttons": {

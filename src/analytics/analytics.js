@@ -3,7 +3,7 @@ import { hasAnalyticsConsent, subscribeConsent } from '../privacy/consent';
 
 export const MEASUREMENT_ID = 'G-PW4BGPSXK3';
 let initialized = false;
-export const canTrack = () => initialized && hasAnalyticsConsent();
+export const canTrack = () => initialized && hasAnalyticsConsent() && !location.pathname.endsWith('/verify');
 
 function clearAnalyticsCookies() {
   const names = document.cookie.split(';').map(cookie => cookie.trim().split('=')[0]).filter(name => /^_ga(?:_|$)/.test(name));
@@ -15,7 +15,7 @@ function clearAnalyticsCookies() {
 }
 
 export function initAnalytics() {
-  if (!hasAnalyticsConsent()) return;
+  if (!hasAnalyticsConsent() || location.pathname.endsWith('/verify')) return;
   window[`ga-disable-${MEASUREMENT_ID}`] = false;
   if (initialized) return;
   ReactGA.initialize(MEASUREMENT_ID, { gtagOptions: {
@@ -39,6 +39,6 @@ export function syncAnalyticsConsent() {
 subscribeConsent(syncAnalyticsConsent);
 
 export const trackPage = (path) => {
-  if (!canTrack()) return;
+  if (!canTrack() || /\/verify(?:[?#]|$)/.test(path)) return;
   ReactGA.send({ hitType: 'pageview', page: path, location: location.origin + location.pathname });
 };

@@ -1,4 +1,6 @@
-﻿import type { PortfolioLanguage } from '../../types/portfolio';
+import { limits, minimums } from '../../forms/validation';
+import { PublicFormError } from '../../forms/apiErrors';
+import type { PortfolioLanguage } from '../../types/portfolio';
 import type { ContactMessage, ProjectBriefMessage } from './types';
 import { normalizeEmail } from '../security/email';
 
@@ -6,7 +8,7 @@ type Payload = Record<string, unknown>;
 const readText = (data: Payload, key: string, max: number, required = false): string => {
   const value = data[key];
   if (value === undefined && !required) return '';
-  if (typeof value !== 'string' || value.length > max || (required && !value.trim())) throw new Error('Invalid request');
+  if (typeof value !== 'string' || value.trim().length > max || (required && !value.trim())) throw new Error('Invalid request');
   return value.trim();
 };
 const language = (data: Payload): PortfolioLanguage => {
@@ -18,7 +20,9 @@ const assertKeys = (data: Payload, keys: string[]) => {
 };
 const identity = (data: Payload) => {
   const name = readText(data, 'name', 120, true);
-  const email = normalizeEmail(readText(data, 'email', 254, true));
+  let email: string;
+  try { email = normalizeEmail(readText(data, 'email', limits.email, true)); }
+  catch { throw new PublicFormError('invalid_email'); }
   if (name.length < 2) throw new Error('Invalid request');
   return { name, email, language: language(data), submittedAt: new Date().toISOString() };
 };
@@ -36,16 +40,16 @@ const bool = (data: Payload, key: string): boolean => {
 export function validateContact(data: Payload): ContactMessage {
   assertKeys(data, ['name', 'email', 'message', 'intent', 'language', 'website', 'turnstileToken']);
   if (readText(data, 'website', 100)) throw new Error('Spam');
-  const message = readText(data, 'message', 5000, true);
-  if (message.length < 10) throw new Error('Invalid request');
+  const message = readText(data, 'message', limits.message, true);
+  if (message.length < minimums.message) throw new PublicFormError('message_too_short');
   return { ...identity(data), message, intent: readText(data, 'intent', 100) };
 }
 
 export function validateBrief(data: Payload): ProjectBriefMessage {
   assertKeys(data, ['name', 'email', 'phone', 'company', 'projectType', 'projectDescription', 'features', 'technologies', 'timeline', 'budget', 'urgency', 'hasDesign', 'needsHosting', 'needsMaintenance', 'needsTraining', 'additionalInfo', 'language', 'website', 'turnstileToken']);
   if (readText(data, 'website', 100)) throw new Error('Spam');
-  const projectDescription = readText(data, 'projectDescription', 10000, true);
-  if (projectDescription.length < 20) throw new Error('Invalid request');
+  const projectDescription = readText(data, 'projectDescription', limits.projectDescription, true);
+  if (projectDescription.length < minimums.projectDescription) throw new PublicFormError('description_too_short');
   return {
     ...identity(data), phone: readText(data, 'phone', 50), company: readText(data, 'company', 150),
     projectType: readText(data, 'projectType', 100, true), projectDescription,

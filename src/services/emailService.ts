@@ -1,3 +1,5 @@
+import { briefSteps, contactFields, invalidFields } from '../forms/validation';
+import { apiCode, type ApiCode } from '../forms/apiErrors';
 import i18next from 'i18next';
 import type { ProjectBriefData, PortfolioLanguage } from '../types/portfolio';
 
@@ -15,40 +17,35 @@ const currentLanguage = (): PortfolioLanguage => {
   return language === 'fr' || language === 'es' ? language : 'en';
 };
 
-async function submit(path: string, data: Record<string, unknown>): Promise<boolean> {
+async function submit(path: string, data: Record<string, unknown>, onError?: (code: ApiCode) => void): Promise<boolean> {
   try {
     const response = await fetch(path, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...data, language: currentLanguage() }),
     });
+    if (!response.ok) {
+      const body = await response.json().catch(() => null);
+      onError?.(apiCode(body?.code));
+    }
     return response.ok;
   } catch {
+    onError?.('server_error');
     return false;
   }
 }
 
-export const sendContactEmail = (formData: ContactFormData, protection: FormProtection = {}): Promise<boolean> =>
-  submit('/api/contact', { ...formData, ...protection });
+export const sendContactEmail = (formData: ContactFormData, protection: FormProtection = {}, onError?: (code: ApiCode) => void): Promise<boolean> =>
+  submit('/api/contact', { ...formData, ...protection }, onError);
 
-export const sendQuoteEmail = (formData: QuoteFormData, protection: FormProtection = {}): Promise<boolean> =>
-  submit('/api/project-brief', { ...formData, ...protection });
+export const sendQuoteEmail = (formData: QuoteFormData, protection: FormProtection = {}, onError?: (code: ApiCode) => void): Promise<boolean> =>
+  submit('/api/project-brief', { ...formData, ...protection }, onError);
 
-export const validateContactForm = (formData: ContactFormData): { isValid: boolean; errors: string[] } => {
-  const errors: string[] = [];
-  if (!formData.name || formData.name.trim().length < 2) errors.push('Invalid name');
-  if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) errors.push('Invalid email');
-  if (!formData.message || formData.message.trim().length < 10) errors.push('Invalid message');
+export const validateContactForm = (formData: ContactFormData) => {
+  const errors = invalidFields(formData, contactFields);
   return { isValid: errors.length === 0, errors };
 };
-
-export const validateQuoteForm = (formData: QuoteFormData): { isValid: boolean; errors: string[] } => {
-  const errors: string[] = [];
-  if (!formData.name || formData.name.trim().length < 2) errors.push('Invalid name');
-  if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) errors.push('Invalid email');
-  if (!formData.projectType) errors.push('Invalid project type');
-  if (!formData.projectDescription || formData.projectDescription.trim().length < 20) errors.push('Invalid description');
-  if (!formData.timeline) errors.push('Invalid timeline');
-  if (!formData.budget) errors.push('Invalid budget');
+export const validateQuoteForm = (formData: QuoteFormData) => {
+  const errors = invalidFields(formData, briefSteps.flat());
   return { isValid: errors.length === 0, errors };
 };

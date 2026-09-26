@@ -1,3 +1,4 @@
+import { PublicFormError } from '../../forms/apiErrors';
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
 import type { ContactMessage, MailService, ProjectBriefMessage } from '../mail/types';
 import { createMailService } from '../mail/mailer';
@@ -22,14 +23,16 @@ export async function beginVerification(message: ContactMessage | ProjectBriefMe
   const hash = tokenHash(token);
   const expiresAt = Date.now() + VERIFICATION_TTL * 1000;
   const pending = { id: randomUUID(), email: message.email, type: kind, payload: message, tokenHash: hash, createdAt: new Date().toISOString(), expiresAt };
+  let sendingEmail = false;
   try {
     await store.set(`pending:${hash}`, JSON.stringify(pending), VERIFICATION_TTL);
     await store.set(`verification:${hash}`, JSON.stringify({ status: 'pending', expiresAt } satisfies Marker), STATUS_TTL);
     // Fragment keeps the token out of server URL logs and HTTP referrers.
+    sendingEmail = true;
     await mailer.sendVerificationEmail(message.email, message.language, `${origin}/${message.language}/verify#token=${token}`);
   } catch {
     await Promise.allSettled([store.delete(`pending:${hash}`), store.delete(`verification:${hash}`), store.delete(duplicateKey(message, kind))]);
-    throw new Error('Unable to process request');
+    throw new PublicFormError(sendingEmail ? 'smtp_error' : 'server_error');
   }
 }
 

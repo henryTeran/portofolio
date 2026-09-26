@@ -1,4 +1,5 @@
-﻿import { beginVerification } from '../security/verification';
+import { PublicFormError } from '../../forms/apiErrors';
+import { beginVerification } from '../security/verification';
 import { validateBrief, validateContact } from './validation';
 import { verifyTurnstile } from '../security/turnstile';
 import { allowSubmission } from '../security/rateLimit';
@@ -7,7 +8,7 @@ import { abuseScore, messageText, reserveSubmission } from '../security/abuse';
 
 export async function handleMailRequest(request: Request, kind: 'contact' | 'brief'): Promise<Response> {
   if (request.method !== 'POST') return Response.json({ error: 'Method not allowed' }, { status: 405, headers: { Allow: 'POST' } });
-  if (!request.headers.get('content-type')?.startsWith('application/json')) return Response.json({ error: 'Invalid request' }, { status: 415 });
+  if (!request.headers.get('content-type')?.startsWith('application/json')) return Response.json({ code: 'invalid_input' }, { status: 415 });
   const origin = request.headers.get('origin');
   if (origin) {
     try {
@@ -17,11 +18,11 @@ export async function handleMailRequest(request: Request, kind: 'contact' | 'bri
         destination.hostname === 'localhost' && destination.port === '3000';
       if (source.host !== destination.host && !localViteProxy) throw new Error('Cross-origin request');
     } catch {
-      return Response.json({ error: 'Invalid request' }, { status: 403 });
+      return Response.json({ code: 'invalid_input' }, { status: 403 });
     }
   }
   const body = await request.text();
-  if (body.length > 20000) return Response.json({ error: 'Invalid request' }, { status: 413 });
+  if (body.length > 20000) return Response.json({ code: 'invalid_input' }, { status: 413 });
   let message;
   let token: unknown;
   try {
@@ -30,19 +31,21 @@ export async function handleMailRequest(request: Request, kind: 'contact' | 'bri
     if ('website' in data && typeof data.website === 'string' && data.website.trim()) return Response.json({ ok: true, status: 'pending_verification' }, { status: 200, headers: { 'Cache-Control': 'no-store' } });
     token = (data as Record<string, unknown>).turnstileToken;
     message = kind === 'contact' ? validateContact(data as Record<string, unknown>) : validateBrief(data as Record<string, unknown>);
-  } catch {
-    return Response.json({ error: 'Invalid request' }, { status: 400 });
+  } catch (error) {
+    return Response.json({ code: error instanceof PublicFormError ? error.code : 'invalid_input' }, { status: 400 });
   }
+  let checkingSecurity = true;
   try {
-    if (!await verifyTurnstile(token, kind)) return Response.json({ error: 'Unable to process request' }, { status: 403 });
-    if (!await allowSubmission(request, kind)) return Response.json({ error: 'Please try again later' }, { status: 429 });
-    if (await emailDomainStatus(message.email) === 'invalid') return Response.json({ error: 'Unable to process request' }, { status: 400 });
-    if (abuseScore(messageText(message)) >= 5) return Response.json({ error: 'Unable to process request' }, { status: 400 });
-    if (!await reserveSubmission(message, kind)) return Response.json({ ok: true, status: 'pending_verification' }, { status: 200, headers: { 'Cache-Control': 'no-store' } });
+    if (!await verifyTurnstile(token, kind)) return Response.json({ code: 'turnstile_failed' }, { status: 403 });
+    checkingSecurity = false;
+    if (!await allowSubmission(request, kind)) return Response.json({ code: 'rate_limited' }, { status: 429 });
+    if (await emailDomainStatus(message.email) === 'invalid') return Response.json({ code: 'invalid_domain' }, { status: 400 });
+    if (abuseScore(messageText(message)) >= 5) return Response.json({ code: 'abusive_content' }, { status: 400 });
+    if (!await reserveSubmission(message, kind)) return Response.json({ code: 'duplicate_request' }, { status: 409, headers: { 'Cache-Control': 'no-store' } });
     await beginVerification(message, kind);
     return Response.json({ ok: true, status: 'pending_verification' }, { status: 200, headers: { 'Cache-Control': 'no-store' } });
-  } catch {
-    return Response.json({ error: 'Unable to send message' }, { status: 503 });
+  } catch (error) {
+    return Response.json({ code: checkingSecurity ? 'turnstile_unavailable' : error instanceof PublicFormError ? error.code : 'server_error' }, { status: 503 });
   }
 }
 

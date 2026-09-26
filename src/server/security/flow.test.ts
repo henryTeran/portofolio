@@ -19,7 +19,7 @@ describe('protected contact pipeline', () => {
     const response = await handleMailRequest(post(contact), 'contact'); expect(response.status).toBe(200);
     expect(await response.json()).toEqual({ ok: true, status: 'pending_verification' });
     expect(mocks.visitor).toHaveBeenCalledOnce(); expect(mocks.contact).not.toHaveBeenCalled();
-    expect((await handleMailRequest(post(contact), 'contact')).status).toBe(200); expect(mocks.visitor).toHaveBeenCalledOnce();
+    expect((await handleMailRequest(post(contact), 'contact')).status).toBe(409); expect(mocks.visitor).toHaveBeenCalledOnce();
     const token = new URL(mocks.visitor.mock.calls[0][2]).hash.slice(7);
     expect((await handleVerification(new Request('http://localhost:3000/api/verify-contact?token=' + token))).status).toBe(405);
     expect(mocks.contact).not.toHaveBeenCalled();
@@ -33,14 +33,14 @@ describe('protected contact pipeline', () => {
     expect(mocks.visitor).not.toHaveBeenCalled();
     vi.stubEnv('TURNSTILE_SECRET_KEY', '');
     expect((await handleMailRequest(post({ ...contact, turnstileToken: '' }), 'contact')).status).toBe(503);
-    expect((await handleMailRequest(post({ ...contact, message: 'connard connard connard' }), 'contact')).status).toBe(400);
+    expect((await handleMailRequest(post({ ...contact, message: 'connard connard connard about this project' }), 'contact')).status).toBe(400);
     expect(mocks.visitor).not.toHaveBeenCalled();
     for (let i = 0; i < 4; i++) await handleMailRequest(post(contact), 'contact');
     expect((await handleMailRequest(post(contact), 'contact')).status).toBe(429);
     expect(mocks.contact).not.toHaveBeenCalled(); expect(mocks.visitor).toHaveBeenCalledOnce();
   });
   it('protects Project Brief identically', async () => {
-    const brief = { name: 'Visitor', email: 'visitor@example.com', language: 'es', turnstileToken: 'development-only', projectType: 'Web', projectDescription: 'A detailed business application request', features: [], technologies: [], timeline: '3 months', budget: '10k' };
+    const brief = { name: 'Visitor', email: 'visitor@example.com', language: 'es', turnstileToken: 'development-only', projectType: 'Web', projectDescription: 'A detailed business application request with a customer dashboard', features: [], technologies: [], timeline: '3 months', budget: '10k' };
     expect((await handleMailRequest(post(brief, '/api/project-brief'), 'brief')).status).toBe(200);
     expect(mocks.brief).not.toHaveBeenCalled();
     const token = new URL(mocks.visitor.mock.calls[0][2]).hash.slice(7);

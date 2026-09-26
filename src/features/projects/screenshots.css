@@ -21,4 +21,5 @@
 .screenshot-gallery figcaption strong { display: block; color: var(--v2-text); margin-bottom: .25rem; }
 @keyframes screenshot-enter { from { opacity: .3; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 @media (max-width: 640px) { .screenshot-gallery { grid-template-columns: minmax(0, 1fr); } }
+@media (min-width: 1024px) { .screenshot-preview .screenshot-device--desktop { transform: perspective(1600px) rotateY(-1deg); } }
 @media (prefers-reduced-motion: reduce) { .screenshot-viewport img { animation: none; } }

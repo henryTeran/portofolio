@@ -7,6 +7,8 @@ import { getProjectCopy } from '../../content/projects';
 import { caseStudyLabels } from '../../content/case-studies/labels';
 import { sectionPath } from '../../router/paths';
 import ProjectPreview from '../projects/ProjectPreview';
+import ScreenshotGallery from '../projects/ScreenshotGallery';
+import { screenshotLabels } from '../projects/screenshotLabels';
 import ArchitectureDiagram from './ArchitectureDiagram';
 import CaseStudyNavigation from './CaseStudyNavigation';
 import CaseStudySection from './CaseStudySection';
@@ -23,13 +25,14 @@ export default function CaseStudyPage({ project, language, narrative }: { projec
       <Link to={sectionPath(language, 'work')} className="inline-flex min-h-11 items-center gap-2 text-sm text-[var(--v2-accent)] hover:underline focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]"><ArrowLeft size={16} aria-hidden="true" />{labels.back}</Link>
       <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_.9fr] lg:items-end lg:gap-16">
         <div><p className="text-xs font-semibold uppercase tracking-[.22em] text-[var(--v2-accent)]">{copy?.category}</p><h1 className="mt-5 font-display text-[clamp(3.6rem,7vw,7rem)] font-semibold leading-none tracking-[-.06em]">{project.title}</h1><p className="mt-6 text-2xl font-medium leading-tight sm:text-3xl">{copy?.tagline}</p><p className="mt-5 max-w-2xl text-lg leading-relaxed text-[var(--v2-text-secondary)]">{copy?.summary}</p></div>
-        <div><ProjectPreview project={project} label={labels.illustrative} /></div>
+        <div><ProjectPreview project={project} label={labels.illustrative} eager /></div>
       </div>
       <div className="mt-12 flex flex-wrap gap-x-10 gap-y-4 border-t border-[var(--v2-border)] py-6 text-sm"><div><span className="text-[var(--v2-text-secondary)]">{labels.period}</span><span className="ml-3 font-medium">{project.period}</span></div><div><span className="text-[var(--v2-text-secondary)]">{labels.role}</span><span className="ml-3 font-medium">{(narrative?.roles ?? project.role).join(' · ')}</span></div></div>
       {narrative?.context && section(labels.context, <p>{narrative.context}</p>)}
       {narrative?.businessProblem && section(labels.problem, <p>{narrative.businessProblem}</p>)}
       {narrative?.roles && section(labels.role, list(narrative.roles))}
       {narrative?.solution && section(labels.solution, <p>{narrative.solution}</p>)}
+      {!!project.visuals?.length && section(screenshotLabels[language], <ScreenshotGallery project={project} language={language} />)}
       {narrative?.architecture && section(labels.architecture, <><p className="mb-7">{narrative.architecture.summary}</p><ArchitectureDiagram layers={narrative.architecture.layers} label={labels.architecture} /></>)}
       {narrative?.aiLayer && section(labels.ai, <><p className="mb-7">{narrative.aiLayer.summary}</p>{list(narrative.aiLayer.capabilities)}</>)}
       {narrative?.challenges?.length ? section(labels.challenges, <div className="grid gap-6 sm:grid-cols-2">{narrative.challenges.map((challenge) => <div key={challenge.title}><h3 className="font-semibold text-[var(--v2-text)]">{challenge.title}</h3><p className="mt-2 text-sm leading-relaxed">{challenge.detail}</p></div>)}</div>) : null}

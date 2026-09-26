@@ -1,0 +1,16 @@
+/* Personal hero: restrained depth, no continuous animation. */
+.hero-section { position:relative; background-image:radial-gradient(ellipse at 85% 25%,color-mix(in srgb,var(--accent-blue) 9%,transparent),transparent 58%),radial-gradient(ellipse at 8% 5%,color-mix(in srgb,var(--accent-cyan) 8%,transparent),transparent 55%); }
+.hero-portrait { position:relative; width:100%; max-width:460px; margin:1.5rem auto; padding:1rem; isolation:isolate; }
+.hero-photo-frame { position:relative; overflow:hidden; border:1px solid var(--v2-border); border-radius:7rem 1.5rem 1.5rem 1.5rem; box-shadow:var(--v2-shadow); background:var(--v2-surface); }
+.hero-photo { display:block; width:100%; height:auto; aspect-ratio:1; object-fit:cover; }
+.hero-photo-frame figcaption { display:flex; justify-content:space-between; gap:1rem; padding:1.25rem; font-size:.8rem; color:var(--v2-text-secondary); }
+.hero-photo-frame figcaption span:first-child { font-weight:600; color:var(--v2-text); }
+.hero-orbit { position:absolute; inset:-1rem; z-index:-1; border:1px solid color-mix(in srgb,var(--accent-blue) 25%,transparent); border-radius:8rem 2rem; transform:rotate(5deg); background:radial-gradient(ellipse at 80% 10%,color-mix(in srgb,var(--accent-cyan) 18%,transparent),transparent 65%); }
+.hero-orbit span { position:absolute; width:8px; height:8px; border-radius:50%; background:var(--accent-blue); left:10%; top:12%; }
+.hero-orbit span:nth-child(2) { left:96%; top:50%; background:var(--accent-cyan); }
+.hero-orbit span:nth-child(3) { left:18%; top:98%; background:var(--accent-violet); }
+.hero-badge { position:absolute; padding:.65rem .9rem; border:1px solid var(--v2-border); border-radius:.8rem; background:var(--v2-surface); color:var(--v2-text); font-size:.75rem; font-weight:600; box-shadow:var(--v2-shadow); }
+.hero-badge--top { right:0; top:0; }.hero-badge--top span { color:var(--ink-blue); margin-left:1rem; }
+.hero-badge--bottom { bottom:-.5rem; left:0; border-left:3px solid var(--accent-cyan); }
+@media(prefers-reduced-motion:no-preference) { .hero-portrait { animation:portrait-arrive .65s ease-out both; } @keyframes portrait-arrive { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } } }
+@media(max-width:767px) { .hero-portrait { max-width:320px; margin-top:0; }.hero-photo-frame { border-top-left-radius:4rem; }.hero-photo-frame figcaption { padding:1rem; font-size:.7rem; }.hero-badge { font-size:.65rem; }.hero-orbit { inset:0; } }

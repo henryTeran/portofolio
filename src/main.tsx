@@ -6,6 +6,7 @@ import App from './App.tsx';
 import AnalyticsTracker from './analytics/AnalyticsTracker';
 import './i18n';
 import './styles/theme.css';
+import './styles/identity.css';
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(

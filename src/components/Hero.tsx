@@ -1,4 +1,4 @@
-import { ArrowDownRight, ArrowUpRight, Check, MapPin } from 'lucide-react';
+import { ArrowDownRight, ArrowUpRight, MapPin } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { DEFAULT_LANGUAGE, isSupportedLanguage } from '../constants/i18n';
 import { heroCopy } from '../content/hero';
@@ -11,11 +11,11 @@ export default function Hero() {
   const copy = heroCopy[language];
 
   return (
-    <section id="home" className="overflow-hidden bg-[var(--v2-background)] text-[var(--v2-text)]">
-      <div className="mx-auto grid max-w-[var(--v2-content-width)] gap-14 px-5 pb-20 pt-20 sm:px-8 sm:pt-24 lg:min-h-[740px] lg:grid-cols-[minmax(0,1.15fr)_minmax(360px,.85fr)] lg:items-center lg:gap-10 lg:pb-28 lg:pt-28">
+    <section id="home" className="hero-section overflow-hidden bg-[var(--v2-background)] text-[var(--v2-text)]">
+      <div className="mx-auto grid max-w-[var(--v2-content-width)] gap-14 px-5 pb-20 pt-20 sm:px-8 sm:pt-24 lg:min-h-[740px] lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,.85fr)] lg:items-center lg:gap-10 lg:pb-28 lg:pt-28">
         <div className="max-w-3xl">
           <p className="mb-7 text-xs font-semibold tracking-[.22em] text-[var(--v2-accent)] sm:text-sm">{copy.eyebrow}</p>
-          <h1 className="font-display text-[clamp(2.9rem,5.4vw,5.9rem)] font-semibold leading-[1.05] tracking-[-.055em]">
+          <h1 className="font-display text-[clamp(2.65rem,4.6vw,5.1rem)] font-semibold leading-[1.05] tracking-[-.055em]">
             {copy.lineOne}<span className="block text-[var(--v2-accent)]">{copy.lineTwo}</span>
           </h1>
           <p className="mt-7 text-base font-semibold tracking-wide sm:text-lg">Senior Full-Stack Developer &amp; Applied AI Engineer</p>
@@ -31,25 +31,15 @@ export default function Hero() {
             <a href="https://linkedin.com/in/henry-teran" onClick={() => trackCTA('hero_linkedin')} target="_blank" rel="noreferrer" className="hover:text-[var(--v2-text)]">LinkedIn</a>
           </div>
         </div>
-        <div className="relative min-w-0" aria-label={copy.system}>
-          <div className="rounded-2xl border border-[var(--v2-border)] bg-[var(--v2-surface)] p-4 shadow-[0_30px_90px_rgba(0,0,0,.16)] sm:p-6">
-            <div className="flex items-center justify-between border-b border-[var(--v2-border)] pb-5">
-              <div><p className="text-xs font-semibold uppercase tracking-[.2em] text-[var(--v2-accent)]">Henry Teran / 01</p><p className="mt-2 text-lg font-semibold">{copy.system}</p></div>
-              <span className="rounded-full border border-[var(--v2-border)] px-3 py-1 text-xs text-[var(--v2-text-secondary)]">LIVE SYSTEM</span>
-            </div>
-            <div className="space-y-3 py-6">
-              {[copy.input, copy.logic, copy.intelligence, copy.output].map((label, index) => (
-                <div key={label} className="flex items-center gap-4">
-                  <span className="w-7 text-xs font-mono text-[var(--v2-text-secondary)]">0{index + 1}</span>
-                  <div className={`flex min-h-14 flex-1 items-center justify-between rounded-lg border px-4 ${index === 2 ? 'border-[var(--v2-accent)] bg-[var(--v2-surface-raised)]' : 'border-[var(--v2-border)]'}`}>
-                    <span className="font-medium">{label}</span><span className="h-1.5 w-1.5 rounded-full bg-[var(--v2-accent)]" />
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="flex items-center gap-2 border-t border-[var(--v2-border)] pt-4 text-sm text-[var(--v2-text-secondary)]"><Check size={17} className="text-[var(--v2-accent)]" aria-hidden="true" />{copy.validated}</div>
+        <figure className="hero-portrait">
+          <div className="hero-orbit" aria-hidden="true"><span /><span /><span /></div>
+          <div className="hero-photo-frame">
+            <img src="/henry-portrait.webp" width="800" height="800" alt="Henry Teran" fetchPriority="high" decoding="async" className="hero-photo" />
+            <figcaption><span>Henry Teran</span><span>{copy.location}</span></figcaption>
           </div>
-        </div>
+          <div className="hero-badge hero-badge--top">Applied AI <span aria-hidden="true">?</span></div>
+          <div className="hero-badge hero-badge--bottom">Full-Stack ? Product Engineering</div>
+        </figure>
       </div>
     </section>
   );

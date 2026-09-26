@@ -1,4 +1,4 @@
-﻿/**
+/**
  * trackingEvents.js
  * Centralized GA4 event tracking helpers.
  * All functions are no-ops if analytics is not initialized (safe in SSR / test environments).
@@ -74,3 +74,6 @@ export const trackScrollDepth = (percent) => {
   trackEventSafely('scroll_depth', { percent });
 };
 
+
+export const trackProjectBriefSubmit = () => trackEventSafely('project_brief_submit');
+export const trackCaseStudyOpen = (slug) => trackEventSafely('case_study_open', { project_slug: slug });

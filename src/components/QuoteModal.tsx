@@ -1,3 +1,4 @@
+import { trackProjectBriefSubmit } from '../analytics/trackingEvents';
 import { briefSteps, fieldIssue, invalidFields, limits, type BriefField as Field } from '../forms/validation';
 import { apiErrorMessage, type ApiCode } from '../forms/apiErrors';
 import { formCopy } from '../forms/copy';
@@ -173,6 +174,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
     setSubmitStatus('idle');
     const success = await sendQuoteEmail(formData, { website, turnstileToken }, setErrorCode);
     setSubmitStatus(success ? 'success' : 'error');
+    if (success) trackProjectBriefSubmit();
     setIsSubmitting(false);
     setSecurityReset(value => value + 1);
   };

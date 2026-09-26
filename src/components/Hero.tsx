@@ -27,8 +27,8 @@ export default function Hero() {
           <div className="mt-12 flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-[var(--v2-border)] pt-5 text-sm text-[var(--v2-text-secondary)]">
             <span className="inline-flex items-center gap-1.5"><MapPin size={15} aria-hidden="true" />{copy.location}</span>
             <span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-[var(--v2-accent)]" />{copy.availability}</span>
-            <a href="https://github.com/henryTeran" target="_blank" rel="noreferrer" className="hover:text-[var(--v2-text)]">GitHub</a>
-            <a href="https://linkedin.com/in/henry-teran" target="_blank" rel="noreferrer" className="hover:text-[var(--v2-text)]">LinkedIn</a>
+            <a href="https://github.com/henryTeran" onClick={() => trackCTA('hero_github')} target="_blank" rel="noreferrer" className="hover:text-[var(--v2-text)]">GitHub</a>
+            <a href="https://linkedin.com/in/henry-teran" onClick={() => trackCTA('hero_linkedin')} target="_blank" rel="noreferrer" className="hover:text-[var(--v2-text)]">LinkedIn</a>
           </div>
         </div>
         <div className="relative min-w-0" aria-label={copy.system}>

@@ -1,3 +1,5 @@
+import SectionTransition from '../features/motion/SectionTransition';
+import { useSectionMotion } from '../features/motion/useSectionMotion';
 import { useParams } from 'react-router-dom';
 import JourneySection from '../features/journey/JourneySection';
 import Contact from '../components/Contact';
@@ -11,20 +13,26 @@ import { DEFAULT_LANGUAGE, isSupportedLanguage, type LanguageCode } from '../con
 import SeoHelmet from '../seo/SeoHelmet';
 
 export default function HomePage() {
+  const motionRef = useSectionMotion();
   const { lang = DEFAULT_LANGUAGE } = useParams();
 
   const language: LanguageCode = isSupportedLanguage(lang) ? lang : DEFAULT_LANGUAGE;
 
   return (
-    <div className="min-h-screen bg-app">
+    <div ref={motionRef} className="min-h-screen bg-app">
       <SeoHelmet language={language} page="landing" />
       <Header />
       <main>
         <Hero />
+        <SectionTransition />
         <SelectedWork />
+        <SectionTransition />
         <ExpertiseSection />
+        <SectionTransition />
         <PrinciplesSection />
+        <SectionTransition />
         <JourneySection />
+        <SectionTransition />
         <Contact />
       </main>
       <Footer />

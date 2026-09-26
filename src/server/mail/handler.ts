@@ -1,4 +1,4 @@
-import { createMailService } from './mailer';
+﻿import { beginVerification } from '../security/verification';
 import { validateBrief, validateContact } from './validation';
 import { verifyTurnstile } from '../security/turnstile';
 import { allowSubmission } from '../security/rateLimit';
@@ -27,7 +27,7 @@ export async function handleMailRequest(request: Request, kind: 'contact' | 'bri
   try {
     const data: unknown = JSON.parse(body);
     if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('Invalid request');
-    if ('website' in data && typeof data.website === 'string' && data.website.trim()) return Response.json({ ok: true }, { status: 200 });
+    if ('website' in data && typeof data.website === 'string' && data.website.trim()) return Response.json({ ok: true, status: 'pending_verification' }, { status: 200, headers: { 'Cache-Control': 'no-store' } });
     token = (data as Record<string, unknown>).turnstileToken;
     message = kind === 'contact' ? validateContact(data as Record<string, unknown>) : validateBrief(data as Record<string, unknown>);
   } catch {
@@ -38,12 +38,11 @@ export async function handleMailRequest(request: Request, kind: 'contact' | 'bri
     if (!await allowSubmission(request, kind)) return Response.json({ error: 'Please try again later' }, { status: 429 });
     if (await emailDomainStatus(message.email) === 'invalid') return Response.json({ error: 'Unable to process request' }, { status: 400 });
     if (abuseScore(messageText(message)) >= 5) return Response.json({ error: 'Unable to process request' }, { status: 400 });
-    if (!await reserveSubmission(message, kind)) return Response.json({ ok: true }, { status: 200 });
-    const mailer = createMailService();
-    if (kind === 'contact') await mailer.sendContactMessage(message as ReturnType<typeof validateContact>);
-    else await mailer.sendProjectBrief(message as ReturnType<typeof validateBrief>);
-    return Response.json({ ok: true }, { status: 200 });
+    if (!await reserveSubmission(message, kind)) return Response.json({ ok: true, status: 'pending_verification' }, { status: 200, headers: { 'Cache-Control': 'no-store' } });
+    await beginVerification(message, kind);
+    return Response.json({ ok: true, status: 'pending_verification' }, { status: 200, headers: { 'Cache-Control': 'no-store' } });
   } catch {
     return Response.json({ error: 'Unable to send message' }, { status: 503 });
   }
 }
+

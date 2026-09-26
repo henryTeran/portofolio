@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+﻿import { describe, expect, it, vi } from 'vitest';
 import { handleMailRequest } from './handler';
 
 vi.mock('./mailer', () => ({ createMailService: () => ({ sendContactMessage: vi.fn().mockResolvedValue(undefined), sendProjectBrief: vi.fn().mockResolvedValue(undefined) }) }));
@@ -6,6 +6,7 @@ vi.mock('../security/turnstile', () => ({ verifyTurnstile: vi.fn().mockResolvedV
 vi.mock('../security/rateLimit', () => ({ allowSubmission: vi.fn().mockResolvedValue(true) }));
 vi.mock('../security/email', async importOriginal => ({ ...await importOriginal<typeof import('../security/email')>(), emailDomainStatus: vi.fn().mockResolvedValue('valid') }));
 vi.mock('../security/abuse', async importOriginal => ({ ...await importOriginal<typeof import('../security/abuse')>(), reserveSubmission: vi.fn().mockResolvedValue(true) }));
+vi.mock('../security/verification', () => ({ beginVerification: vi.fn().mockResolvedValue(undefined) }));
 
 const request = (data: unknown, origin = 'https://henryteran.com') => new Request('https://henryteran.com/api/contact', {
   method: 'POST', headers: { 'content-type': 'application/json', origin }, body: JSON.stringify(data),
@@ -15,7 +16,7 @@ describe('public mail endpoint', () => {
   it('returns a neutral success for a filled honeypot in both forms', async () => {
     for (const kind of ['contact', 'brief'] as const) {
       const result = await handleMailRequest(request({ website: 'bot.example' }), kind);
-      expect(result.status).toBe(200); expect(await result.json()).toEqual({ ok: true });
+      expect(result.status).toBe(200); expect(await result.json()).toEqual({ ok: true, status: 'pending_verification' });
     }
   });
   it('accepts a valid contact message', async () => {
@@ -47,3 +48,4 @@ describe('public mail endpoint', () => {
     expect((await handleMailRequest(request({ ...brief, projectDescription: 'short' }), 'brief')).status).toBe(400);
   });
 });
+

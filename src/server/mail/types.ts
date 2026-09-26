@@ -21,6 +21,7 @@ export interface EmailContent {
 }
 
 export interface MailService {
+  sendVerificationEmail(email: string, language: PortfolioLanguage, url: string): Promise<void>;
   sendContactMessage(message: ContactMessage): Promise<void>;
   sendProjectBrief(message: ProjectBriefMessage): Promise<void>;
 }

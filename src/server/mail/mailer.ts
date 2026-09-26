@@ -4,12 +4,14 @@ import type { ContactMessage, MailService, ProjectBriefMessage } from './types';
 import { contactEmail } from './templates/contact-email';
 import { projectBriefEmail } from './templates/project-brief-email';
 import { acknowledgementEmail } from './templates/acknowledgement-email';
+import { verificationEmail } from './templates/verification-email';
 
 export function createMailService(): MailService {
   const config = getMailConfig();
   const transport = nodemailer.createTransport({
     host: config.host, port: config.port, secure: config.secure,
     auth: { user: config.user, pass: config.password },
+    connectionTimeout: 10000, greetingTimeout: 10000, socketTimeout: 15000,
   });
 
   async function deliver(message: ContactMessage | ProjectBriefMessage, kind: 'contact' | 'brief') {
@@ -25,6 +27,7 @@ export function createMailService(): MailService {
   }
 
   return {
+    sendVerificationEmail: async (email, language, url) => { await transport.sendMail({ from: config.from, to: email, ...verificationEmail(language, url) }); },
     sendContactMessage: (message) => deliver(message, 'contact'),
     sendProjectBrief: (message) => deliver(message, 'brief'),
   };

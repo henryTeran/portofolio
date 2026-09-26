@@ -17,7 +17,7 @@ export default function SeoHelmet({ language, page, projectSlug }: SeoHelmetProp
   const seo = project && projectCopy
     ? { title: `${project.title} — ${projectCopy.tagline} | Henry Teran`, description: projectCopy.summary }
     : SEO_CONFIG[page ?? 'landing'][language];
-  const pathSuffix = project ? `/projects/${project.slug}` : '';
+  const pathSuffix = project ? `/projects/${project.slug}` : page === 'privacy' ? '/privacy' : '';
   const canonical = `${siteUrl}/${language}${pathSuffix}`;
 
   return (

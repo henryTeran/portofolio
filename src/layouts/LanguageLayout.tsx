@@ -4,6 +4,7 @@ import { ensureLanguageResources } from '../i18n';
 import i18n from '../i18n';
 import HomePage from '../pages/HomePage';
 import ProjectRoutePage from '../pages/ProjectRoutePage';
+import PrivacyPage from '../pages/PrivacyPage';
 import {
   DEFAULT_LANGUAGE,
   getPreferredLanguage,
@@ -60,5 +61,5 @@ function ValidLanguageLayout({ currentLanguage, slug }: { currentLanguage: Langu
     }
   }, [currentLanguage, location.hash, location.pathname, location.search, navigate]);
 
-  return slug ? <ProjectRoutePage /> : <HomePage />;
+  return location.pathname === `/${currentLanguage}/privacy` ? <PrivacyPage language={currentLanguage} /> : slug ? <ProjectRoutePage /> : <HomePage />;
 }

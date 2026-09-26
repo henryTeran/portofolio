@@ -1,4 +1,4 @@
-import type { PortfolioLanguage } from '../../types/portfolio';
+﻿import type { PortfolioLanguage } from '../../types/portfolio';
 import type { ContactMessage, ProjectBriefMessage } from './types';
 
 type Payload = Record<string, unknown>;
@@ -34,7 +34,7 @@ const bool = (data: Payload, key: string): boolean => {
 };
 
 export function validateContact(data: Payload): ContactMessage {
-  assertKeys(data, ['name', 'email', 'message', 'intent', 'language', 'website']);
+  assertKeys(data, ['name', 'email', 'message', 'intent', 'language', 'website', 'turnstileToken']);
   if (readText(data, 'website', 100)) throw new Error('Spam');
   const message = readText(data, 'message', 5000, true);
   if (message.length < 10) throw new Error('Invalid request');
@@ -42,7 +42,7 @@ export function validateContact(data: Payload): ContactMessage {
 }
 
 export function validateBrief(data: Payload): ProjectBriefMessage {
-  assertKeys(data, ['name', 'email', 'phone', 'company', 'projectType', 'projectDescription', 'features', 'technologies', 'timeline', 'budget', 'urgency', 'hasDesign', 'needsHosting', 'needsMaintenance', 'needsTraining', 'additionalInfo', 'language', 'website']);
+  assertKeys(data, ['name', 'email', 'phone', 'company', 'projectType', 'projectDescription', 'features', 'technologies', 'timeline', 'budget', 'urgency', 'hasDesign', 'needsHosting', 'needsMaintenance', 'needsTraining', 'additionalInfo', 'language', 'website', 'turnstileToken']);
   if (readText(data, 'website', 100)) throw new Error('Spam');
   const projectDescription = readText(data, 'projectDescription', 10000, true);
   if (projectDescription.length < 20) throw new Error('Invalid request');
@@ -56,3 +56,4 @@ export function validateBrief(data: Payload): ProjectBriefMessage {
     needsTraining: bool(data, 'needsTraining'), additionalInfo: readText(data, 'additionalInfo', 5000),
   };
 }
+

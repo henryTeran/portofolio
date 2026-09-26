@@ -1,4 +1,4 @@
-import { useState, type FormEvent, type ChangeEvent } from 'react';
+﻿import { useState, type FormEvent, type ChangeEvent } from 'react';
 import { ArrowUpRight, Linkedin, Mail } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -8,6 +8,7 @@ import { sendContactEmail, validateContactForm, type ContactFormData } from '../
 import { trackContactSubmit, trackCTA } from '../analytics/trackingEvents';
 import QuoteModal from './QuoteModal';
 import FormDisclosure from '../privacy/FormDisclosure';
+import Turnstile from '../security/Turnstile';
 
 export default function Contact() {
   const { t } = useTranslation();
@@ -19,17 +20,21 @@ export default function Contact() {
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [form, setForm] = useState<ContactFormData>({ name: '', email: '', message: '' });
   const [website, setWebsite] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const [securityReset, setSecurityReset] = useState(0);
 
   const change = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
+    if (!turnstileToken) { setStatus('error'); return; }
     if (!validateContactForm(form).isValid) { setStatus('error'); return; }
     setSubmitting(true);
     setStatus('idle');
-    const sent = await sendContactEmail(form, { website });
+    const sent = await sendContactEmail(form, { website, turnstileToken });
     setSubmitting(false);
+    setSecurityReset(value => value + 1);
     setStatus(sent ? 'success' : 'error');
     if (sent) { trackContactSubmit('contact_section'); setForm({ name: '', email: '', message: '' }); }
   };
@@ -54,7 +59,8 @@ export default function Contact() {
             <div className="grid gap-5 sm:grid-cols-2"><div><label htmlFor="name" className="mb-2 block text-sm">{t('contact.form.name')}</label><input id="name" name="name" value={form.name} onChange={change} autoComplete="name" required minLength={2} maxLength={120} className="w-full rounded-lg border border-[var(--v2-border)] bg-[var(--v2-surface)] px-4 py-3 text-[var(--v2-text)] focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]" /></div><div><label htmlFor="email" className="mb-2 block text-sm">{t('contact.form.email')}</label><input id="email" name="email" type="email" value={form.email} onChange={change} autoComplete="email" required maxLength={254} className="w-full rounded-lg border border-[var(--v2-border)] bg-[var(--v2-surface)] px-4 py-3 text-[var(--v2-text)] focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]" /></div></div>
             <div><label htmlFor="message" className="mb-2 block text-sm">{t('contact.form.message')}</label><textarea id="message" name="message" value={form.message} onChange={change} required minLength={10} maxLength={5000} rows={5} className="w-full resize-y rounded-lg border border-[var(--v2-border)] bg-[var(--v2-surface)] px-4 py-3 text-[var(--v2-text)] focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]" /></div>
             <div className="sr-only" aria-hidden="true"><label htmlFor="website">Website</label><input id="website" name="website" value={website} onChange={(event) => setWebsite(event.target.value)} tabIndex={-1} autoComplete="off" /></div>
-            <button type="submit" disabled={submitting} className="inline-flex min-h-12 items-center gap-2 rounded-lg bg-[var(--v2-accent)] px-5 py-3 font-semibold text-[#07120f] disabled:opacity-60">{submitting ? t('contact.form.submitting') : t('contact.form.submit')}<ArrowUpRight size={17} aria-hidden="true" /></button>
+            <Turnstile action="contact" onToken={setTurnstileToken} resetKey={securityReset} />
+            <button type="submit" disabled={submitting || !turnstileToken} className="inline-flex min-h-12 items-center gap-2 rounded-lg bg-[var(--v2-accent)] px-5 py-3 font-semibold text-[#07120f] disabled:opacity-60">{submitting ? t('contact.form.submitting') : t('contact.form.submit')}<ArrowUpRight size={17} aria-hidden="true" /></button>
             <p role="status" aria-live="polite" className={`text-sm ${status === 'error' ? 'text-red-500' : 'text-[var(--v2-accent)]'}`}>{status === 'success' ? t('contact.form.success') : status === 'error' ? t('contact.form.error') : ''}</p>
             <FormDisclosure kind="contact" />
           </form>
@@ -67,3 +73,4 @@ export default function Contact() {
     </div>
   </section>;
 }
+

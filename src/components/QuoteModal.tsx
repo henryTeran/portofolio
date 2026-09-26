@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { sendQuoteEmail, validateQuoteForm, QuoteFormData } from '../services/emailService';
 import FormDisclosure from '../privacy/FormDisclosure';
+import Turnstile from '../security/Turnstile';
 
 interface QuoteModalProps {
   isOpen: boolean;
@@ -18,6 +19,8 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [website, setWebsite] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const [securityReset, setSecurityReset] = useState(0);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   
   const [formData, setFormData] = useState<QuoteFormData>({
@@ -109,6 +112,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
   };
 
   const handleSubmit = async () => {
+    if (!turnstileToken) { setSubmitStatus('error'); return; }
     const validation = validateQuoteForm(formData);
     if (!validation.isValid) {
       console.error('[Quote] Erreurs de validation:', validation.errors);
@@ -120,7 +124,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
     setSubmitStatus('idle');
 
     try {
-      const success = await sendQuoteEmail(formData, { website });
+      const success = await sendQuoteEmail(formData, { website, turnstileToken });
       if (success) {
         setSubmitStatus('success');
         setTimeout(() => {
@@ -135,6 +139,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
+      setSecurityReset(value => value + 1);
     }
   };
 
@@ -499,7 +504,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
           )}
         </div>
 
-        {currentStep === 4 && <div className="px-4 pb-5 sm:px-6"><FormDisclosure kind="brief" /></div>}
+        {currentStep === 4 && <div className="px-4 pb-5 sm:px-6"><Turnstile action="brief" onToken={setTurnstileToken} resetKey={securityReset} /><FormDisclosure kind="brief" /></div>}
         {/* Footer */}
         <div className="sr-only" aria-hidden="true"><label htmlFor="brief-website">Website</label><input id="brief-website" name="website" value={website} onChange={event => setWebsite(event.target.value)} tabIndex={-1} autoComplete="off" /></div>
         <div className={`sticky bottom-0 flex flex-col gap-3 border-t ${borderColor} ${bgModal} px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:p-6`}>
@@ -527,7 +532,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
             ) : (
               <button
                 onClick={handleSubmit}
-                disabled={isSubmitting || submitStatus === 'success'}
+                disabled={isSubmitting || !turnstileToken || submitStatus === 'success'}
                 className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-8 py-3 font-semibold text-white transition-colors hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:py-2"
               >
                 {isSubmitting ? (
@@ -551,3 +556,4 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
 };
 
 export default QuoteModal;
+

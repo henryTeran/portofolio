@@ -6,6 +6,10 @@ import { describe, expect, it, vi } from 'vitest';
 import i18n from '../i18n';
 import LanguageLayout from '../layouts/LanguageLayout';
 import Contact from '../components/Contact';
+vi.mock('../security/Turnstile', async () => {
+  const { useEffect } = await import('react');
+  return { default: ({ onToken }: { onToken: (token: string) => void }) => { useEffect(() => { onToken('test-token'); }, [onToken]); return null; } };
+});
 
 vi.mock('../services/emailService', () => ({
   sendContactEmail: vi.fn().mockResolvedValue(true),

@@ -1,5 +1,6 @@
 import { createMailService } from './mailer';
 import { validateBrief, validateContact } from './validation';
+import { verifyTurnstile } from '../security/turnstile';
 
 export async function handleMailRequest(request: Request, kind: 'contact' | 'brief'): Promise<Response> {
   if (request.method !== 'POST') return Response.json({ error: 'Method not allowed' }, { status: 405, headers: { Allow: 'POST' } });
@@ -19,15 +20,18 @@ export async function handleMailRequest(request: Request, kind: 'contact' | 'bri
   const body = await request.text();
   if (body.length > 20000) return Response.json({ error: 'Invalid request' }, { status: 413 });
   let message;
+  let token: unknown;
   try {
     const data: unknown = JSON.parse(body);
     if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('Invalid request');
     if ('website' in data && typeof data.website === 'string' && data.website.trim()) return Response.json({ ok: true }, { status: 200 });
+    token = (data as Record<string, unknown>).turnstileToken;
     message = kind === 'contact' ? validateContact(data as Record<string, unknown>) : validateBrief(data as Record<string, unknown>);
   } catch {
     return Response.json({ error: 'Invalid request' }, { status: 400 });
   }
   try {
+    if (!await verifyTurnstile(token, kind)) return Response.json({ error: 'Unable to process request' }, { status: 403 });
     const mailer = createMailService();
     if (kind === 'contact') await mailer.sendContactMessage(message as ReturnType<typeof validateContact>);
     else await mailer.sendProjectBrief(message as ReturnType<typeof validateBrief>);

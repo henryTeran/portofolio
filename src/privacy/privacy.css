@@ -1,0 +1,18 @@
+.privacy-banner,.privacy-dialog{background:var(--v2-surface);color:var(--v2-text);border:1px solid var(--v2-border);border-radius:1rem;padding:1.25rem;box-shadow:0 8px 40px #0003;font-size:.875rem;line-height:1.6}
+.privacy-banner{position:fixed;z-index:70;bottom:1rem;left:1rem;right:1rem;max-width:72rem;margin:auto;max-height:calc(100dvh - 2rem);overflow:auto;display:flex;gap:1.5rem;align-items:center}
+.privacy-banner h2,.privacy-dialog h2{font-size:1.1rem;font-weight:600;margin-bottom:.4rem}
+.privacy-banner p,.privacy-category p{color:var(--v2-text-secondary)}
+.privacy-actions{display:flex;flex-wrap:wrap;gap:.6rem;flex-shrink:0}
+.privacy-button{border:1px solid var(--v2-text-secondary);border-radius:.5rem;padding:.65rem .9rem;min-height:44px;background:var(--v2-surface);color:var(--v2-text);font-size:.875rem;font-weight:500;cursor:pointer}
+.privacy-button:hover{background:var(--v2-surface-raised)}
+.privacy-link{text-decoration:underline;text-underline-offset:3px;color:var(--v2-text)}
+.privacy-dialog{width:min(36rem,calc(100% - 2rem));max-height:calc(100dvh - 2rem);overflow:auto;margin:auto}
+.privacy-dialog::backdrop{background:#0009}
+.privacy-dialog-heading{display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.privacy-category{border-top:1px solid var(--v2-border);margin-top:1rem;padding-top:1rem}
+.privacy-category h3,.privacy-toggle{font-weight:600}
+.privacy-toggle{display:flex;gap:.75rem;align-items:center;min-height:44px}
+.privacy-toggle input{width:1.25rem;height:1.25rem;accent-color:var(--v2-text)}
+.privacy-dialog .privacy-actions{margin-top:1.5rem}
+@media(max-width:900px){.privacy-banner{display:block}.privacy-banner .privacy-actions{margin-top:1rem}}
+@media(max-width:430px){.privacy-actions{display:grid;grid-template-columns:1fr;width:100%}.privacy-banner .privacy-actions{grid-template-columns:repeat(3,minmax(0,1fr))}.privacy-banner .privacy-button{padding:.6rem .25rem;font-size:.8rem}}

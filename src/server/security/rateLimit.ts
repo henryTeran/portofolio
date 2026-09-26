@@ -1,6 +1,6 @@
 import { createHmac } from 'node:crypto';
 import { isIP } from 'node:net';
-import { localSecurityMode } from './config';
+import { localDevelopment, localSecurityMode } from './config';
 import { securityStore, type SecurityStore } from './store';
 export function privateFingerprint(value: string): string {
   const secret = process.env.CONTACT_SECURITY_HASH_SECRET || (localSecurityMode() ? 'explicit-local-development-secret' : '');
@@ -8,7 +8,7 @@ export function privateFingerprint(value: string): string {
   return createHmac('sha256', secret).update(value).digest('hex');
 }
 export function clientAddress(request: Request): string {
-  if (localSecurityMode()) return '127.0.0.1';
+  if (localDevelopment() && ['localhost', '127.0.0.1', '[::1]'].includes(new URL(request.url).hostname)) return '127.0.0.1';
   // Vercel overwrites this header; arbitrary proxy headers are not trusted.
   const ip = process.env.VERCEL ? request.headers.get('x-vercel-forwarded-for')?.split(',')[0].trim() : undefined;
   if (!ip || !isIP(ip)) throw new Error('Client address unavailable');

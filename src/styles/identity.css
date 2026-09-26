@@ -71,3 +71,9 @@ main a:focus-visible, [tabindex="-1"]:focus-visible { outline:2px solid var(--v2
 }
 @media(prefers-reduced-motion:reduce) { .hero-starfield i { display:none; }.hero-photo-frame,.product-visual,.theme-icon:hover { transform:none; } }
 @media(max-width:767px) { .section-transition { height:44px; }.hero-starfield i { width:120px; }.hero-grid-plane { background-size:44px 44px; } }
+
+.value-section { background:radial-gradient(ellipse at 0 50%,color-mix(in srgb,var(--accent-blue) 8%,transparent),transparent 55%),var(--v2-surface); }
+.value-card { position:relative; overflow:hidden; display:flex; flex-direction:column; padding:2rem; border:1px solid var(--v2-border); border-radius:1.4rem; background:var(--v2-background); box-shadow:var(--v2-shadow); }
+.value-number { position:absolute; right:1rem; top:-.7rem; font-size:7rem; font-weight:800; line-height:1; color:color-mix(in srgb,var(--project-color) 12%,transparent); pointer-events:none; }
+.value-outcome { border-left:3px solid var(--project-color); padding-left:1rem; flex:1; }.value-card a:hover { text-decoration-thickness:2px; }
+@media(max-width:430px) { .value-card { padding:1.5rem; } }

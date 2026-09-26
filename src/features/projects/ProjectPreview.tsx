@@ -1,5 +1,5 @@
 import { useTilt } from '../motion/useTilt';
-﻿import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import type { PortfolioProject } from '../../types/portfolio';
 import { DEFAULT_LANGUAGE, isSupportedLanguage } from '../../constants/i18n';
 import { caseStudyLabels } from '../../content/case-studies/labels';

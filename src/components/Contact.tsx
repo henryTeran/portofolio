@@ -1,4 +1,4 @@
-import { useSubmissionTracking } from '../security/submissionTracking';
+import { clearSubmission, useSubmissionTracking } from '../security/submissionTracking';
 import DeliveryStatus from '../security/DeliveryStatus';
 import { contactFields, fieldIssue } from '../forms/validation';
 import { apiErrorMessage, type ApiCode } from '../forms/apiErrors';
@@ -39,8 +39,11 @@ export default function Contact() {
     'aria-describedby': `${field}-feedback`,
     onBlur: () => setTouched(current => ({ ...current, [field]: true })),
   });
-  const change = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+  const change = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (delivery !== 'idle') clearSubmission('contact');
+    setStatus('idle');
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
+  };
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();

@@ -1,4 +1,4 @@
-import { useSubmissionTracking } from '../security/submissionTracking';
+import { clearSubmission, useSubmissionTracking } from '../security/submissionTracking';
 import DeliveryStatus from '../security/DeliveryStatus';
 import { trackProjectBriefSubmit } from '../analytics/trackingEvents';
 import { briefSteps, fieldIssue, invalidFields, limits, type BriefField as Field } from '../forms/validation';
@@ -157,10 +157,14 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
     return invalid.length > 0;
   };
   const handleInputChange = <K extends keyof QuoteFormData>(field: K, value: QuoteFormData[K]) => {
+    if (delivery !== 'idle') clearSubmission('brief');
+    setSubmitStatus('idle');
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
   const handleArrayToggle = (field: 'features' | 'technologies', value: string) => {
+    if (delivery !== 'idle') clearSubmission('brief');
+    setSubmitStatus('idle');
     setFormData(prev => ({
       ...prev,
       [field]: prev[field].includes(value)

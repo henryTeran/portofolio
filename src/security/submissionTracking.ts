@@ -7,6 +7,12 @@ const eventName = 'portfolio-submission';
 const key = (kind: Kind) => `portfolio:submission:${kind}`;
 const memory = new Map<Kind, Tracking>();
 
+export function clearSubmission(kind: Kind) {
+  memory.delete(kind);
+  try { sessionStorage.removeItem(key(kind)); } catch { /* Storage unavailable. */ }
+  window.dispatchEvent(new CustomEvent(eventName, { detail: kind }));
+}
+
 export function trackSubmission(kind: Kind, data: unknown) {
   const value = data as Partial<Tracking> | null;
   if (!value || typeof value.receipt !== 'string' || !/^[A-Za-z0-9_-]{43}$/.test(value.receipt) || typeof value.expiresAt !== 'number') return;
@@ -32,7 +38,8 @@ export function useSubmissionTracking(kind: Kind): DeliveryState {
   useEffect(() => {
     const update = (event: Event) => {
       if ((event as CustomEvent).detail !== kind) return;
-      setTracking(read(kind)); setState('pending');
+      const next = read(kind);
+      setTracking(next); setState(next ? 'pending' : 'idle');
     };
     window.addEventListener(eventName, update);
     return () => window.removeEventListener(eventName, update);

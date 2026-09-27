@@ -213,6 +213,17 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
           </button>
         </div>
 
+        <div id="brief-delivery-status" className="shrink-0 px-4 sm:px-6">
+          <DeliveryStatus kind="brief" state={delivery} language={i18n.language} />
+              {submitStatus === 'success' && delivery === 'idle' && (
+                <div role="status" aria-live="polite" className="flex items-center p-4 bg-green-500/20 border border-green-500/30 rounded-lg">
+                  <CheckCircle className="text-green-800 dark:text-green-300 mr-3" size={20} />
+                  <span className="text-green-800 dark:text-green-300">{feedback.briefSuccess}</span>
+                </div>
+              )}
+
+        </div>
+
         {/* Progress Bar */}
         <div className={`px-4 py-4 sm:px-6 ${bgProgress}`}>
           <div className="mb-3 flex items-center justify-between gap-2 sm:mb-2 sm:gap-0">
@@ -241,7 +252,6 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
 
         {/* Content */}
         <div ref={contentRef} className="min-h-0 flex-1 overflow-y-auto px-4 py-5 sm:p-6">
-          <DeliveryStatus kind="brief" state={delivery} language={i18n.language} />
           {/* Étape 1: Informations personnelles */}
           {currentStep === 1 && (
             <div className="space-y-6">
@@ -513,13 +523,6 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
-              {submitStatus === 'success' && delivery === 'idle' && (
-                <div role="status" aria-live="polite" className="flex items-center p-4 bg-green-500/20 border border-green-500/30 rounded-lg">
-                  <CheckCircle className="text-green-800 dark:text-green-300 mr-3" size={20} />
-                  <span className="text-green-800 dark:text-green-300">{feedback.briefSuccess}</span>
-                </div>
-              )}
-
               {submitStatus === 'error' && (
                 <div role="alert" aria-live="assertive" className="flex items-center p-4 bg-red-500/20 border border-red-500/30 rounded-lg">
                   <AlertCircle className="text-red-800 dark:text-red-300 mr-3" size={20} />
@@ -529,14 +532,14 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
             </div>
           )}
           <div className="mt-6 space-y-4">
-            {currentStep === 4 && <Turnstile action="brief" onToken={setTurnstileToken} resetKey={securityReset} />}
-            <FormStatusSummary id="brief-readiness" language={i18n.language} busy={isSubmitting} readyText={submitStatus === 'success' ? '' : currentStep === 4 ? feedback.briefReady : feedback.stepReady} items={submitStatus === 'success' ? [] : currentStep === 4 ? [
+            {currentStep === 4 && submitStatus !== 'success' && <Turnstile action="brief" onToken={setTurnstileToken} resetKey={securityReset} />}
+            {submitStatus !== 'success' && <FormStatusSummary id="brief-readiness" language={i18n.language} busy={isSubmitting} readyText={currentStep === 4 ? feedback.briefReady : feedback.stepReady} items={currentStep === 4 ? [
               { label: feedback.labels.information, valid: stepValid(1) },
               { label: feedback.labels.project, valid: stepValid(2) },
               { label: feedback.labels.planning, valid: stepValid(3) },
               ...(stepValid(4) ? [] : [{ label: feedback.labels.additionalInfo, valid: false }]),
               { label: feedback.security, valid: Boolean(turnstileToken) },
-            ] : briefSteps[currentStep - 1].map(field => ({ label: feedback.labels[field], valid: !fieldIssue(field, formData[field] ?? '') }))} />
+            ] : briefSteps[currentStep - 1].map(field => ({ label: feedback.labels[field], valid: !fieldIssue(field, formData[field] ?? '') }))} />}
             {currentStep === 4 && <FormDisclosure kind="brief" />}
           </div>
         </div>
@@ -555,7 +558,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
             {currentStep < 4 ? (
               <button
                 onClick={nextStep}
-                aria-describedby="brief-readiness"
+                aria-describedby={submitStatus === 'success' ? 'brief-delivery-status' : 'brief-readiness'}
                 disabled={!stepValid(currentStep) || isSubmitting}
                 className="w-full rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-700 dark:disabled:bg-slate-700 dark:disabled:text-slate-200 sm:w-auto sm:py-2"
               >
@@ -564,7 +567,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
             ) : (
               <button
                 onClick={handleSubmit}
-                aria-describedby="brief-readiness"
+                aria-describedby={submitStatus === 'success' ? 'brief-delivery-status' : 'brief-readiness'}
                 disabled={isSubmitting || !validateQuoteForm(formData).isValid || !turnstileToken || submitStatus === 'success'}
                 className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-8 py-3 font-semibold text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-700 dark:disabled:bg-slate-700 dark:disabled:text-slate-200 sm:w-auto sm:py-2"
               >

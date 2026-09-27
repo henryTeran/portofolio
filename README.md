@@ -1,277 +1,200 @@
-# 👨‍💻 Henry Teran – Full-Stack Developer Portfolio
+﻿<div align="center">
 
-<a id="top"></a>
+# Henry Teran
 
-<div align="center">
+### Full-Stack Developer & Applied AI Engineer
 
-[![React](https://img.shields.io/badge/React-18%2B-61DAFB?logo=react&logoColor=white&style=flat-square)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5%2B-3178C6?logo=typescript&logoColor=white&style=flat-square)](https://www.typescriptlang.org)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3-38B2AC?logo=tailwindcss&logoColor=white&style=flat-square)](https://tailwindcss.com)
-[![Vite](https://img.shields.io/badge/Vite-5%2B-646CFF?logo=vite&logoColor=white&style=flat-square)](https://vitejs.dev)
-[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
-[![GitHub Pages](https://img.shields.io/badge/Live-Portfolio-blue?style=flat-square)](https://henryteran.com)
+**Des processus métier complexes, des logiciels clairs et intelligents.**
 
-**Modern, responsive full-stack portfolio showcasing expertise in React, TypeScript, and modern web development with integrated email solutions and multi-language support.**
+Genève, Suisse · Produits métier & SaaS · IA appliquée
 
-[🌐 **Live Portfolio**](https://henryteran.com) • [📧 **Contact**](#-contact) • [🚀 **Quick Start**](#-quick-start)
+[**Découvrir le portfolio →**](https://henryteran.com/fr) · [LinkedIn](https://linkedin.com/in/henry-teran) · [Me contacter](mailto:teranhenryc@gmail.com)
+
+[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)](package.json)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](package.json)
+[![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)](package.json)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?logo=tailwindcss&logoColor=white)](package.json)
+[![License MIT](https://img.shields.io/badge/Licence-MIT-22c55e)](LICENSE)
+
+[Français](https://henryteran.com/fr) · [English](https://henryteran.com/en) · [Español](https://henryteran.com/es)
 
 </div>
 
 ---
 
-## ✨ Features
+## Relier le besoin métier à un produit utilisable
 
-### 📧 Smart Email System
-- **Contact Form** – Direct email delivery with validation and error handling
-- **Quote Generator** – 4-step wizard for detailed project inquiries
-- **EmailJS Integration** – Zero backend infrastructure required
-- **Auto-responses** – Instant confirmation messages to clients
-- **Template Variables** – Corrupted template prevention with string normalization
-- **Multilingual Support** – Email responses adapt to selected language
+Je conçois des applications qui relient les processus, les données et l’expérience utilisateur : ERP modulaires, outils de candidature, automatisation et applications mobiles. Mon travail couvre l’architecture, le backend et l’interface, avec une IA intégrée aux usages et encadrée par des permissions et une validation humaine.
 
-### 🌍 Internationalization (i18n)
-- **Three Languages:** 🇫🇷 Français, 🇬🇧 English, 🇪🇸 Español
-- **Single Landing by Language** – `/fr`, `/en`, `/es`
-- **Hash Navigation** – sections navigated with `/:lang#about`, `/:lang#projects`, `/:lang#services`, `/:lang#contact`
-- **Dynamic Switching** – Instant language changes while preserving current route context
-- **Complete Localization** – All UI text, forms, and templates translated
-- **Context-Aware** – Email language matches user's selected language
+Ce portfolio présente **quatre études de cas** avec contexte métier, rôle, architecture, défis techniques et aperçus produit. Ce dépôt contient le code du portfolio et de ses API de contact ; les applications présentées sont décrites dans les études de cas.
 
-### 🔎 SEO Architecture
-- **Canonical URLs** – One canonical URL per language landing (`/fr`, `/en`, `/es`)
-- **`hreflang` Tags** – Runtime `fr`, `en`, `es` + `x-default` aligned with language landings
-- **Dynamic Metadata** – Per-page/per-language title and description
-- **Structured Data** – JSON-LD `Person` profile for portfolio indexing
-- **Indexable Pages** – `robots` meta configured to `index,follow`
+**Ouvert aux opportunités en développement full-stack, logiciels métier et IA appliquée.** Pour échanger sur un poste, une mission ou un produit : [LinkedIn](https://linkedin.com/in/henry-teran) ou [email](mailto:teranhenryc@gmail.com).
 
-### 🎨 User Interface & Experience
-- ✨ **Dark/Light Mode** – Seamless theme switching with persistent storage
-- 📱 **Fully Responsive** – Mobile-first design with optimized mobile layouts
-- 🎬 **Smooth Animations** – Framer Motion powered transitions and interactions
-- ♿ **Accessible** – WCAG 2.1 compliant with keyboard navigation
-- 🚀 **Performance Optimized** – Instant page loads and smooth interactions
-- 🎯 **Modern UI Components** – Badge system, modals, cards, and interactive elements
+## Projets sélectionnés
 
-### 🛠️ Developer Experience
-- 🔒 **TypeScript** – Full type safety and improved code quality
-- 🎯 **ESLint** – Consistent code style and best practices
-- 🔄 **Hot Module Replacement (HMR)** – Instant updates during development
-- 📊 **Git Workflow** – Clean commit history and version control
-- 🔐 **Environment Security** – Secure handling of API keys and secrets
+<table>
+  <tr>
+    <td width="50%" align="center">
+      <a href="https://henryteran.com/fr/projects/zigoma"><img src="public/images/projects/zigoma/masterimage.webp" alt="ZIGOMA : tableau de bord ERP, CRM et facturation" width="440" /></a><br />
+      <strong>ZIGOMA</strong> · ERP métier modulaire
+    </td>
+    <td width="50%" align="center">
+      <a href="https://henryteran.com/fr/projects/applyflow"><img src="public/images/projects/applyflow/masterimage.webp" alt="ApplyFlow : dashboard et parcours de candidature assistée par IA" width="440" /></a><br />
+      <strong>ApplyFlow</strong> · Candidatures assistées par IA
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <a href="https://henryteran.com/fr/projects/jobtrace-ai"><img src="public/images/projects/jobtrace-ai/masterimage.webp" alt="JobTrace AI : suivi des candidatures, emails et rapports" width="440" /></a><br />
+      <strong>JobTrace AI</strong> · Suivi depuis les emails · En développement
+    </td>
+    <td width="50%" align="center">
+      <a href="https://henryteran.com/fr/projects/wellsync"><img src="public/images/projects/wellsync/masterimage.webp" alt="WellSync : interfaces mobiles et assistant bien-être" width="440" /></a><br />
+      <strong>WellSync</strong> · Application mobile de bien-être
+    </td>
+  </tr>
+</table>
 
----
+| Projet et rôle | Enjeu métier et sujets techniques | Technologies du projet |
+| --- | --- | --- |
+| [**ZIGOMA**](https://henryteran.com/fr/projects/zigoma) — Lead Developer, architecture & full-stack | Relier CRM, ventes, facturation, stocks et finance. Isolation multi-entreprise, RBAC, idempotence et assistant IA contextualisé. | Python, Flask, Firestore, OpenAI, Pandas, NumPy, Tailwind, WeasyPrint |
+| [**ApplyFlow**](https://henryteran.com/fr/projects/applyflow) — Full-stack & IA appliquée | Centraliser les offres et les candidatures. Matching IA, génération de lettres, traitements en arrière-plan et isolation utilisateur. | React, TypeScript, FastAPI, PostgreSQL, Redis, Docker, OpenAI |
+| [**JobTrace AI**](https://henryteran.com/fr/projects/jobtrace-ai) — Backend & IA appliquée | Structurer le suivi à partir des emails Gmail et Outlook. OAuth, synchronisation, extraction, déduplication et rapports PDF. **En développement.** | Python, FastAPI, Gmail API, Microsoft Graph |
+| [**WellSync**](https://henryteran.com/fr/projects/wellsync) — Full-stack & produit mobile | Réunir suivi du bien-être et assistance contextualisée. Rôles, données en temps réel et notifications. | Angular, Ionic, Firebase, OpenAI, TypeScript |
 
-## 🚀 Quick Start
+## Ce que vous pouvez examiner dans ce dépôt
 
-### Prerequisites
-- **Node.js** 16.0.0 or higher
-- **npm** 8.0.0+ or **yarn** 3.0.0+
-- **Git** for version control
+| Dimension | Mise en œuvre | Point d’entrée dans le code |
+| --- | --- | --- |
+| **Architecture** | Fonctionnalités, contenu éditorial, données typées et services serveur séparés. | [Fonctionnalités](src/features/), [modèles](src/types/portfolio.ts), [serveur](src/server/) |
+| **Expérience produit** | Galeries, vues produit, études de cas, thèmes clair/sombre et animations adaptées à la réduction des mouvements. | [Projets](src/features/projects/), [études de cas](src/features/case-study/), [mouvement](src/features/motion/) |
+| **Internationalisation** | Français, anglais et espagnol, routes localisées et ressources de traduction. | [Routage](src/router/AppRouter.tsx), [i18n](src/i18n/index.ts), [contenus](src/content/) |
+| **Contact et sécurité** | Validation serveur, Turnstile, quotas Redis, déduplication et confirmation de l’adresse avant notification. | [API](api/), [sécurité](src/server/security/), [envoi SMTP](src/server/mail/) |
+| **Confidentialité** | Gestion du consentement pour les analytics et page de confidentialité localisée. | [Consentement](src/privacy/consent.ts), [analytics](src/analytics/), [politique](src/privacy/policy.ts) |
+| **SEO** | Métadonnées localisées, URL canoniques, `hreflang`, données structurées et génération du sitemap. | [SEO](src/seo/), [générateur du sitemap](scripts/generate-sitemap.mjs) |
+| **Vérification** | Tests des formulaires, de la navigation, du consentement, des emails et des protections contre les abus. | [Tests des formulaires](src/forms/), [tests de sécurité](src/server/security/), [tests de navigation](src/router/) |
 
-### Installation & Development
+La configuration inclut des en-têtes de sécurité et une **CSP en mode Report-Only** : elle collecte les violations sans bloquer les ressources. Le [guide de déploiement CSP](docs/security/csp-rollout.md) détaille son évolution.
+
+## Stack du portfolio
+
+| Couche | Technologies |
+| --- | --- |
+| Interface | React 18, TypeScript 5, React Router 6 |
+| Design et interactions | Tailwind CSS 3, Framer Motion, Lucide React |
+| Langues et métadonnées | i18next, react-i18next, React Helmet Async |
+| API et emails | Vercel Functions, Nodemailer, SMTP |
+| Protection des formulaires | Cloudflare Turnstile, Upstash Redis |
+| Qualité et build | Vitest, Testing Library, ESLint 9, Vite 5 |
+| Hébergement | Vercel, configuration dans [vercel.json](vercel.json) |
+
+## Lancer le projet
+
+Utiliser **Node.js 22** et npm. Les dépendances sont verrouillées dans `package-lock.json`.
 
 ```bash
-# Clone the repository
 git clone https://github.com/henryTeran/portofolio.git
 cd portofolio
-
-# Install dependencies
-npm install
-
-# Start development server with HMR
+npm ci
 npm run dev
-
-# Build for production
-npm run build
-
-# Generate multilingual sitemap.xml
-npm run generate:sitemap
-
-# Preview production build locally
-npm run preview
-
-# Run ESLint checks
-npm run lint
-
-# Type check with TypeScript
-npm run type-check
 ```
 
----
+Le serveur Vite sert l’interface, généralement sur `http://localhost:5173`. Les routes `/fr`, `/en` et `/es` permettent de parcourir les versions localisées.
 
-## SMTP mail configuration
+Pour tester les envois de formulaires, copier `.env.example` vers `.env.local`, configurer les services ci-dessous et utiliser **Vercel Dev** (`npx vercel dev`) pour exécuter également les fonctions `/api/*`. `npm run dev` seul ne fournit pas ces API.
 
-Contact and Project Brief submit to first-party Vercel Functions (/api/contact and /api/project-brief). Set server-only environment variables from .env.example in Vercel Project Settings. Never use a VITE_ prefix for SMTP credentials. The acknowledgement email is opt-in with MAIL_ACKNOWLEDGEMENT=true.
+### Commandes utiles
 
-## 📁 Project Structure
+| Commande | Usage |
+| --- | --- |
+| `npm run dev` | Démarrer l’interface avec rechargement à chaud |
+| `npm run type-check` | Vérifier les types de l’application, des API et de la configuration Node |
+| `npm run lint` | Exécuter ESLint |
+| `npm run test -- --run` | Exécuter les tests Vitest une fois |
+| `npm test` | Lancer Vitest en mode interactif |
+| `npm run build` | Générer le site dans `dist/` |
+| `npm run preview` | Prévisualiser le build frontend |
+| `npm run generate:sitemap` | Régénérer le sitemap multilingue |
+| `npm run generate:csp-hash` | Générer le hash CSP du JSON-LD |
+| `npm run vercel:check` | Générer le sitemap puis construire le site |
 
-```
-portofolio/
-├── src/
-│   ├── components/
-│   │   ├── About.tsx              # About section with skills
-│   │   ├── Contact.tsx            # Contact form component
-│   │   ├── Footer.tsx             # Footer with links
-│   │   ├── Header.tsx             # Navigation header
-│   │   ├── Hero.tsx               # Landing hero section
-│   │   ├── LanguageSwitcher.tsx   # i18n language selector
-│   │   ├── Pricing.tsx            # Pricing section
-│   │   ├── Projects.tsx           # Portfolio projects grid
-│   │   ├── QuoteModal.tsx         # 4-step quote wizard
-│   │   ├── Services.tsx           # Services offered
-│   │   ├── Skills.tsx             # Technical skills display
-│   │   ├── ThemeToggle.tsx        # Dark/Light mode switcher
-│   │   └── ui/                    # Reusable UI components
-│   │       ├── Badge.tsx
-│   │       ├── Card.tsx
-│   │       ├── Feature.tsx
-│   │       └── PillButton.tsx
-│   ├── services/
-│   │   └── emailService.ts        # EmailJS integration & validation
-│   ├── locales/                   # i18n translations
-│   │   ├── en/common.json         # English translations
-│   │   ├── fr/common.json         # French translations
-│   │   └── es/common.json         # Spanish translations
-│   ├── i18n/
-│   │   └── index.ts               # i18next configuration
-│   ├── styles/
-│   │   ├── theme.css              # CSS variables for theming
-│   │   └── index.css              # Global styles
-│   ├── App.tsx                    # Main application component
-│   ├── main.tsx                   # Entry point
-│   └── vite-env.d.ts              # Vite type definitions
-├── public/
-│   ├── logo-dark.svg              # Dark theme logo
-│   ├── logo-light.svg             # Light theme logo
-│   └── 404.html                   # Static fallback page
-├── index.html                     # HTML template
-├── tailwind.config.js             # Tailwind CSS configuration
-├── postcss.config.js              # PostCSS configuration
-├── tsconfig.json                  # TypeScript main config
-├── tsconfig.app.json              # TypeScript app config
-├── tsconfig.node.json             # TypeScript node config
-├── vite.config.ts                 # Vite build configuration
-├── eslint.config.js               # ESLint configuration
-├── package.json                   # Dependencies & scripts
-├── .env.example                   # Environment template
-├── .gitignore                     # Git ignore rules
-└── README.md                      # This file
+### Configuration des formulaires
+
+Les variables attendues sont documentées dans [`.env.example`](.env.example). Les API refusent les soumissions si les services de sécurité requis ne sont pas configurés.
+
+| Groupe | Variables |
+| --- | --- |
+| SMTP | `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD` |
+| Expéditeur et destinataire | `MAIL_FROM`, `MAIL_TO`, `MAIL_ACKNOWLEDGEMENT` |
+| Anti-bot | `VITE_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY` |
+| Stockage des protections | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` |
+| Origine et empreintes | `CONTACT_PUBLIC_URL`, `CONTACT_SECURITY_HASH_SECRET` |
+| URL du site et sitemap | `VITE_SITE_URL`, `SITE_URL` |
+
+Les identifiants SMTP, Redis et les secrets restent côté serveur, sans préfixe `VITE_`. La clé publique Turnstile est destinée au navigateur. `CONTACT_SECURITY_HASH_SECRET` doit contenir au moins 32 caractères aléatoires ; `CONTACT_PUBLIC_URL` définit l’origine de confiance utilisée dans les emails de vérification. L’accusé de réception complémentaire est optionnel via `MAIL_ACKNOWLEDGEMENT=true`.
+
+<details>
+<summary><strong>Parcours de vérification, quotas et développement local</strong></summary>
+
+Le formulaire suit ce parcours :
+
+```text
+Formulaire → validation + Turnstile + quotas → email de confirmation
+          → clic explicite de vérification → notification SMTP à Henry
 ```
 
----
+- Turnstile vérifie le hostname et l’action (`contact` ou `brief`). Utiliser des clés autorisées pour le domaine de chaque environnement.
+- Redis applique des limites glissantes atomiques : 5 contacts par 15 minutes et par IP ; 3 briefs par 30 minutes et par IP. Les réseaux partagés peuvent partager un quota ; les attaques distribuées nécessitent une protection supplémentaire au niveau de la plateforme.
+- Les empreintes utilisent un HMAC et les adresses IP proviennent des en-têtes de confiance Vercel. Les réservations anti-doublon durent 15 minutes ; les emails de confirmation sont limités à 3 par heure et par destinataire.
+- Les contenus en attente expirent après 20 minutes. Les marqueurs de jetons utilisés ou échoués ne contiennent pas le formulaire et expirent après 24 heures. Prévoir une base Redis dédiée sans éviction des clés de sécurité actives.
+- Le contrôle MX vérifie le domaine, pas l’existence de la boîte email. Une erreur DNS temporaire laisse le parcours de confirmation se poursuivre.
+- Le jeton aléatoire est transmis dans le fragment du lien ; seul son hash SHA-256 est stocké. La page de vérification retire le fragment et est exclue des analytics.
+- Un `GET` ne déclenche aucun envoi. Le clic explicite appelle `POST /api/verify-contact`, qui consomme le contenu atomiquement. L’adresse vérifiée devient le `Reply-To` de la notification.
+- Le contenu est supprimé avant l’envoi SMTP final. Redis et SMTP ne partagent pas de transaction : un échec de livraison ambigu n’est pas retenté automatiquement et peut nécessiter une nouvelle demande.
 
-## 🛠️ Tech Stack
+Pour un test local explicite, activer **les deux** variables `CONTACT_SECURITY_DEV_MODE=true` et `VITE_CONTACT_SECURITY_DEV_MODE=true`, avec `NODE_ENV=development` et `CONTACT_PUBLIC_URL=http://localhost:5173`. Vercel Dev doit signaler `VERCEL_ENV=development`.
 
-| Category | Technologies |
-|----------|--------------|
-| **Frontend Framework** | React 18, TypeScript |
-| **Styling** | Tailwind CSS 3, PostCSS |
-| **Build Tool** | Vite 5 |
-| **Animations** | Framer Motion |
-| **Internationalization** | i18next, react-i18next |
-| **Email Service** | EmailJS |
-| **Icon Library** | Lucide React |
-| **Code Quality** | ESLint, TypeScript |
-| **Hosting** | Vercel |
+Ce mode utilise un stockage en mémoire et un jeton de contournement signalé dans l’interface. Il est refusé en preview et en production et ne vérifie pas la persistance entre processus. Pour une intégration réaliste, utiliser Redis et les clés de test officielles Cloudflare. La configuration et la livraison réelle des emails doivent être vérifiées dans l’environnement cible.
 
----
+</details>
 
-## 🚀 Deployment (Vercel)
+## Organisation du code
 
-This repository is now **Vercel-only**.
-
-1. Import the project in Vercel (Framework: Vite).
-2. Build Command: `npm run build`.
-3. Output Directory: `dist`.
-4. Configure environment variables listed in `VERCEL-MIGRATION.md`.
-5. Add `henryteran.com` as primary domain and `www.henryteran.com` as redirect.
-
-Detailed migration, redirects, and Search Console checklist:
-
-- `VERCEL-MIGRATION.md`
-
----
-
-## 📊 Performance & Quality
-
-- **⚡ Lighthouse Score:** 95+ (Performance, Accessibility, Best Practices, SEO)
-- **🎯 First Contentful Paint (FCP):** < 1 second
-- **📱 Mobile Score:** 95+
-- **🔒 Security Grade:** A+
-- **♿ Accessibility:** WCAG 2.1 Level AA
-- **📈 Core Web Vitals:** All green
-
----
-
-## 📝 Available Scripts
-
-```bash
-npm run dev        # Start development server with HMR
-npm run build      # Build optimized production bundle
-npm run preview    # Preview production build locally
-npm run lint       # Run ESLint on all TypeScript/JSX files
-npm run generate:sitemap # Generate multilingual sitemap.xml
-npm run vercel:check     # Generate sitemap + production build
+```text
+api/                 Fonctions contact, project-brief, verify-contact et csp-report
+src/
+  components/        Sections et composants partagés
+  features/          Projets, études de cas, expertise et animations
+  content/           Textes éditoriaux et études de cas multilingues
+  data/              Projets, parcours et expertise
+  locales/           Traductions FR / EN / ES
+  router/            Routes localisées et gestion du défilement
+  forms/             Validation et retours utilisateur
+  security/          Widget Turnstile et parcours de vérification
+  server/            Logique SMTP et protections côté serveur
+  privacy/           Consentement et confidentialité
+  analytics/         Suivi conditionné au consentement
+  seo/               Métadonnées et référencement
+  styles/            Identité visuelle et thèmes
+public/              Visuels produit, portrait et ressources statiques
+scripts/             Génération du sitemap et du hash CSP
+docs/security/       Documentation CSP
 ```
 
----
+## Déploiement
 
-## 🤝 Contributing
+Le projet est configuré pour **Vercel** : preset Vite, commande `npm run build`, répertoire de sortie `dist`. Configurer les variables serveur et publiques dans chaque environnement, puis vérifier le parcours de contact complet.
 
-Contributions are welcome! To contribute:
-
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Commit** your changes (`git commit -m 'feat: add amazing feature'`)
-4. **Push** to the branch (`git push origin feature/amazing-feature`)
-5. **Open** a Pull Request
-
-### Guidelines
-- Follow the existing code style (ESLint configuration)
-- Write meaningful commit messages
-- Test your changes locally before submitting
-- Update documentation if needed
-- Respect the TypeScript strict mode
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
-
----
-
-## 📧 Contact
-
-**Henry Teran – Full-Stack Developer**
-
-- 💼 **LinkedIn:** [Henry Teran](https://linkedin.com/in/henry-teran)
-- 🐙 **GitHub:** [@henryTeran](https://github.com/henryTeran)
-- 📧 **Email:** [teranhenryc@gmail.com](mailto:teranhenryc@gmail.com)
-- 🌐 **Portfolio:** [henryteran.com](https://henryteran.com)
+Le fichier [vercel.json](vercel.json) définit les réécritures SPA, les en-têtes et la redirection de `www.henryteran.com` vers `henryteran.com`. Pour l’historique de migration et les vérifications de domaine, consulter [VERCEL-MIGRATION.md](VERCEL-MIGRATION.md) ; pour les variables attendues, se référer à [`.env.example`](.env.example).
 
 ---
 
 <div align="center">
 
-### ⭐ If you find this project helpful, please give it a star!
+**Un besoin métier à transformer en logiciel ? Parlons-en.**
 
-Made with ❤️ by [Henry Teran](https://github.com/henryTeran)
+[Portfolio](https://henryteran.com/fr) · [LinkedIn](https://linkedin.com/in/henry-teran) · [Email](mailto:teranhenryc@gmail.com) · [GitHub](https://github.com/henryTeran)
 
-[🔝 Back to top](#top)
+Code distribué sous [licence MIT](LICENSE) · Henry Teran
 
 </div>
-## Contact security configuration
-
-The contact and project brief APIs fail closed until their security services are configured. See `.env.example`. Keep SMTP and security credentials in `.env.local` or Vercel environment variables, never in public `VITE_*` variables except the Turnstile site key.
-
-- Create a Cloudflare Turnstile widget for the hostname in `CONTACT_PUBLIC_URL`. Set `VITE_TURNSTILE_SITE_KEY` and server-only `TURNSTILE_SECRET_KEY`. The server validates both hostname and action (`contact` / `brief`).
-- Create an Upstash Redis database, select its region and retention settings, and set `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN`. Choose a database dedicated to this site, without eviction of active security keys. Provisioning is not automated.
-- Set `CONTACT_SECURITY_HASH_SECRET` to a cryptographically random secret of at least 32 characters. `CONTACT_PUBLIC_URL` is the trusted public origin used in verification emails; never derive it from request headers.
-- For explicit local testing only, set both `CONTACT_SECURITY_DEV_MODE=true` and `VITE_CONTACT_SECURITY_DEV_MODE=true`, run with `NODE_ENV=development`, and set `CONTACT_PUBLIC_URL=http://localhost:5173`. Local Vercel Dev must report `VERCEL_ENV=development`. This mode uses an in-process store and bypass token, visibly labelled in the forms; it is rejected on preview/production deployments. It cannot validate cross-process or production persistence. Use real Redis and official Cloudflare test keys for realistic integration tests.
-
-Production uses atomic Redis rolling limits (Contact: 5/15 minutes/IP, Brief: 3/30 minutes/IP), trusted Vercel client IP headers and HMAC fingerprints. Shared networks can share a quota; distributed attacks require additional platform protection. Duplicate reservations last 15 minutes, recipient email limits are 3/hour, and pending payloads expire after 20 minutes. Failed/used-token markers contain no form content and expire after 24 hours. MX lookup is a domain check, not proof that a mailbox exists; temporary DNS failures proceed to email confirmation.
-
-The visitor receives a minimal confirmation email before Henry receives anything. The link contains a random token in the fragment; only its SHA-256 hash is stored. The verification page is excluded from analytics, removes the fragment, and requires an explicit button click. `POST /api/verify-contact` consumes the payload atomically; GET never sends email. Notifications use the verified address as Reply-To. Payloads are deleted before final SMTP delivery. SMTP has no atomic transaction with Redis: ambiguous final delivery errors are not retried automatically, so a failed/crashed delivery may require a new request. This trades automatic recovery for avoiding duplicate notifications. No production keys, Redis service or real confirmation-delivery test have been provisioned by this implementation.
-
-References: [Cloudflare server validation](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/), [Cloudflare test keys](https://developers.cloudflare.com/turnstile/troubleshooting/testing/), [Vercel trusted IP headers](https://vercel.com/docs/headers/request-headers#x-vercel-forwarded-for), [Upstash REST API](https://upstash.com/docs/redis/features/restapi).

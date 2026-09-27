@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+﻿import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { trackScrollDepth } from './trackingEvents';
 
@@ -13,7 +13,7 @@ const isDev = import.meta.env.DEV;
  * - Uses passive scroll listener for performance.
  * - Returns null — meant to be rendered inside BrowserRouter context.
  */
-export default function useScrollDepth(): void {
+export default function useScrollDepth(enabled = false): void {
   const location = useLocation();
   // Set of already-fired thresholds for the current page
   const firedRef = useRef<Set<Threshold>>(new Set());
@@ -21,15 +21,16 @@ export default function useScrollDepth(): void {
   // Reset fired thresholds on every route/hash change
   useEffect(() => {
     firedRef.current = new Set();
-    if (isDev) {
+    if (isDev && enabled) {
       console.debug('[GA4] Scroll tracker reset', {
         path: location.pathname,
         hash: location.hash,
       });
     }
-  }, [location.pathname, location.hash]);
+  }, [enabled, location.pathname, location.hash]);
 
   useEffect(() => {
+    if (!enabled) return;
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -63,5 +64,6 @@ export default function useScrollDepth(): void {
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [location.pathname, location.hash]);
+  }, [enabled, location.pathname, location.hash]);
 }
+

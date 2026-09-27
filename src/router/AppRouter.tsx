@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import LanguageLayout from '../layouts/LanguageLayout';
 import RootLanguageRedirect from './RootLanguageRedirect';
+import RouteScrollManager from './RouteScrollManager';
 
 function RouteLoader() {
   return <div className="container py-20">Loading…</div>;
@@ -10,9 +11,13 @@ function RouteLoader() {
 export default function AppRouter() {
   return (
     <Suspense fallback={<RouteLoader />}>
+      <RouteScrollManager />
       <Routes>
         <Route path="/" element={<RootLanguageRedirect />} />
         <Route path="/:lang" element={<LanguageLayout />} />
+        <Route path="/:lang/projects/:slug" element={<LanguageLayout />} />
+        <Route path="/:lang/privacy" element={<LanguageLayout />} />
+        <Route path="/:lang/verify" element={<LanguageLayout />} />
         <Route path="*" element={<RootLanguageRedirect />} />
       </Routes>
     </Suspense>

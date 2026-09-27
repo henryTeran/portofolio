@@ -1,0 +1,10 @@
+import type { LanguageCode } from '../../../constants/i18n';
+const copy = {
+  fr: { title: 'Votre espace bien-être', today: 'Ma journée', routines: ['Routine', 'Suivi personnel', 'Rappels'], assistant: 'Assistant contextualisé', context: 'Des suggestions adaptées au contexte de votre suivi.', data: 'Données en temps réel', sync: 'Application ↔ Firebase', note: 'Accompagnement de bien-être' },
+  en: { title: 'Your wellness space', today: 'My day', routines: ['Routine', 'Personal tracking', 'Reminders'], assistant: 'Contextual assistant', context: 'Suggestions informed by the context of your tracking.', data: 'Real-time data', sync: 'Application ↔ Firebase', note: 'Wellness support' },
+  es: { title: 'Tu espacio de bienestar', today: 'Mi día', routines: ['Rutina', 'Seguimiento personal', 'Recordatorios'], assistant: 'Asistente contextual', context: 'Sugerencias adaptadas al contexto de tu seguimiento.', data: 'Datos en tiempo real', sync: 'Aplicación ↔ Firebase', note: 'Apoyo para el bienestar' },
+};
+export default function WellsyncVisual({ language }: { language: LanguageCode }) {
+  const t = copy[language];
+  return <div className="visual-body"><p className="visual-kicker">MOBILE / {t.title}</p><div className="visual-mobile-layout"><div className="visual-phone"><div className="visual-phone-speaker" aria-hidden="true" /><p className="visual-heading">{t.today}</p><div className="visual-wellness-mark" aria-hidden="true">✦</div><ul>{t.routines.map((item, i) => <li key={item}><span aria-hidden="true">{i === 0 ? '✓' : '○'}</span>{item}</li>)}</ul><div className="visual-phone-home" aria-hidden="true" /></div><div className="visual-mobile-notes"><div className="visual-assistant"><span className="visual-kicker">AI / OpenAI</span><p className="visual-heading">{t.assistant}</p><p>{t.context}</p></div><div className="visual-realtime"><span aria-hidden="true">↔</span><p className="visual-heading">{t.data}</p><p>{t.sync}</p></div><p className="visual-timeline">{t.note}</p></div></div></div>;
+}

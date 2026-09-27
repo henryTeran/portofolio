@@ -2,17 +2,23 @@ import { Helmet } from 'react-helmet-async';
 import type { LanguageCode } from '../constants/i18n';
 import HreflangLinks from './HreflangLinks';
 import { SEO_CONFIG, type SeoPageKey } from './seoConfig';
+import { getProjectCopy } from '../content/projects';
+import { getProject } from '../data/projects';
 
 const siteUrl = (import.meta.env.VITE_SITE_URL ?? 'https://henryteran.com').replace(/\/$/, '');
 
 type SeoHelmetProps = {
   language: LanguageCode;
-  page: SeoPageKey;
-};
+} & ({ page: SeoPageKey; projectSlug?: never } | { projectSlug: string; page?: never });
 
-export default function SeoHelmet({ language, page }: SeoHelmetProps) {
-  const seo = SEO_CONFIG[page][language];
-  const canonical = `${siteUrl}/${language}`;
+export default function SeoHelmet({ language, page, projectSlug }: SeoHelmetProps) {
+  const project = projectSlug ? getProject(projectSlug) : undefined;
+  const projectCopy = projectSlug ? getProjectCopy(language, projectSlug) : undefined;
+  const seo = project && projectCopy
+    ? { title: `${project.title} — ${projectCopy.tagline} | Henry Teran`, description: projectCopy.summary }
+    : SEO_CONFIG[page ?? 'landing'][language];
+  const pathSuffix = project ? `/projects/${project.slug}` : page === 'privacy' ? '/privacy' : '';
+  const canonical = `${siteUrl}/${language}${pathSuffix}`;
 
   return (
     <>
@@ -31,7 +37,7 @@ export default function SeoHelmet({ language, page }: SeoHelmetProps) {
         <meta name="twitter:description" content={seo.description} />
         <link rel="canonical" href={canonical} />
       </Helmet>
-      <HreflangLinks currentLanguage={language} />
+      <HreflangLinks currentLanguage={language} pathSuffix={pathSuffix} />
     </>
   );
 }

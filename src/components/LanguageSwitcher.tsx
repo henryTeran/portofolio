@@ -54,7 +54,9 @@ export default function LanguageSwitcher(){
       {langs.map(l=>(
         <button key={l.code}
           onClick={()=>handleLanguageChange(l.code as LanguageCode)}
-          className={`px-2 py-1 text-xs rounded-lg ${currentLanguage === l.code ? 'bg-[var(--primary)] text-white' : 'text-[var(--muted)] hover:text-white'}`}>
+          aria-label={l.label}
+          aria-pressed={currentLanguage === l.code}
+          className={`px-2 py-1 text-xs rounded-lg ${currentLanguage === l.code ? 'bg-[var(--v2-accent)] text-[var(--v2-on-accent)]' : 'text-[var(--v2-text-secondary)] hover:text-[var(--v2-text)]'}`}>
           {l.label}
         </button>
       ))}

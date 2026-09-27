@@ -3,6 +3,9 @@ import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { ensureLanguageResources } from '../i18n';
 import i18n from '../i18n';
 import HomePage from '../pages/HomePage';
+import ProjectRoutePage from '../pages/ProjectRoutePage';
+import PrivacyPage from '../pages/PrivacyPage';
+import VerifyPage from '../pages/VerifyPage';
 import {
   DEFAULT_LANGUAGE,
   getPreferredLanguage,
@@ -19,15 +22,16 @@ const mapLegacySectionToHash: Record<string, string> = {
 };
 
 export default function LanguageLayout() {
-  const { lang = DEFAULT_LANGUAGE } = useParams();
-  const location = useLocation();
-  const navigate = useNavigate();
-
+  const { lang = DEFAULT_LANGUAGE, slug } = useParams();
   if (!isSupportedLanguage(lang)) {
     return <Navigate to={`/${DEFAULT_LANGUAGE}`} replace />;
   }
+  return <ValidLanguageLayout currentLanguage={lang} slug={slug} />;
+}
 
-  const currentLanguage = lang as LanguageCode;
+function ValidLanguageLayout({ currentLanguage, slug }: { currentLanguage: LanguageCode; slug?: string }) {
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const init = async () => {
@@ -58,5 +62,6 @@ export default function LanguageLayout() {
     }
   }, [currentLanguage, location.hash, location.pathname, location.search, navigate]);
 
-  return <HomePage />;
+  if (location.pathname === `/${currentLanguage}/verify`) return <VerifyPage language={currentLanguage} />;
+  return location.pathname === `/${currentLanguage}/privacy` ? <PrivacyPage language={currentLanguage} /> : slug ? <ProjectRoutePage /> : <HomePage />;
 }

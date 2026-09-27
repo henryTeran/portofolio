@@ -99,150 +99,9 @@ npm run type-check
 
 ---
 
-## ⚙️ EmailJS Configuration
+## SMTP mail configuration
 
-## ⚙️ EmailJS Configuration
-
-### Step 1: Create EmailJS Account
-1. Visit [EmailJS](https://www.emailjs.com/)
-2. Sign up for a free account
-3. Verify your email address
-
-### Step 2: Set Up Email Service
-1. Navigate to **Email Services** in your dashboard
-2. Add your email provider:
-   - Gmail (recommended for beginners)
-   - Outlook
-   - Yahoo
-   - Custom SMTP
-3. Connect your email and verify
-4. Save your **Service ID** (format: `service_xxxxxxxxx`)
-
-### Step 3: Create Public Key
-1. Go to **Account** → **API Keys**
-2. Copy your **Public Key** (format: `xxxxxxxxxxxxxxxxxxxx`)
-
-### Step 4: Create Email Templates
-
-#### Template 1: Contact Form (`template_contact`)
-
-In EmailJS dashboard, create a new template with these variables:
-
-```
-New contact message from portfolio
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SENDER INFORMATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Name: {{from_name}}
-Email: {{from_email}}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-MESSAGE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-{{message}}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-METADATA
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Sent: {{time}}
-Language: {{lang}}
-Reply to: {{reply_to}}
-```
-
-#### Template 2: Quote Request (`template_quote`)
-
-In EmailJS dashboard, create a new template with these variables:
-
-```
-New quote request from portfolio
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-👤 CLIENT INFORMATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Name: {{client_name}}
-Email: {{client_email}}
-Phone: {{client_phone}}
-Company: {{client_company}}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📋 PROJECT DETAILS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Type: {{project_type}}
-Description: {{project_description}}
-Features: {{project_features}}
-Technologies: {{project_technologies}}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📅 TIMELINE & BUDGET
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Timeline: {{project_timeline}}
-Budget: {{project_budget}}
-Urgency: {{project_urgency}}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🔧 ADDITIONAL SERVICES
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Design Work: {{needs_design}}
-Hosting Setup: {{needs_hosting}}
-Maintenance Plan: {{needs_maintenance}}
-Training & Support: {{needs_training}}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📝 ADDITIONAL NOTES
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-{{additional_info}}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⏰ SUBMISSION DETAILS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Sent: {{time}}
-Language: {{lang}}
-Reply to: {{reply_to}}
-```
-
-### Step 5: Configure Environment Variables
-
-Create `.env.local` in your project root:
-
-```env
-# EmailJS Configuration
-VITE_EMAILJS_SERVICE_ID=service_xxxxxxxxx
-VITE_EMAILJS_PUBLIC_KEY=xxxxxxxxxxxxxxxxxxxx
-VITE_EMAILJS_TPL_CONTACT=template_contact
-VITE_EMAILJS_TPL_QUOTE=template_quote
-```
-
-**Create `.env.example` for documentation:**
-
-```env
-# EmailJS Configuration
-# Get these from https://www.emailjs.com/docs/rest-api/send/
-VITE_EMAILJS_SERVICE_ID=your_service_id
-VITE_EMAILJS_PUBLIC_KEY=your_public_key
-VITE_EMAILJS_TPL_CONTACT=template_contact
-VITE_EMAILJS_TPL_QUOTE=template_quote
-```
-
-⚠️ **IMPORTANT:** Add `.env.local` to `.gitignore` to protect your credentials!
-
-### Step 6: Verify Configuration
-
-```bash
-# Start the development server
-npm run dev
-
-# Test the contact form at http://localhost:5173
-# Test the quote generator (4-step wizard)
-# Check your email inbox for test messages
-```
-
-**Troubleshooting:**
-- **"One or more dynamic variables are corrupted"** → Ensure all template variables are strings
-- **Emails not received** → Verify Service ID and Public Key are correct
-- **Template not found** → Check template names match exactly in `.env.local`
-
----
+Contact and Project Brief submit to first-party Vercel Functions (/api/contact and /api/project-brief). Set server-only environment variables from .env.example in Vercel Project Settings. Never use a VITE_ prefix for SMTP credentials. The acknowledgement email is opt-in with MAIL_ACKNOWLEDGEMENT=true.
 
 ## 📁 Project Structure
 
@@ -402,3 +261,17 @@ Made with ❤️ by [Henry Teran](https://github.com/henryTeran)
 [🔝 Back to top](#top)
 
 </div>
+## Contact security configuration
+
+The contact and project brief APIs fail closed until their security services are configured. See `.env.example`. Keep SMTP and security credentials in `.env.local` or Vercel environment variables, never in public `VITE_*` variables except the Turnstile site key.
+
+- Create a Cloudflare Turnstile widget for the hostname in `CONTACT_PUBLIC_URL`. Set `VITE_TURNSTILE_SITE_KEY` and server-only `TURNSTILE_SECRET_KEY`. The server validates both hostname and action (`contact` / `brief`).
+- Create an Upstash Redis database, select its region and retention settings, and set `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN`. Choose a database dedicated to this site, without eviction of active security keys. Provisioning is not automated.
+- Set `CONTACT_SECURITY_HASH_SECRET` to a cryptographically random secret of at least 32 characters. `CONTACT_PUBLIC_URL` is the trusted public origin used in verification emails; never derive it from request headers.
+- For explicit local testing only, set both `CONTACT_SECURITY_DEV_MODE=true` and `VITE_CONTACT_SECURITY_DEV_MODE=true`, run with `NODE_ENV=development`, and set `CONTACT_PUBLIC_URL=http://localhost:5173`. Local Vercel Dev must report `VERCEL_ENV=development`. This mode uses an in-process store and bypass token, visibly labelled in the forms; it is rejected on preview/production deployments. It cannot validate cross-process or production persistence. Use real Redis and official Cloudflare test keys for realistic integration tests.
+
+Production uses atomic Redis rolling limits (Contact: 5/15 minutes/IP, Brief: 3/30 minutes/IP), trusted Vercel client IP headers and HMAC fingerprints. Shared networks can share a quota; distributed attacks require additional platform protection. Duplicate reservations last 15 minutes, recipient email limits are 3/hour, and pending payloads expire after 20 minutes. Failed/used-token markers contain no form content and expire after 24 hours. MX lookup is a domain check, not proof that a mailbox exists; temporary DNS failures proceed to email confirmation.
+
+The visitor receives a minimal confirmation email before Henry receives anything. The link contains a random token in the fragment; only its SHA-256 hash is stored. The verification page is excluded from analytics, removes the fragment, and requires an explicit button click. `POST /api/verify-contact` consumes the payload atomically; GET never sends email. Notifications use the verified address as Reply-To. Payloads are deleted before final SMTP delivery. SMTP has no atomic transaction with Redis: ambiguous final delivery errors are not retried automatically, so a failed/crashed delivery may require a new request. This trades automatic recovery for avoiding duplicate notifications. No production keys, Redis service or real confirmation-delivery test have been provisioned by this implementation.
+
+References: [Cloudflare server validation](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/), [Cloudflare test keys](https://developers.cloudflare.com/turnstile/troubleshooting/testing/), [Vercel trusted IP headers](https://vercel.com/docs/headers/request-headers#x-vercel-forwarded-for), [Upstash REST API](https://upstash.com/docs/redis/features/restapi).

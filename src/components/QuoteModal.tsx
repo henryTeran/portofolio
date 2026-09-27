@@ -1,7 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { clearSubmission, useSubmissionTracking } from '../security/submissionTracking';
+import DeliveryStatus from '../security/DeliveryStatus';
+import { trackProjectBriefSubmit } from '../analytics/trackingEvents';
+import { briefSteps, fieldIssue, invalidFields, limits, type BriefField as Field } from '../forms/validation';
+import { apiErrorMessage, type ApiCode } from '../forms/apiErrors';
+import { formCopy } from '../forms/copy';
+import { FieldValidationMessage, FormStatusSummary } from '../forms/ValidationFeedback';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { X, Send, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { sendQuoteEmail, validateQuoteForm, QuoteFormData } from '../services/emailService';
+import FormDisclosure from '../privacy/FormDisclosure';
+import Turnstile from '../security/Turnstile';
 
 interface QuoteModalProps {
   isOpen: boolean;
@@ -9,11 +18,21 @@ interface QuoteModalProps {
 }
 
 const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const feedback = formCopy(i18n.language);
+  const delivery = useSubmissionTracking('brief');
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [errorCode, setErrorCode] = useState<ApiCode>('server_error');
+  const pendingFocus = useRef<Field | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const [isDark, setIsDark] = useState(true);
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [website, setWebsite] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const [securityReset, setSecurityReset] = useState(0);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   
   const [formData, setFormData] = useState<QuoteFormData>({
@@ -36,86 +55,10 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
   });
 
   // Détecter le thème au montage du composant
-  useEffect(() => {
-    const root = document.documentElement;
-    setIsDark(root.classList.contains('dark'));
-    
-    const observer = new MutationObserver(() => {
-      setIsDark(root.classList.contains('dark'));
-    });
-    
-    observer.observe(root, { attributes: true, attributeFilter: ['class'] });
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [isOpen]);
-
-  useEffect(() => {
-    contentRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [currentStep]);
-
-  const projectTypes = t('quoteModal.step2.projectTypes', { returnObjects: true }) as string[];
-  const availableFeatures = t('quoteModal.step2.featuresList', { returnObjects: true }) as string[];
-  const availableTechnologies = t('quoteModal.step2.technologiesList', { returnObjects: true }) as string[];
-  const budgetRanges = t('quoteModal.step3.budgetRanges', { returnObjects: true }) as string[];
-  const timelineOptions = t('quoteModal.step3.timelineOptions', { returnObjects: true }) as string[];
-  const urgencyLevels = t('quoteModal.step3.urgencyLevels', { returnObjects: true }) as string[];
-
-  const handleInputChange = <K extends keyof QuoteFormData>(field: K, value: QuoteFormData[K]) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const handleArrayToggle = (field: 'features' | 'technologies', value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: prev[field].includes(value)
-        ? prev[field].filter((item: string) => item !== value)
-        : [...prev[field], value]
-    }));
-  };
-
-  const handleSubmit = async () => {
-    const validation = validateQuoteForm(formData);
-    if (!validation.isValid) {
-      console.error('[Quote] Erreurs de validation:', validation.errors);
-      setSubmitStatus('error');
-      return;
-    }
-
-    setIsSubmitting(true);
-    setSubmitStatus('idle');
-
-    try {
-      const success = await sendQuoteEmail(formData);
-      if (success) {
-        setSubmitStatus('success');
-        setTimeout(() => {
-          onClose();
-          resetForm();
-        }, 2000);
-      } else {
-        setSubmitStatus('error');
-      }
-    } catch (error) {
-      console.error('[Quote] Erreur lors de l\'envoi:', error);
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
+    setTouched({});
+    setWebsite('');
+    setTurnstileToken('');
     setCurrentStep(1);
     setSubmitStatus('idle');
     setFormData({
@@ -136,12 +79,117 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
       needsTraining: false,
       additionalInfo: ''
     });
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    setIsDark(root.classList.contains('dark'));
+    
+    const observer = new MutationObserver(() => {
+      setIsDark(root.classList.contains('dark'));
+    });
+    
+    observer.observe(root, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) {
+      resetForm();
+      return;
+    }
+
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    closeButtonRef.current?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onClose();
+      }
+      if (event.key === 'Tab' && dialogRef.current) {
+        const controls = Array.from(dialogRef.current.querySelectorAll<HTMLElement>('button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), a[href]'));
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', onKeyDown);
+      previousFocus?.focus();
+    };
+  }, [isOpen, onClose, resetForm]);
+
+  useEffect(() => {
+    contentRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+    if (pendingFocus.current) { document.getElementById(fieldId(pendingFocus.current))?.focus(); pendingFocus.current = null; }
+  }, [currentStep]);
+
+  const projectTypes = t('quoteModal.step2.projectTypes', { returnObjects: true }) as string[];
+  const availableFeatures = t('quoteModal.step2.featuresList', { returnObjects: true }) as string[];
+  const availableTechnologies = t('quoteModal.step2.technologiesList', { returnObjects: true }) as string[];
+  const budgetRanges = t('quoteModal.step3.budgetRanges', { returnObjects: true }) as string[];
+  const timelineOptions = t('quoteModal.step3.timelineOptions', { returnObjects: true }) as string[];
+  const urgencyLevels = t('quoteModal.step3.urgencyLevels', { returnObjects: true }) as string[];
+
+  const fieldId = (field: Field) => `brief-${field === 'projectDescription' ? 'description' : field === 'projectType' ? 'project-type' : field === 'additionalInfo' ? 'additional-info' : field}`;
+  const stepValid = (step: number) => invalidFields(formData, briefSteps[step - 1]).length === 0;
+  const fieldProps = (field: Field) => ({
+    'aria-invalid': Boolean(touched[field] && fieldIssue(field, formData[field] ?? '')),
+    'aria-describedby': `${fieldId(field)}-feedback`,
+    onBlur: () => setTouched(current => ({ ...current, [field]: true })),
+  });
+  const fieldFeedback = (field: Field) => <FieldValidationMessage id={fieldId(field)} field={field} value={formData[field] ?? ''} language={i18n.language} touched={Boolean(touched[field])} />;
+  const focusInvalid = (fields: Field[]) => {
+    const invalid = invalidFields(formData, fields);
+    setTouched(current => ({ ...current, ...Object.fromEntries(invalid.map(field => [field, true])) }));
+    if (invalid[0]) {
+      const step = briefSteps.findIndex(fields => fields.includes(invalid[0])) + 1;
+      if (step !== currentStep) { pendingFocus.current = invalid[0]; setCurrentStep(step); }
+      else document.getElementById(fieldId(invalid[0]))?.focus();
+    }
+    return invalid.length > 0;
+  };
+  const handleInputChange = <K extends keyof QuoteFormData>(field: K, value: QuoteFormData[K]) => {
+    if (delivery !== 'idle') clearSubmission('brief');
+    setSubmitStatus('idle');
+    setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const nextStep = () => setCurrentStep(prev => Math.min(prev + 1, 4));
+  const handleArrayToggle = (field: 'features' | 'technologies', value: string) => {
+    if (delivery !== 'idle') clearSubmission('brief');
+    setSubmitStatus('idle');
+    setFormData(prev => ({
+      ...prev,
+      [field]: prev[field].includes(value)
+        ? prev[field].filter((item: string) => item !== value)
+        : [...prev[field], value]
+    }));
+  };
+
+  const handleSubmit = async () => {
+    if (isSubmitting || submitStatus === 'success') return;
+    if (focusInvalid(briefSteps.flat())) return;
+    if (!turnstileToken) { setErrorCode('turnstile_failed'); setSubmitStatus('error'); return; }
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    const success = await sendQuoteEmail(formData, { website, turnstileToken }, setErrorCode);
+    setSubmitStatus(success ? 'success' : 'error');
+    if (success) trackProjectBriefSubmit();
+    setIsSubmitting(false);
+    setSecurityReset(value => value + 1);
+  };
+
+  const nextStep = () => { if (!focusInvalid(briefSteps[currentStep - 1])) setCurrentStep(prev => Math.min(prev + 1, 4)); };
   const prevStep = () => setCurrentStep(prev => Math.max(prev - 1, 1));
 
-  if (!isOpen) return null;
+  if (!isOpen) return <DeliveryStatus kind="brief" state={delivery} language={i18n.language} />;
 
   // Classes conditionnelles basées sur le thème
   const bgModal = isDark ? 'bg-slate-900' : 'bg-white';
@@ -157,16 +205,27 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-end justify-center overflow-y-auto overscroll-contain p-0 sm:items-center sm:p-4">
-      <div className={`${bgModal} flex h-[100dvh] w-full flex-col overflow-hidden rounded-none border ${borderColor} sm:h-auto sm:max-h-[90vh] sm:max-w-4xl sm:rounded-2xl`}>
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="project-brief-title" className={`${bgModal} flex h-[100dvh] w-full flex-col overflow-hidden rounded-none border ${borderColor} sm:h-auto sm:max-h-[90vh] sm:max-w-4xl sm:rounded-2xl`}>
         {/* Header */}
         <div className={`sticky top-0 z-10 flex items-start justify-between border-b ${borderColor} ${bgModal} px-4 py-4 sm:p-6`}>
           <div>
-            <h2 className={`pr-4 text-2xl font-bold leading-tight ${textPrimary}`}>{t('quoteModal.title')}</h2>
+            <h2 id="project-brief-title" className={`pr-4 text-2xl font-bold leading-tight ${textPrimary}`}>{t('quoteModal.title')}</h2>
             <p className={textSecondary}>{t('quoteModal.step', { step: currentStep })}</p>
           </div>
-          <button onClick={onClose} className={`shrink-0 p-2 ${bgHover} rounded-lg transition-colors`}>
+          <button ref={closeButtonRef} type="button" aria-label={t('quoteModal.buttons.close')} onClick={onClose} className={`shrink-0 p-2 ${bgHover} rounded-lg transition-colors focus-visible:outline-2 focus-visible:outline-blue-500`}>
             <X size={24} className={textPrimary} />
           </button>
+        </div>
+
+        <div id="brief-delivery-status" className="shrink-0 px-4 sm:px-6">
+          <DeliveryStatus kind="brief" state={delivery} language={i18n.language} />
+              {submitStatus === 'success' && delivery === 'idle' && (
+                <div role="status" aria-live="polite" className="flex items-center p-4 bg-green-500/20 border border-green-500/30 rounded-lg">
+                  <CheckCircle className="text-green-800 dark:text-green-300 mr-3" size={20} />
+                  <span className="text-green-800 dark:text-green-300">{feedback.briefSuccess}</span>
+                </div>
+              )}
+
         </div>
 
         {/* Progress Bar */}
@@ -175,13 +234,13 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
             {[1, 2, 3, 4].map((step) => (
               <div key={step} className="flex min-w-0 flex-1 items-center last:flex-initial">
                 <div className={`h-8 w-8 shrink-0 rounded-full flex items-center justify-center text-sm font-semibold ${
-                  step <= currentStep ? 'bg-blue-500 text-white' : `${bgProgressBar} ${textSecondary}`
+                  step <= currentStep ? 'bg-blue-600 text-white' : `${bgProgressBar} ${textSecondary}`
                 }`}>
                   {step}
                 </div>
                 {step < 4 && (
                   <div className={`mx-2 h-1 flex-1 ${
-                    step < currentStep ? 'bg-blue-500' : bgProgressBar
+                    step < currentStep ? 'bg-blue-600' : bgProgressBar
                   }`} />
                 )}
               </div>
@@ -203,10 +262,11 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
               <h3 className={`text-xl font-semibold mb-4 ${textPrimary}`}>{t('quoteModal.step1.title')}</h3>
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
-                  <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
+                  <label htmlFor="brief-name" className={`block text-sm font-medium ${textSecondary} mb-2`}>
                     {t('quoteModal.step1.fullName')}
                   </label>
                   <input
+                    id="brief-name" {...fieldProps('name')} maxLength={limits.name}
                     type="text"
                     value={formData.name}
                     onChange={(e) => handleInputChange('name', e.target.value)}
@@ -214,12 +274,14 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                     placeholder={t('quoteModal.step1.fullNamePlaceholder')}
                     required
                   />
+                  {fieldFeedback('name')}
                 </div>
                 <div>
-                  <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
+                  <label htmlFor="brief-email" className={`block text-sm font-medium ${textSecondary} mb-2`}>
                     {t('quoteModal.step1.email')}
                   </label>
                   <input
+                    id="brief-email" {...fieldProps('email')} maxLength={limits.email}
                     type="email"
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
@@ -227,30 +289,35 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                     placeholder={t('quoteModal.step1.emailPlaceholder')}
                     required
                   />
+                  {fieldFeedback('email')}
                 </div>
                 <div>
-                  <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
-                    {t('quoteModal.step1.phone')}
+                  <label htmlFor="brief-phone" className={`block text-sm font-medium ${textSecondary} mb-2`}>
+                    {t('quoteModal.step1.phone')} <span className="text-xs">({feedback.optional})</span>
                   </label>
                   <input
+                    id="brief-phone" {...fieldProps('phone')} maxLength={limits.phone}
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => handleInputChange('phone', e.target.value)}
                     className={`w-full px-4 py-3 ${bgInput} border ${bgInputBorder} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${textPrimary}`}
                     placeholder={t('quoteModal.step1.phonePlaceholder')}
                   />
+                  {fieldFeedback('phone')}
                 </div>
                 <div>
-                  <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
-                    {t('quoteModal.step1.company')}
+                  <label htmlFor="brief-company" className={`block text-sm font-medium ${textSecondary} mb-2`}>
+                    {t('quoteModal.step1.company')} <span className="text-xs">({feedback.optional})</span>
                   </label>
                   <input
+                    id="brief-company" {...fieldProps('company')} maxLength={limits.company}
                     type="text"
                     value={formData.company}
                     onChange={(e) => handleInputChange('company', e.target.value)}
                     className={`w-full px-4 py-3 ${bgInput} border ${bgInputBorder} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${textPrimary}`}
                     placeholder={t('quoteModal.step1.companyPlaceholder')}
                   />
+                  {fieldFeedback('company')}
                 </div>
               </div>
             </div>
@@ -262,10 +329,11 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
               <h3 className={`text-xl font-semibold mb-4 ${textPrimary}`}>{t('quoteModal.step2.title')}</h3>
               
               <div>
-                <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
+                <label htmlFor="brief-project-type" className={`block text-sm font-medium ${textSecondary} mb-2`}>
                   {t('quoteModal.step2.projectType')}
                 </label>
                 <select
+                  id="brief-project-type" {...fieldProps('projectType')}
                   value={formData.projectType}
                   onChange={(e) => handleInputChange('projectType', e.target.value)}
                   className={`w-full px-4 py-3 ${bgInput} border ${bgInputBorder} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${textPrimary}`}
@@ -276,13 +344,15 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                     <option key={type} value={type}>{type}</option>
                   ))}
                 </select>
+                  {fieldFeedback('projectType')}
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
+                <label htmlFor="brief-description" className={`block text-sm font-medium ${textSecondary} mb-2`}>
                   {t('quoteModal.step2.description')}
                 </label>
                 <textarea
+                  id="brief-description" {...fieldProps('projectDescription')} maxLength={limits.projectDescription}
                   value={formData.projectDescription}
                   onChange={(e) => handleInputChange('projectDescription', e.target.value)}
                   rows={4}
@@ -290,12 +360,13 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                   placeholder={t('quoteModal.step2.descriptionPlaceholder')}
                   required
                 />
+                  {fieldFeedback('projectDescription')}
               </div>
 
-              <div>
-                <label className={`block text-sm font-medium ${textSecondary} mb-3`}>
-                  {t('quoteModal.step2.features')}
-                </label>
+              <div role="group" aria-label={t('quoteModal.step2.features')}>
+                <p className={`block text-sm font-medium ${textSecondary} mb-3`}>
+                  {t('quoteModal.step2.features')} <span className="text-xs">({feedback.optional})</span>
+                </p>
                 <div className="grid gap-2 md:grid-cols-2">
                   {availableFeatures.map((feature: string) => (
                     <label key={feature} className={`flex items-center p-3 ${bgInput} rounded-lg ${bgHoverDarker} transition-colors cursor-pointer`}>
@@ -311,10 +382,10 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
-              <div>
-                <label className={`block text-sm font-medium ${textSecondary} mb-3`}>
-                  {t('quoteModal.step2.technologies')}
-                </label>
+              <div role="group" aria-label={t('quoteModal.step2.technologies')}>
+                <p className={`block text-sm font-medium ${textSecondary} mb-3`}>
+                  {t('quoteModal.step2.technologies')} <span className="text-xs">({feedback.optional})</span>
+                </p>
                 <div className="grid gap-2 md:grid-cols-3">
                   {availableTechnologies.map((tech: string) => (
                     <label key={tech} className={`flex items-center p-3 ${bgInput} rounded-lg ${bgHoverDarker} transition-colors cursor-pointer`}>
@@ -339,10 +410,11 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
               
               <div className="grid gap-6 md:grid-cols-2">
                 <div>
-                  <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
+                  <label htmlFor="brief-timeline" className={`block text-sm font-medium ${textSecondary} mb-2`}>
                     {t('quoteModal.step3.timeline')}
                   </label>
                   <select
+                    id="brief-timeline" {...fieldProps('timeline')}
                     value={formData.timeline}
                     onChange={(e) => handleInputChange('timeline', e.target.value)}
                     className={`w-full px-4 py-3 ${bgInput} border ${bgInputBorder} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${textPrimary}`}
@@ -353,13 +425,15 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                       <option key={option} value={option}>{option}</option>
                     ))}
                   </select>
+                  {fieldFeedback('timeline')}
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
+                  <label htmlFor="brief-budget" className={`block text-sm font-medium ${textSecondary} mb-2`}>
                     {t('quoteModal.step3.budget')}
                   </label>
                   <select
+                    id="brief-budget" {...fieldProps('budget')}
                     value={formData.budget}
                     onChange={(e) => handleInputChange('budget', e.target.value)}
                     className={`w-full px-4 py-3 ${bgInput} border ${bgInputBorder} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${textPrimary}`}
@@ -370,13 +444,14 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                       <option key={range} value={range}>{range}</option>
                     ))}
                   </select>
+                  {fieldFeedback('budget')}
                 </div>
               </div>
 
-              <div>
-                <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
-                  {t('quoteModal.step3.urgency')}
-                </label>
+              <div role="group" aria-label={t('quoteModal.step3.urgency')}>
+                <p className={`block text-sm font-medium ${textSecondary} mb-2`}>
+                  {t('quoteModal.step3.urgency')} <span className="text-xs">({feedback.optional})</span>
+                </p>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
                   {urgencyLevels.map((level: string) => (
                     <label key={level} className={`flex items-center p-3 sm:p-4 ${bgInput} rounded-lg ${bgHoverDarker} transition-colors cursor-pointer`}>
@@ -394,10 +469,10 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
-              <div>
-                <label className={`block text-sm font-medium ${textSecondary} mb-3`}>
+              <div role="group" aria-label={t('quoteModal.step3.additionalServices')}>
+                <p className={`block text-sm font-medium ${textSecondary} mb-3`}>
                   {t('quoteModal.step3.additionalServices')}
-                </label>
+                </p>
                 <div className="space-y-3">
                   {[
                     { key: 'hasDesign', label: t('quoteModal.step3.design') },
@@ -426,16 +501,18 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
               <h3 className={`text-xl font-semibold mb-4 ${textPrimary}`}>{t('quoteModal.step4.title')}</h3>
               
               <div>
-                <label className={`block text-sm font-medium ${textSecondary} mb-2`}>
-                  {t('quoteModal.step4.additionalInfo')}
+                <label htmlFor="brief-additional-info" className={`block text-sm font-medium ${textSecondary} mb-2`}>
+                  {t('quoteModal.step4.additionalInfo')} <span className="text-xs">({feedback.optional})</span>
                 </label>
                 <textarea
+                  id="brief-additional-info" {...fieldProps('additionalInfo')} maxLength={limits.additionalInfo}
                   value={formData.additionalInfo}
                   onChange={(e) => handleInputChange('additionalInfo', e.target.value)}
                   rows={4}
                   className={`w-full px-4 py-3 ${bgInput} border ${bgInputBorder} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${textPrimary} resize-none`}
                   placeholder={t('quoteModal.step4.additionalInfoPlaceholder')}
                 />
+                  {fieldFeedback('additionalInfo')}
               </div>
 
               {/* Résumé */}
@@ -450,29 +527,33 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
-              {submitStatus === 'success' && (
-                <div className="flex items-center p-4 bg-green-500/20 border border-green-500/30 rounded-lg">
-                  <CheckCircle className="text-green-400 mr-3" size={20} />
-                  <span className="text-green-400">{t('quoteModal.step4.successMessage')}</span>
-                </div>
-              )}
-
               {submitStatus === 'error' && (
-                <div className="flex items-center p-4 bg-red-500/20 border border-red-500/30 rounded-lg">
-                  <AlertCircle className="text-red-400 mr-3" size={20} />
-                  <span className="text-red-400">{t('quoteModal.step4.errorMessage')}</span>
+                <div role="alert" aria-live="assertive" className="flex items-center p-4 bg-red-500/20 border border-red-500/30 rounded-lg">
+                  <AlertCircle className="text-red-800 dark:text-red-300 mr-3" size={20} />
+                  <span className="text-red-800 dark:text-red-300">{apiErrorMessage(errorCode, i18n.language)}</span>
                 </div>
               )}
             </div>
           )}
+          <div className="mt-6 space-y-4">
+            {currentStep === 4 && submitStatus !== 'success' && <Turnstile action="brief" onToken={setTurnstileToken} resetKey={securityReset} />}
+            {submitStatus !== 'success' && <FormStatusSummary id="brief-readiness" language={i18n.language} busy={isSubmitting} readyText={currentStep === 4 ? feedback.briefReady : feedback.stepReady} items={currentStep === 4 ? [
+              { label: feedback.labels.information, valid: stepValid(1) },
+              { label: feedback.labels.project, valid: stepValid(2) },
+              { label: feedback.labels.planning, valid: stepValid(3) },
+              ...(stepValid(4) ? [] : [{ label: feedback.labels.additionalInfo, valid: false }]),
+              { label: feedback.security, valid: Boolean(turnstileToken) },
+            ] : briefSteps[currentStep - 1].map(field => ({ label: feedback.labels[field], valid: !fieldIssue(field, formData[field] ?? '') }))} />}
+            {currentStep === 4 && <FormDisclosure kind="brief" />}
+          </div>
         </div>
-
         {/* Footer */}
+        <div className="sr-only" aria-hidden="true"><label htmlFor="brief-website">Website</label><input id="brief-website" name="website" value={website} onChange={event => setWebsite(event.target.value)} tabIndex={-1} autoComplete="off" /></div>
         <div className={`sticky bottom-0 flex flex-col gap-3 border-t ${borderColor} ${bgModal} px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:p-6`}>
           <button
             onClick={prevStep}
-            disabled={currentStep === 1}
-            className={`order-2 px-6 py-2 text-left sm:order-1 ${textSecondary} disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
+            disabled={currentStep === 1 || isSubmitting || submitStatus === 'success'}
+            className={`order-2 px-6 py-2 text-left sm:order-1 ${textSecondary} disabled:bg-slate-200 disabled:text-slate-700 dark:disabled:bg-slate-700 dark:disabled:text-slate-200 disabled:cursor-not-allowed transition-colors`}
           >
             {t('quoteModal.buttons.previous')}
           </button>
@@ -481,20 +562,18 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
             {currentStep < 4 ? (
               <button
                 onClick={nextStep}
-                disabled={
-                  (currentStep === 1 && (!formData.name || !formData.email)) ||
-                  (currentStep === 2 && (!formData.projectType || !formData.projectDescription)) ||
-                  (currentStep === 3 && (!formData.timeline || !formData.budget))
-                }
-                className="w-full rounded-lg bg-blue-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:py-2"
+                aria-describedby={submitStatus === 'success' ? 'brief-delivery-status' : 'brief-readiness'}
+                disabled={!stepValid(currentStep) || isSubmitting}
+                className="w-full rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-700 dark:disabled:bg-slate-700 dark:disabled:text-slate-200 sm:w-auto sm:py-2"
               >
                 {t('quoteModal.buttons.next')}
               </button>
             ) : (
               <button
                 onClick={handleSubmit}
-                disabled={isSubmitting || submitStatus === 'success'}
-                className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-8 py-3 font-semibold text-white transition-colors hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:py-2"
+                aria-describedby={submitStatus === 'success' ? 'brief-delivery-status' : 'brief-readiness'}
+                disabled={isSubmitting || !validateQuoteForm(formData).isValid || !turnstileToken || submitStatus === 'success'}
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-8 py-3 font-semibold text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-700 dark:disabled:bg-slate-700 dark:disabled:text-slate-200 sm:w-auto sm:py-2"
               >
                 {isSubmitting ? (
                   <>
@@ -517,3 +596,6 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
 };
 
 export default QuoteModal;
+
+
+

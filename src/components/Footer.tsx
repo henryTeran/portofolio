@@ -1,149 +1,30 @@
-import React from 'react';
-import { Mail, Linkedin, Github, Heart } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { trackCTA } from '../analytics/trackingEvents';
+import { ArrowUpRight } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
-import { DEFAULT_LANGUAGE, isSupportedLanguage, type LanguageCode } from '../constants/i18n';
+import { DEFAULT_LANGUAGE, isSupportedLanguage } from '../constants/i18n';
+import { navigationCopy } from '../content/navigation';
+import { homePath, sectionPath } from '../router/paths';
+import BrandLogo from './BrandLogo';
+import { consentCopy } from '../privacy/consentCopy';
+import { openCookiePreferences } from '../privacy/consent';
 
-const Footer = () => {
-  const base = import.meta.env.BASE_URL;
-  const { t } = useTranslation();
-  const currentYear = new Date().getFullYear();
-  const { lang = DEFAULT_LANGUAGE } = useParams();
-  const language: LanguageCode = isSupportedLanguage(lang) ? lang : DEFAULT_LANGUAGE;
+export default function Footer() {
+  const { lang } = useParams();
+  const language = lang && isSupportedLanguage(lang) ? lang : DEFAULT_LANGUAGE;
+  const copy = navigationCopy[language];
+  const links = [
+    { id: 'projects', label: copy.work }, { id: 'expertise', label: copy.expertise },
+    { id: 'approach', label: copy.approach },
+    { id: 'contact', label: copy.contact },
+  ];
 
-  const buildLanguagePath = (segment = '') => `/${language}${segment ? `/${segment}` : ''}`;
-  const buildSectionPath = (section: 'about' | 'skills' | 'projects' | 'services' | 'contact') =>
-    `/${language}#${section}`;
-
-  return (
-    <footer className="bg-app border-t border-white/10 py-12">
-      <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
-          {/* Brand */}
-          <div>
-            <div className="text-2xl font-display font-bold text-[var(--primary)] mb-4">
-              {/* Affiché en mode clair */}
-              <img
-                src={`${base}logo-dark.svg`}
-                alt="Logo clair"
-                className="block dark:hidden w-64"
-              />
-              {/* Affiché en mode sombre */}
-              <img
-                src={`${base}logo-light.svg`}
-                alt="Logo sombre"
-                className="hidden dark:block w-64"
-              />
-            </div>
-            <p className="text-[var(--muted)] mb-4">
-              {t('footer.description')}
-            </p>
-            <div className="flex gap-4">
-              <a
-                href="https://linkedin.com/in/henry-teran"
-                className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center border border-white/10 hover:bg-white/10 transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Linkedin className="text-[var(--primary)]" size={20} />
-              </a>
-              <a
-                href="https://github.com/henryTeran"
-                className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center border border-white/10 hover:bg-white/10 transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Github className="text-[var(--text)] hover:text-[var(--primary)]" size={20} />
-              </a>
-              <a
-                href="mailto:teranhenryc@gmail.com"
-                className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center border border-white/10 hover:bg-white/10 transition-colors"
-              >
-                <Mail className="text-[var(--primary)]" size={20} />
-              </a>
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4">{t('footer.navigation')}</h4>
-            <div className="space-y-2">
-              <Link
-                to={buildLanguagePath()}
-                className="block text-[var(--muted)] hover:text-[var(--primary)] transition-colors"
-              >
-                {t('nav.home')}
-              </Link>
-              <Link
-                to={`${buildLanguagePath()}#about`}
-                className="block text-[var(--muted)] hover:text-[var(--primary)] transition-colors"
-              >
-                {t('nav.about')}
-              </Link>
-              <Link
-                to={`${buildLanguagePath()}#skills`}
-                className="block text-[var(--muted)] hover:text-[var(--primary)] transition-colors"
-              >
-                {t('nav.skills')}
-              </Link>
-              <Link
-                to={buildSectionPath('projects')}
-                className="block text-[var(--muted)] hover:text-[var(--primary)] transition-colors"
-              >
-                {t('nav.projects')}
-              </Link>
-              <Link
-                to={buildSectionPath('services')}
-                className="block text-[var(--muted)] hover:text-[var(--primary)] transition-colors"
-              >
-                {t('nav.services')}
-              </Link>
-              <Link
-                to={buildSectionPath('contact')}
-                className="block text-[var(--muted)] hover:text-[var(--primary)] transition-colors"
-              >
-                {t('nav.contact')}
-              </Link>
-            </div>
-          </div>
-
-          {/* Contact Info */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4">{t('footer.contact')}</h4>
-            <div className="space-y-3">
-              <div className="flex items-center">
-                <Mail className="text-[var(--primary)] mr-3" size={18} />
-                <a
-                  href="mailto:teranhenryc@gmail.com"
-                  className="text-[var(--muted)] hover:text-[var(--primary)] transition-colors"
-                >
-                  teranhenryc@gmail.com
-                </a>
-              </div>
-              <div className="flex items-center">
-                <div className="w-3 h-3 bg-emerald-400 rounded-full mr-3"></div>
-                <span className="text-[var(--muted)]">{t('footer.availability')}</span>
-              </div>
-              <div className="text-[var(--muted)] text-sm">
-                {t('footer.location')}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="border-t border-white/10 pt-8 mt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="text-[var(--muted)] text-sm mb-4 md:mb-0">
-              © {currentYear} Henry Teran. {t('footer.rights')}
-            </div>
-            <div className="flex items-center text-[var(--muted)] text-sm">
-              {t('footer.madeWith')} <Heart className="mx-2 text-red-400" size={16} /> {t('footer.andCoffee')}
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-};
-
-export default Footer;
+  return <footer className="border-t border-[var(--v2-border)] bg-[var(--v2-surface)] text-[var(--v2-text)]">
+    <div className="mx-auto grid max-w-[var(--v2-content-width)] gap-10 px-5 py-14 sm:px-8 md:grid-cols-[1.5fr_1fr_1fr]">
+      <div><Link to={homePath(language)} className="inline-block focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]"><BrandLogo className="w-[180px]" /></Link><p className="mt-4 max-w-xs text-sm leading-relaxed text-[var(--v2-text-secondary)]">Senior Full-Stack Developer &amp; Applied AI Engineer</p></div>
+      <nav aria-label={`${copy.nav} (${language === 'fr' ? 'pied de page' : language === 'es' ? 'pie de página' : 'footer'})`}><h2 className="mb-4 text-sm font-semibold">{copy.nav}</h2><ul className="space-y-2">{links.map((item) => <li key={item.id}><Link to={sectionPath(language, item.id)} className="text-sm text-[var(--v2-text-secondary)] hover:text-[var(--v2-accent)]">{item.label}</Link></li>)}</ul></nav>
+      <div><h2 className="mb-4 text-sm font-semibold">{copy.contact}</h2><a href="mailto:teranhenryc@gmail.com" className="block break-all text-sm text-[var(--v2-text-secondary)] hover:text-[var(--v2-accent)]">teranhenryc@gmail.com</a><div className="mt-4 flex gap-5 text-sm"><a href="https://linkedin.com/in/henry-teran" onClick={() => trackCTA('footer_linkedin')} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:text-[var(--v2-accent)]">LinkedIn<ArrowUpRight size={14} aria-hidden="true" /></a><a href="https://github.com/henryTeran" onClick={() => trackCTA('footer_github')} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:text-[var(--v2-accent)]">GitHub<ArrowUpRight size={14} aria-hidden="true" /></a></div></div>
+    </div>
+    <nav aria-label={consentCopy[language].privacy} className="mx-auto flex max-w-[var(--v2-content-width)] flex-wrap gap-x-6 gap-y-2 px-5 pb-5 text-sm sm:px-8"><Link className="inline-flex min-h-11 items-center underline underline-offset-4" to={`/${language}/privacy`}>{consentCopy[language].privacy}</Link><button type="button" onClick={openCookiePreferences} className="min-h-11 underline underline-offset-4">{consentCopy[language].preferences}</button></nav>
+    <div className="mx-auto flex max-w-[var(--v2-content-width)] flex-wrap justify-between gap-3 border-t border-[var(--v2-border)] px-5 py-5 text-xs text-[var(--v2-text-secondary)] sm:px-8"><span>© {new Date().getFullYear()} Henry Teran</span><span>Geneva, Switzerland</span></div>
+  </footer>;
+}

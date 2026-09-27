@@ -1,175 +1,60 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Menu, X } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
-import { Link, NavLink, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import LanguageSwitcher from './LanguageSwitcher';
 import ThemeToggle from './ThemeToggle';
-import { DEFAULT_LANGUAGE, isSupportedLanguage, type LanguageCode } from '../constants/i18n';
+import BrandLogo from './BrandLogo';
+import { DEFAULT_LANGUAGE, isSupportedLanguage } from '../constants/i18n';
+import { navigationCopy } from '../content/navigation';
+import { homePath, sectionPath } from '../router/paths';
 import { trackCTA } from '../analytics/trackingEvents';
 
-const Header = () => {
-  const base = import.meta.env.BASE_URL;
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const { t } = useTranslation();
-  const { lang = DEFAULT_LANGUAGE } = useParams();
+export default function Header() {
+  const [open, setOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const { lang } = useParams();
+  const location = useLocation();
+  const language = lang && isSupportedLanguage(lang) ? lang : DEFAULT_LANGUAGE;
+  const copy = navigationCopy[language];
+  const links = [
+    { id: 'work', label: copy.work },
+    { id: 'expertise', label: copy.expertise },
+    { id: 'approach', label: copy.approach },
+  ];
 
-  const language: LanguageCode = isSupportedLanguage(lang) ? lang : DEFAULT_LANGUAGE;
-
-  const buildLanguagePath = (segment = '') =>
-    `/${language}${segment ? `/${segment}` : ''}`;
-
-  const buildSectionPath = (section: 'about' | 'skills' | 'projects' | 'services' | 'contact') =>
-    `/${language}#${section}`;
-
+  useEffect(() => setOpen(false), [location.pathname, location.hash]);
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    if (!open) return;
+    const onEscape = (event: KeyboardEvent) => { if (event.key === 'Escape') { setOpen(false); menuButton.current?.focus(); } };
+    window.addEventListener('keydown', onEscape);
+    return () => window.removeEventListener('keydown', onEscape);
+  }, [open]);
 
-  const closeMenu = () => setIsMenuOpen(false);
-
-  const hasBackground = isScrolled || isMenuOpen;
-
-  const desktopLinkClass = ({ isActive }: { isActive: boolean }) =>
-    `hover:text-[var(--primary)] ${isActive ? 'text-[var(--primary)]' : ''}`;
+  const contact = () => trackCTA('header_contact');
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
-        hasBackground
-          ? 'bg-[var(--bg)]/98 backdrop-blur-lg border-b border-white/10'
-          : 'bg-transparent'
-      }`}
-    >
-      <nav className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo cliquable */}
-          <Link
-            to={buildLanguagePath()}
-            onClick={closeMenu}
-            className="flex items-center focus:outline-none"
-            aria-label="Aller à la page d'accueil"
-          >
-            {/* clair */}
-            <img
-              src={`${base}logo-dark.svg`}
-              alt="Henry Teran - logo clair"
-              className="block dark:hidden w-40 sm:w-52"
-            />
-            {/* sombre */}
-            <img
-              src={`${base}logo-light.svg`}
-              alt="Henry Teran - logo sombre"
-              className="hidden dark:block w-40 sm:w-52"
-            />
-          </Link>
-
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-6 text-[var(--muted)]">
-            <NavLink to={buildLanguagePath()} end className={desktopLinkClass}>
-              {t('nav.home')}
-            </NavLink>
-            <Link to={buildSectionPath('about')} className="hover:text-[var(--primary)]">
-              {t('nav.about')}
-            </Link>
-            <Link to={buildSectionPath('skills')} className="hover:text-[var(--primary)]">
-              {t('nav.skills')}
-            </Link>
-            <Link to={buildSectionPath('projects')} className="hover:text-[var(--primary)]">
-              {t('nav.projects')}
-            </Link>
-            <Link to={buildSectionPath('services')} className="hover:text-[var(--primary)]">
-              {t('nav.services')}
-            </Link>
-            <Link
-              to={buildSectionPath('contact')}
-              onClick={() => trackCTA('header_contact')}
-              className="btn"
-            >
-              {t('nav.contact')}
-            </Link>
-            <LanguageSwitcher />
-            <ThemeToggle />
-          </div>
-
-          {/* Mobile toggle */}
-          <button
-            className="md:hidden text-[var(--text)]"
-            onClick={() => setIsMenuOpen((prev) => !prev)}
-            aria-label="Ouvrir / fermer le menu"
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+    <header className="sticky top-0 z-50 border-b border-[var(--v2-border)] bg-[var(--v2-background)]/95 text-[var(--v2-text)] backdrop-blur-md">
+      <nav className="mx-auto flex max-w-[var(--v2-content-width)] items-center justify-between gap-4 px-5 py-4 sm:px-8" aria-label={copy.nav}>
+        <Link to={homePath(language)} className="shrink-0 outline-offset-4 focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]" onClick={() => setOpen(false)}>
+          <BrandLogo className="w-[150px] sm:w-[180px]" />
+        </Link>
+        <div className="hidden items-center gap-5 xl:gap-7 lg:flex">
+          {links.map((item) => <Link key={item.id} to={sectionPath(language, item.id)} className="text-sm text-[var(--v2-text-secondary)] transition-colors hover:text-[var(--v2-text)] focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]">{item.label}</Link>)}
+          <Link to={sectionPath(language, 'contact')} onClick={contact} className="text-sm font-semibold text-[var(--v2-accent)] hover:underline focus-visible:outline-2 focus-visible:outline-[var(--v2-accent)]">{copy.contact}</Link>
+          <LanguageSwitcher />
+          <ThemeToggle />
         </div>
-
-        {/* Mobile menu avec slide droite -> gauche */}
-        <div
-          className={`
-            md:hidden absolute top-full left-0 right-0 bg-[var(--bg)] border-t border-white/10
-            transform transition-transform duration-300
-            ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}
-          `}
-        >
-          <div className="flex flex-col p-4 space-y-3">
-            <NavLink
-              to={buildLanguagePath()}
-              end
-              onClick={closeMenu}
-              className="text-left py-2 hover:text-[var(--primary)]"
-            >
-              {t('nav.home')}
-            </NavLink>
-            <Link
-              to={buildSectionPath('about')}
-              onClick={closeMenu}
-              className="text-left hover:text-[var(--primary)] py-2"
-            >
-              {t('nav.about')}
-            </Link>
-            <Link
-              to={buildSectionPath('skills')}
-              onClick={closeMenu}
-              className="text-left hover:text-[var(--primary)] py-2"
-            >
-              {t('nav.skills')}
-            </Link>
-            <Link
-              to={buildSectionPath('projects')}
-              onClick={closeMenu}
-              className="text-left hover:text-[var(--primary)] py-2"
-            >
-              {t('nav.projects')}
-            </Link>
-            <Link
-              to={buildSectionPath('services')}
-              onClick={closeMenu}
-              className="text-left hover:text-[var(--primary)] py-2"
-            >
-              {t('nav.services')}
-            </Link>
-
-            <div className="flex items-center justify-between pt-2">
-              <LanguageSwitcher />
-              <ThemeToggle />
-            </div>
-
-            <Link
-              to={buildSectionPath('contact')}
-              onClick={() => {
-                trackCTA('header_contact');
-                closeMenu();
-              }}
-              className="text-left btn mt-4 w-full"
-            >
-              {t('nav.contact')}
-            </Link>
-          </div>
-        </div>
+        <button ref={menuButton} type="button" className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-[var(--v2-border)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--v2-accent)] lg:hidden" aria-label={open ? copy.close : copy.menu} aria-expanded={open} aria-controls="mobile-navigation" onClick={() => setOpen((value) => !value)}>
+          {open ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
+        </button>
       </nav>
+      {open && <div id="mobile-navigation" className="border-t border-[var(--v2-border)] bg-[var(--v2-background)] px-5 pb-6 pt-3 lg:hidden">
+        <div className="mx-auto flex max-w-[var(--v2-content-width)] flex-col gap-1">
+          {links.map((item) => <Link key={item.id} to={sectionPath(language, item.id)} onClick={() => setOpen(false)} className="rounded-lg px-3 py-3 text-base hover:bg-[var(--v2-surface-raised)]">{item.label}</Link>)}
+          <Link to={sectionPath(language, 'contact')} onClick={() => { contact(); setOpen(false); }} className="rounded-lg px-3 py-3 font-semibold text-[var(--v2-accent)] hover:bg-[var(--v2-surface-raised)]">{copy.contact}</Link>
+          <div className="mt-3 flex items-center gap-4 border-t border-[var(--v2-border)] pt-4"><LanguageSwitcher /><ThemeToggle /></div>
+        </div>
+      </div>}
     </header>
   );
-};
-
-export default Header;
+}

@@ -1,5 +1,4 @@
-import React from 'react';
-import { Check, Clock, MapPin, Euro } from 'lucide-react';
+import { Clock, MapPin, Euro } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const Pricing = () => {

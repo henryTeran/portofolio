@@ -104,87 +104,7 @@
     "subtitle": "Discover my most recent projects and the technologies used",
     "learnmore": "Learn more",
     "featuresTitle": "Key features",
-    "techTitle": "Technologies used",
-    "list": {
-      "zigoma": {
-        "title": "ZIGOMA ERP",
-        "period": "05/2025 – 06/2025",
-        "category": "ERP",
-        "description": "Intelligent modular ERP for SMEs with CRM, product and stock management, full sales flow (quotes, orders, delivery notes, invoices) and integrated AI.",
-        "features": [
-          "Integrated CRM",
-          "Complete invoicing (quotes → invoices)",
-          "Real-time dashboards and KPIs",
-          "AI for automatic document generation"
-        ],
-        "technologies": ["OpenAI", "Flask", "Pandas", "NumPy", "Firestore", "Jinja2", "TailwindCSS"]
-      },
-      "wellsync": {
-        "title": "WellSync",
-        "period": "03/2025 – 05/2025",
-        "category": "Mobile & AI",
-        "description": "Intelligent wellness mobile app with AI for tracking emotions, nutrition, fitness, and self-care routines.",
-        "features": [
-          "Dynamic diagnostic forms",
-          "Personalized recommendations",
-          "Contextual AI chatbot",
-          "Smart push notifications"
-        ],
-        "technologies": ["Ionic", "Firebase", "Angular", "OpenAI", "TypeScript"]
-      },
-      "healthsync": {
-        "title": "HealthSync",
-        "period": "01/2025 – 03/2025",
-        "category": "Healthcare",
-        "description": "Medical tracking platform connecting patients and doctors for treatment and appointment management.",
-        "features": [
-          "Medication tracking & reminders",
-          "Secure patient-doctor chat",
-          "Medical dashboards",
-          "PDF prescription generation"
-        ],
-        "technologies": ["React", "Firebase", "TailwindCSS", "Node.js", "WebRTC"]
-      },
-      "beautybooker": {
-        "title": "BeautyBooker",
-        "period": "09/2024 – 12/2024",
-        "category": "E-commerce",
-        "description": "Booking platform for beauty services with slot management, online payments, and customer loyalty system.",
-        "features": [
-          "Online bookings",
-          "Secure Stripe payments",
-          "Loyalty program",
-          "Responsive interface"
-        ],
-        "technologies": ["Angular", "Firebase", "Stripe", "PWA", "Tailwind"]
-      },
-      "selfservicedesk": {
-        "title": "SelfServiceDesk",
-        "period": "05/2024 – 08/2024",
-        "category": "Mobile",
-        "description": "Quick ordering mobile app for restaurants with intuitive interface, stock management, and real-time analytics.",
-        "features": [
-          "Quick orders",
-          "Real-time stock management",
-          "Advanced analytics",
-          "Offline mode"
-        ],
-        "technologies": ["Ionic", "Firebase", "Angular", "PayPal", "PWA"]
-      },
-      "fromdeepestrecord": {
-        "title": "FromDeepestRecord",
-        "period": "01/2024 – 05/2024",
-        "category": "E-commerce",
-        "description": "Multilingual music e-commerce with advanced catalog, AI recommendations, and integrated streaming system.",
-        "features": [
-          "Multilingual catalog",
-          "AI recommendations",
-          "Integrated streaming",
-          "Complete catalog management"
-        ],
-        "technologies": ["React", "Node.js", "PostgreSQL", "Stripe", "AWS"]
-      }
-    }
+    "techTitle": "Technologies used"
   },
   "services": {
     "title": "My Services",
@@ -282,7 +202,7 @@
       "messagePlaceholder": "Describe your project...",
       "submit": "Send message",
       "submitting": "Sending...",
-      "success": "Message sent successfully! I will get back to you within 24h.",
+      "success": "Check your inbox to confirm your request.",
       "error": "Error sending. Please try again or contact me directly."
     },
     "quote": {
@@ -401,10 +321,11 @@
       "features": "Features:",
       "selected": "selected",
       "technologies": "Technologies:",
-      "successMessage": "Request sent successfully! I will get back to you within 24h.",
+      "successMessage": "Check your inbox to confirm your request.",
       "errorMessage": "Error sending. Please try again or contact me directly."
     },
     "buttons": {
+      "close": "Close Project Brief",
       "previous": "Previous",
       "next": "Next",
       "submit": "Send request",

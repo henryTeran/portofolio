@@ -1,4 +1,3 @@
-import React from 'react';
 import { Globe, Users, Lightbulb, MessageSquare } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import Feature from '../ui/Feature';

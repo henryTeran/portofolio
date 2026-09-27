@@ -104,87 +104,7 @@
     "subtitle": "Découvrez mes projets les plus récents et les technologies utilisées",
     "learnmore": "En savoir plus",
     "featuresTitle": "Fonctionnalités clés",
-    "techTitle": "Technologies utilisées",
-    "list": {
-      "zigoma": {
-        "title": "ZIGOMA ERP",
-        "period": "05/2025 – 06/2025",
-        "category": "ERP",
-        "description": "ERP intelligent et modulaire pour PME avec CRM, gestion des produits et stocks, facturation (devis, commandes, bons de livraison, factures) et IA intégrée.",
-        "features": [
-          "CRM intégré",
-          "Facturation complète (devis → factures)",
-          "Tableaux de bord et KPIs en temps réel",
-          "IA pour génération automatique de documents"
-        ],
-        "technologies": ["OpenAI", "Flask", "Pandas", "NumPy", "Firestore", "Jinja2", "TailwindCSS"]
-      },
-      "wellsync": {
-        "title": "WellSync",
-        "period": "03/2025 – 05/2025",
-        "category": "Mobile & IA",
-        "description": "Application mobile de bien-être intelligente avec IA pour le suivi des émotions, de la nutrition, du sport et des routines de soins.",
-        "features": [
-          "Formulaires de diagnostic dynamiques",
-          "Recommandations personnalisées",
-          "Chatbot IA contextuel",
-          "Notifications intelligentes (push)"
-        ],
-        "technologies": ["Ionic", "Firebase", "Angular", "OpenAI", "TypeScript"]
-      },
-      "healthsync": {
-        "title": "HealthSync",
-        "period": "01/2025 – 03/2025",
-        "category": "Santé",
-        "description": "Plateforme de suivi médical connectant patients et médecins pour la gestion des traitements et des rendez-vous.",
-        "features": [
-          "Suivi médicaments & rappels",
-          "Chat sécurisé patient-médecin",
-          "Dashboards médicaux",
-          "Génération prescriptions PDF"
-        ],
-        "technologies": ["React", "Firebase", "TailwindCSS", "Node.js", "WebRTC"]
-      },
-      "beautybooker": {
-        "title": "BeautyBooker",
-        "period": "09/2024 – 12/2024",
-        "category": "E-commerce",
-        "description": "Plateforme de réservation pour soins esthétiques avec gestion des créneaux, paiements en ligne et système de fidélité client.",
-        "features": [
-          "Réservations en ligne",
-          "Paiements sécurisés Stripe",
-          "Programme fidélité",
-          "Interface responsive"
-        ],
-        "technologies": ["Angular", "Firebase", "Stripe", "PWA", "Tailwind"]
-      },
-      "selfservicedesk": {
-        "title": "SelfServiceDesk",
-        "period": "05/2024 – 08/2024",
-        "category": "Mobile",
-        "description": "Application mobile de commande rapide pour restaurants avec interface intuitive, gestion des stocks et analytics en temps réel.",
-        "features": [
-          "Commandes rapides",
-          "Gestion stocks temps réel",
-          "Analytics avancés",
-          "Mode hors-ligne"
-        ],
-        "technologies": ["Ionic", "Firebase", "Angular", "PayPal", "PWA"]
-      },
-      "fromdeepestrecord": {
-        "title": "FromDeepestRecord",
-        "period": "01/2024 – 05/2024",
-        "category": "E-commerce",
-        "description": "E-commerce musical multilingue avec catalogue avancé, recommandations IA et système de streaming intégré.",
-        "features": [
-          "Catalogue multilingue",
-          "Recommandations IA",
-          "Streaming intégré",
-          "Gestion complète catalogue"
-        ],
-        "technologies": ["React", "Node.js", "PostgreSQL", "Stripe", "AWS"]
-      }
-    }
+    "techTitle": "Technologies utilisées"
   },
   "services": {
     "title": "Services Proposés",
@@ -282,7 +202,7 @@
       "messagePlaceholder": "Décrivez votre projet...",
       "submit": "Envoyer le message",
       "submitting": "Envoi en cours...",
-      "success": "Message envoyé avec succès ! Je vous recontacterai sous 24h.",
+      "success": "Vérifiez votre boîte email pour confirmer votre demande.",
       "error": "Erreur lors de l'envoi. Veuillez réessayer ou me contacter directement."
     },
     "quote": {
@@ -401,10 +321,11 @@
       "features": "Fonctionnalités :",
       "selected": "sélectionnées",
       "technologies": "Technologies :",
-      "successMessage": "Demande envoyée avec succès ! Je vous recontacterai sous 24h.",
+      "successMessage": "Vérifiez votre boîte email pour confirmer votre demande.",
       "errorMessage": "Erreur lors de l'envoi. Veuillez réessayer ou me contacter directement."
     },
     "buttons": {
+      "close": "Fermer le Project Brief",
       "previous": "Précédent",
       "next": "Suivant",
       "submit": "Envoyer la demande",

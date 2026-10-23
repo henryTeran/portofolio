@@ -8,17 +8,17 @@ type HreflangLinksProps = {
   pathSuffix?: string;
 };
 
-export default function HreflangLinks({ currentLanguage, pathSuffix = '' }: HreflangLinksProps) {
-  const canonicalLanguage = SUPPORTED_LANGUAGES.includes(currentLanguage as (typeof SUPPORTED_LANGUAGES)[number])
-    ? currentLanguage
-    : 'en';
+// x-default must be identical on every language version of a page.
+const X_DEFAULT_LANGUAGE = 'en';
 
+// currentLanguage is kept for API compatibility; the alternates are the same set on every version.
+export default function HreflangLinks({ pathSuffix = '' }: HreflangLinksProps) {
   return (
     <Helmet>
       {SUPPORTED_LANGUAGES.map((lang) => {
         return <link key={lang} rel="alternate" hrefLang={lang} href={`${siteUrl}/${lang}${pathSuffix}`} />;
       })}
-      <link rel="alternate" hrefLang="x-default" href={`${siteUrl}/${canonicalLanguage}${pathSuffix}`} />
+      <link rel="alternate" hrefLang="x-default" href={`${siteUrl}/${X_DEFAULT_LANGUAGE}${pathSuffix}`} />
     </Helmet>
   );
 }

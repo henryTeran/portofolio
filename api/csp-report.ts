@@ -8,6 +8,10 @@ export const config = {
   },
 };
 
+// Abuse limits: browsers send small reports; anything larger is not a genuine report.
+const MAX_BODY_BYTES = 64 * 1024;
+const MAX_REPORTS_PER_REQUEST = 20;
+
 const SUPPORTED_CONTENT_TYPES = new Set([
   'application/csp-report',
   'application/reports+json',
@@ -65,9 +69,12 @@ const toNumberOrNull = (value: unknown): number | null => {
   return null;
 };
 
+// Control characters (including newlines) are removed so a crafted report cannot
+// forge extra log lines; values are capped to keep log entries small.
 const toStringOrNull = (value: unknown): string | null => {
   if (typeof value !== 'string') return null;
-  const trimmed = value.trim();
+  // eslint-disable-next-line no-control-regex
+  const trimmed = value.replace(/[\u0000-\u001f\u007f]+/g, ' ').trim().slice(0, 1000);
   return trimmed.length > 0 ? trimmed : null;
 };
 
@@ -88,6 +95,7 @@ const sanitizeUri = (value: unknown): string | null => {
     const parsed = new URL(raw);
     return `${parsed.origin}${parsed.pathname}`;
   } catch {
+    // Non-URL values such as 'inline' or 'eval' (control characters already removed).
     return raw.split('?')[0].split('#')[0].slice(0, 300);
   }
 };
@@ -147,20 +155,27 @@ const readRawBody = (req: RequestLike): Promise<string | null> => {
     }
 
     const chunks: Buffer[] = [];
+    let size = 0;
+    let tooLarge = false;
 
     req.on('data', (chunk: unknown) => {
-      if (typeof chunk === 'string') {
-        chunks.push(Buffer.from(chunk));
+      if (tooLarge) return;
+      const buffer = typeof chunk === 'string'
+        ? Buffer.from(chunk)
+        : chunk && typeof Buffer !== 'undefined' && Buffer.isBuffer(chunk) ? chunk : null;
+      if (!buffer) return;
+      size += buffer.length;
+      if (size > MAX_BODY_BYTES) {
+        // Stop buffering: an oversized body is rejected without being kept in memory.
+        tooLarge = true;
+        chunks.length = 0;
         return;
       }
-
-      if (chunk && typeof Buffer !== 'undefined' && Buffer.isBuffer(chunk)) {
-        chunks.push(chunk);
-      }
+      chunks.push(buffer);
     });
 
     req.on('end', () => {
-      if (chunks.length === 0) {
+      if (tooLarge || chunks.length === 0) {
         resolve(null);
         return;
       }
@@ -296,7 +311,7 @@ const logCompact = (report: NormalizedCspReport) => {
   const disposition = report.disposition ?? 'report';
 
   console.info(
-    `[CSP][Report-Only] effectiveDirective=${effective} blockedUri=${blocked} documentUri=${documentUri} disposition=${disposition}`
+    `[CSP] effectiveDirective=${effective} blockedUri=${blocked} documentUri=${documentUri} disposition=${disposition}`
   );
 };
 
@@ -321,7 +336,7 @@ export default function handler(req: RequestLike, res: ResponseLike) {
 
   const process = async () => {
     const parsedBody = await resolvePayload();
-    const rawReports = extractRawReports(parsedBody);
+    const rawReports = extractRawReports(parsedBody).slice(0, MAX_REPORTS_PER_REQUEST);
 
     if (rawReports.length === 0) {
       return res.status(400).json({ ok: false, error: 'Invalid body format' });
@@ -341,7 +356,7 @@ export default function handler(req: RequestLike, res: ResponseLike) {
     normalizedReports.forEach(logCompact);
 
     if (isDev) {
-      console.debug('[CSP][Report-Only][Debug]', JSON.stringify(normalizedReports));
+      console.debug('[CSP][Debug]', JSON.stringify(normalizedReports));
     }
 
     return res.status(204).end();

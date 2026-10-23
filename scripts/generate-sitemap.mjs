@@ -1,47 +1,34 @@
 import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
+// Each URL lists its language alternates (hreflang) so Google links the
+// fr/en/es versions of a page together. changefreq/priority are omitted:
+// Google ignores them.
 const siteUrl = (process.env.SITE_URL || 'https://henryteran.com').replace(/\/$/, '');
 const languages = ['fr', 'en', 'es'];
+const defaultLanguage = 'en';
 const pageSlugs = ['', 'projects/zigoma', 'projects/applyflow', 'projects/jobtrace-ai', 'projects/wellsync', 'privacy'];
 const today = new Date().toISOString().split('T')[0];
 
-const getPriority = (slug) => {
-  if (slug === '') return '1.0';
-  if (slug === 'projects') return '0.9';
-  if (slug === 'services') return '0.9';
-  return '0.8';
-};
+const buildUrl = (lang, slug) => (slug ? `${siteUrl}/${lang}/${slug}` : `${siteUrl}/${lang}`);
 
-const buildUrl = (lang, slug) => {
-  if (!slug) {
-    return `${siteUrl}/${lang}`;
-  }
-
-  return `${siteUrl}/${lang}/${slug}`;
-};
-
-const urls = languages.flatMap((lang) =>
-  pageSlugs.map((slug) => ({
-    loc: buildUrl(lang, slug),
-    lastmod: today,
-    changefreq: slug === '' ? 'weekly' : 'monthly',
-    priority: getPriority(slug),
-  }))
+const entries = languages.flatMap((lang) =>
+  pageSlugs.map((slug) => {
+    const alternates = [
+      ...languages.map((alt) => `    <xhtml:link rel="alternate" hreflang="${alt}" href="${buildUrl(alt, slug)}"/>`),
+      `    <xhtml:link rel="alternate" hreflang="x-default" href="${buildUrl(defaultLanguage, slug)}"/>`,
+    ].join('\n');
+    return `  <url>
+    <loc>${buildUrl(lang, slug)}</loc>
+    <lastmod>${today}</lastmod>
+${alternates}
+  </url>`;
+  })
 );
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls
-  .map(
-    ({ loc, lastmod, changefreq, priority }) => `  <url>
-    <loc>${loc}</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>${changefreq}</changefreq>
-    <priority>${priority}</priority>
-  </url>`
-  )
-  .join('\n')}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${entries.join('\n')}
 </urlset>
 `;
 

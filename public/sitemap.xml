@@ -1,111 +1,147 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://henryteran.com/fr</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://henryteran.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://henryteran.com/en"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://henryteran.com/es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://henryteran.com/en"/>
   </url>
   <url>
     <loc>https://henryteran.com/fr/projects/zigoma</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://henryteran.com/fr/projects/zigoma"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://henryteran.com/en/projects/zigoma"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://henryteran.com/es/projects/zigoma"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://henryteran.com/en/projects/zigoma"/>
   </url>
   <url>
     <loc>https://henryteran.com/fr/projects/applyflow</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://henryteran.com/fr/projects/applyflow"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://henryteran.com/en/projects/applyflow"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://henryteran.com/es/projects/applyflow"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://henryteran.com/en/projects/applyflow"/>
   </url>
   <url>
     <loc>https://henryteran.com/fr/projects/jobtrace-ai</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://henryteran.com/fr/projects/jobtrace-ai"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://henryteran.com/en/projects/jobtrace-ai"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://henryteran.com/es/projects/jobtrace-ai"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://henryteran.com/en/projects/jobtrace-ai"/>
   </url>
   <url>
     <loc>https://henryteran.com/fr/projects/wellsync</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://henryteran.com/fr/projects/wellsync"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://henryteran.com/en/projects/wellsync"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://henryteran.com/es/projects/wellsync"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://henryteran.com/en/projects/wellsync"/>
   </url>
   <url>
     <loc>https://henryteran.com/fr/privacy</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://henryteran.com/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://henryteran.com/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://henryteran.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://henryteran.com/en/privacy"/>
   </url>
   <url>
     <loc>https://henryteran.com/en</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://henryteran.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://henryteran.com/en"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://henryteran.com/es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://henryteran.com/en"/>
   </url>
   <url>
     <loc>https://henryteran.com/en/projects/zigoma</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://henryteran.com/fr/projects/zigoma"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://henryteran.com/en/projects/zigoma"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://henryteran.com/es/projects/zigoma"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://henryteran.com/en/projects/zigoma"/>
   </url>
   <url>
     <loc>https://henryteran.com/en/projects/applyflow</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://henryteran.com/fr/projects/applyflow"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://henryteran.com/en/projects/applyflow"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://henryteran.com/es/projects/applyflow"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://henryteran.com/en/projects/applyflow"/>
   </url>
   <url>
     <loc>https://henryteran.com/en/projects/jobtrace-ai</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://henryteran.com/fr/projects/jobtrace-ai"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://henryteran.com/en/projects/jobtrace-ai"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://henryteran.com/es/projects/jobtrace-ai"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://henryteran.com/en/projects/jobtrace-ai"/>
   </url>
   <url>
     <loc>https://henryteran.com/en/projects/wellsync</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://henryteran.com/fr/projects/wellsync"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://henryteran.com/en/projects/wellsync"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://henryteran.com/es/projects/wellsync"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://henryteran.com/en/projects/wellsync"/>
   </url>
   <url>
     <loc>https://henryteran.com/en/privacy</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://henryteran.com/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://henryteran.com/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://henryteran.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://henryteran.com/en/privacy"/>
   </url>
   <url>
     <loc>https://henryteran.com/es</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://henryteran.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://henryteran.com/en"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://henryteran.com/es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://henryteran.com/en"/>
   </url>
   <url>
     <loc>https://henryteran.com/es/projects/zigoma</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://henryteran.com/fr/projects/zigoma"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://henryteran.com/en/projects/zigoma"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://henryteran.com/es/projects/zigoma"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://henryteran.com/en/projects/zigoma"/>
   </url>
   <url>
     <loc>https://henryteran.com/es/projects/applyflow</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://henryteran.com/fr/projects/applyflow"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://henryteran.com/en/projects/applyflow"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://henryteran.com/es/projects/applyflow"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://henryteran.com/en/projects/applyflow"/>
   </url>
   <url>
     <loc>https://henryteran.com/es/projects/jobtrace-ai</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://henryteran.com/fr/projects/jobtrace-ai"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://henryteran.com/en/projects/jobtrace-ai"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://henryteran.com/es/projects/jobtrace-ai"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://henryteran.com/en/projects/jobtrace-ai"/>
   </url>
   <url>
     <loc>https://henryteran.com/es/projects/wellsync</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://henryteran.com/fr/projects/wellsync"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://henryteran.com/en/projects/wellsync"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://henryteran.com/es/projects/wellsync"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://henryteran.com/en/projects/wellsync"/>
   </url>
   <url>
     <loc>https://henryteran.com/es/privacy</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://henryteran.com/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://henryteran.com/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://henryteran.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://henryteran.com/en/privacy"/>
   </url>
 </urlset>

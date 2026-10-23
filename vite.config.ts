@@ -5,6 +5,11 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   base: '/',
+  ssr: {
+    // Bundled for the build-time prerender (scripts/prerender.mjs): these packages
+    // ship CommonJS entries that Node cannot import with named ESM exports.
+    noExternal: ['react-helmet-async'],
+  },
   optimizeDeps: {
     exclude: ['lucide-react'],
   },

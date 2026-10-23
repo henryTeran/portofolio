@@ -1,5 +1,13 @@
 # CSP rollout (Vercel + React + Vite)
 
+> **Statut (octobre 2026) : CSP appliquée.** `vercel.json` envoie désormais
+> `Content-Security-Policy` (bloquante) au lieu de `Content-Security-Policy-Report-Only`.
+> Les violations restent signalées à `/api/csp-report` (logs Vercel, préfixe `[CSP]`).
+> Domaines GA4 élargis à `*.google-analytics.com`, `*.analytics.google.com` et
+> `stats.g.doubleclick.net`. Hash JSON-LD mis à jour (`npm run generate:csp-hash`) —
+> le relancer après toute modification du bloc `jsonld-person` de `index.html`.
+> Retour arrière rapide : renommer l'en-tête en `Content-Security-Policy-Report-Only`.
+
 ## 1) Sources réellement utilisées (audit)
 
 ### `default-src`
